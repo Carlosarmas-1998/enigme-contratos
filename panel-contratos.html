@@ -160,9 +160,7 @@ const PASS='administracionenigme123';
 function api(ep,o){const h={'apikey':SK,'Authorization':'Bearer '+SK};if(o&&o.method&&o.method!=='GET'){h['Content-Type']='application/json';h['Prefer']='return=representation';}return fetch(SB+ep,{...o,headers:h});}
 function $(id){return document.getElementById(id);}
 
-let contratos=[],filtro='todos',authed=false,zonas=[],gerentes=[],depMap={};
-const ZONAS_NOMBRES=['ORO I','ORO II','RODIO I','RODIO II','OCEANO I','OCEANO II','COSMOS'];
-const DEP_MAP={'ORO I':'Choluteca','ORO II':'Valle','RODIO I':'Francisco Morazán','RODIO II':'El Paraíso','OCEANO I':'La Paz','OCEANO II':'Comayagua','COSMOS':'Olancho'};
+let contratos=[],filtro='todos',authed=false;
 
 function doLogin(){
   const v=$('passInput').value;
@@ -171,49 +169,11 @@ function doLogin(){
 }
 function logout(){authed=false;contratos=[];$('panelScreen').classList.remove('active');$('topActions').style.display='none';$('loginScreen').style.display='block';$('passInput').value='';$('loginErr').style.display='none';}
 
-async function loadAll(){await Promise.all([loadContratos(),loadZonasGerentes()]);}
+async function loadAll(){await loadContratos();}
 
 async function loadContratos(){
   try{const r=await api('contratos_vendedoras?select=*&order=created_at.desc');if(!r.ok)throw new Error(r.status);contratos=await r.json();updateStats();renderTable();}
   catch(e){console.error(e);$('tBody').innerHTML='<tr><td colspan="10" style="text-align:center;color:var(--red);padding:20px">Error al cargar contratos</td></tr>';}
-}
-async function loadZonasGerentes(){
-  try{
-    const zr=await api('zonas?nombre=in.(ORO I,ORO II,RODIO I,RODIO II,OCEANO I,OCEANO II,COSMOS)&select=id,nombre,codigo');
-    if(zr.ok)zonas=await zr.json();
-    const gr=await api('gerentes_zona?select=id,nombre,codigo,zona_id,email');
-    if(gr.ok)gerentes=await gr.json();
-    renderZonas();
-  }catch(e){console.error(e);}
-}
-function renderZonas(){
-  const gerenteOpts=gerentes.map(g=>'<option value="'+g.id+'">'+g.nombre+' ('+g.codigo+')</option>').join('');
-  $('tZonas').innerHTML=ZONAS_NOMBRES.map(zn=>{
-    const z=zonas.find(x=>x.nombre===zn);
-    const gAsignado=z?gerentes.find(g=>String(g.zona_id)===String(z.id)):null;
-    return '<tr><td style="font-family:Cinzel,serif;color:var(--gold);font-weight:400">'+zn+'</td>'
-      +'<td>'+DEP_MAP[zn]+'</td>'
-      +'<td>'+(gAsignado?'<span style="font-weight:400">'+gAsignado.nombre+' <span style="color:var(--muted)">('+gAsignado.codigo+')</span></span>':'<span style="color:var(--muted)">Sin asignar</span>')+'</td>'
-      +'<td><select class="search-input" style="width:auto;padding:6px 10px;font-size:.72rem" id="selGZ_'+zn.replace(/\s/g,'_')+'">'
-      +'<option value="">Seleccionar gerente...</option>'+gerenteOpts+'</select> '
-      +'<button class="filter-btn" style="padding:6px 14px" onclick="asignarGerente(\''+zn+'\')">Asignar</button></td></tr>';
-  }).join('');
-}
-async function asignarGerente(zonaNombre){
-  const selId='selGZ_'+zonaNombre.replace(/\s/g,'_');
-  const gerenteId=$(selId).value;
-  if(!gerenteId){alert('Selecciona un gerente primero.');return;}
-  const z=zonas.find(x=>x.nombre===zonaNombre);
-  if(!z){alert('Zona no encontrada.');return;}
-  try{
-    // Remove old assignment from any gerente that had this zona
-    const oldG=gerentes.filter(g=>String(g.zona_id)===String(z.id));
-    for(const og of oldG){await api('gerentes_zona?id=eq.'+og.id,{method:'PATCH',body:JSON.stringify({zona_id:null})});}
-    // Assign new gerente to this zona
-    await api('gerentes_zona?id=eq.'+gerenteId,{method:'PATCH',body:JSON.stringify({zona_id:z.id})});
-    alert('Gerente asignado a '+zonaNombre+' correctamente.');
-    await loadZonasGerentes();
-  }catch(e){console.error(e);alert('Error al asignar: '+e.message);}
 }
 function updateStats(){
   $('statTotal').textContent=contratos.length;

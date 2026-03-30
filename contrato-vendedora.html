@@ -332,6 +332,7 @@
 const SB='https://hajmyntnvurlcuwshjdd.supabase.co/rest/v1/';
 const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhham15bnRudnVybGN1d3NoamRkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwMDM2MjEsImV4cCI6MjA4ODU3OTYyMX0.XGF5wPX1sI9VgG11bnr41lCxeqTfFVHEhBIfBXXYAkw';
 function api(ep,o){const h={'apikey':SK,'Authorization':'Bearer '+SK};if(o&&o.method&&o.method!=='GET'){h['Content-Type']='application/json';h['Prefer']='return=representation';}return fetch(SB+ep,{...o,headers:h});}
+async function sendEmail(to,subject,html){try{await fetch('https://hajmyntnvurlcuwshjdd.supabase.co/functions/v1/send-email',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({to,subject,html})});}catch(e){console.error('Email error:',e);}}
 
 // ========== STATE ==========
 const ses=JSON.parse(sessionStorage.getItem('enigme_session')||'null');
@@ -415,18 +416,25 @@ async function onDepChange(){
   // Find gerencia divisional
   if(z.gerencia_divisional_id){try{const dr2=await api('gerencias_divisionales?id=eq.'+z.gerencia_divisional_id+'&select=id,nombre,codigo,email');const dd=await dr2.json();
     if(dd[0]){DV=dd[0];$('f_div_txt').value=DV.nombre+' ('+DV.codigo+')';$('f_div_id').value=DV.id;}}catch(e){}}
-  if(GZ)await genCodigo();
+  await genCodigo();
 }
 async function loadMun(id){const s=$('f_mun');s.innerHTML='<option value="">Cargando...</option>';s.disabled=true;if(!id){s.innerHTML='<option value="">Primero selecciona departamento</option>';return;}
   if(!munC[id]){const r=await api('municipios?departamento_id=eq.'+id+'&select=id,nombre&order=nombre');munC[id]=await r.json();}
   s.innerHTML='<option value="">Selecciona municipio ('+munC[id].length+')</option>';munC[id].forEach(m=>{const o=document.createElement('option');o.value=m.id;o.textContent=m.nombre;s.appendChild(o);});s.disabled=false;}
 // assignGZ removed - zona now auto-assigned by departamento in onDepChange
-async function genCodigo(){if(!GZ)return;try{
-  const r=await api('vendedoras?gerente_id=eq.'+GZ.id+'&select=codigo&order=codigo.desc&limit=1');const d=await r.json();
-  let n=d.length>0?parseInt(d[0].codigo)+1:parseInt(GZ.codigo)+1;
-  const cr=await api('contratos_vendedoras?gerente_id=eq.'+GZ.id+'&select=codigo_vendedora&order=codigo_vendedora.desc&limit=1');const cd=await cr.json();
-  if(cd.length>0){const cn=parseInt(cd[0].codigo_vendedora);if(cn>=n)n=cn+1;}
-  codigo=String(n);$('f_codigo').value=codigo;}catch(e){codigo=GZ.codigo+'01';$('f_codigo').value=codigo;}}
+async function genCodigo(){try{
+  if(GZ){
+    const r=await api('vendedoras?gerente_id=eq.'+GZ.id+'&select=codigo&order=codigo.desc&limit=1');const d=await r.json();
+    let n=d.length>0?parseInt(d[0].codigo)+1:parseInt(GZ.codigo)+1;
+    const cr=await api('contratos_vendedoras?gerente_id=eq.'+GZ.id+'&select=codigo_vendedora&order=codigo_vendedora.desc&limit=1');const cd=await cr.json();
+    if(cd.length>0){const cn=parseInt(cd[0].codigo_vendedora);if(cn>=n)n=cn+1;}
+    codigo=String(n);
+  }else{
+    const cr=await api('contratos_vendedoras?select=codigo_vendedora&order=codigo_vendedora.desc&limit=1');const cd=await cr.json();
+    let n=cd.length>0?parseInt(cd[0].codigo_vendedora)+1:100001;
+    codigo=String(n);
+  }
+  $('f_codigo').value=codigo;}catch(e){codigo=String(Date.now()).slice(-6);$('f_codigo').value=codigo;}}
 async function genNumContrato(){const y=new Date().getFullYear();const ts=Date.now().toString().slice(-4);
   try{const r=await api('contratos_vendedoras?select=numero_contrato&order=created_at.desc&limit=1');const d=await r.json();let s=1;
   if(d.length>0){const m=d[0].numero_contrato.match(/(\d+)$/);if(m)s=parseInt(m[1])+1;}
@@ -490,17 +498,41 @@ function imprimirPDF(){if(!contratoFinal)return;const w=window.open('','_blank')
 
 // ========== EMAIL HTML ==========
 function emailHTML(d){
-  return '<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#fff;color:#333;border:1px solid #e0d8c8">'
+  return '<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#fff;color:#000;border:1px solid #e0d8c8">'
   +'<div style="background:#FAF6F0;padding:30px;text-align:center;border-bottom:2px solid #8B6914"><h1 style="font-family:serif;font-size:24px;font-weight:300;letter-spacing:8px;color:#000;margin:0">ENIGME</h1><p style="font-size:10px;letter-spacing:4px;color:#8B6914;margin-top:6px">HONDURAS</p></div>'
-  +'<div style="padding:30px;background:#fff;color:#333">'
-  +'<h2 style="font-size:18px;color:#333;margin-bottom:16px;text-align:center">¡Bienvenida a ENIGME!</h2>'
+  +'<div style="padding:30px;background:#fff;color:#000">'
+  +'<h2 style="font-size:18px;color:#000;margin-bottom:16px;text-align:center">¡Bienvenida a ENIGME!</h2>'
   +'<p style="font-size:14px;line-height:1.8;margin-bottom:16px">Estimada <strong>'+d.nombre_completo+'</strong>,</p>'
-  +'<p style="font-size:14px;line-height:1.8;color:#555;margin-bottom:20px">Es un placer darte la bienvenida como Asesora Independiente de ENIGME Honduras. Tu contrato <strong>'+d.numero_contrato+'</strong> ha sido registrado exitosamente.</p>'
+  +'<p style="font-size:14px;line-height:1.8;color:#000;margin-bottom:12px">Es un placer darte la bienvenida como <strong>Asesora Independiente</strong> de ENIGME Honduras. Tu contrato <strong>'+d.numero_contrato+'</strong> ha sido registrado exitosamente.</p>'
   +'<div style="background:#FAF6F0;border:2px solid #8B6914;padding:20px;text-align:center;margin-bottom:20px"><p style="font-size:11px;letter-spacing:3px;color:#8B6914;margin:0 0 6px">Tu Código de Asesora</p><p style="font-family:serif;font-size:28px;color:#8B6914;letter-spacing:4px;margin:0;font-weight:bold">'+d.codigo_vendedora+'</p></div>'
-  +'<table style="width:100%;font-size:13px;border-collapse:collapse;margin-bottom:20px"><tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888">Comisión:</td><td style="padding:8px;border-bottom:1px solid #eee;text-align:right;font-weight:bold;color:#27ae60">15% sobre venta neta</td></tr><tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888">Esquema de Pago:</td><td style="padding:8px;border-bottom:1px solid #eee;text-align:right;font-weight:bold">30% - 40% - 30%</td></tr><tr><td style="padding:8px;color:#888">Plazo máximo:</td><td style="padding:8px;text-align:right;font-weight:bold">14 días</td></tr></table>'
+  +'<h3 style="font-size:15px;color:#8B6914;margin:20px 0 10px;border-bottom:1px solid #eee;padding-bottom:6px">Resumen de tu Contrato</h3>'
+  +'<p style="font-size:13px;line-height:1.8;color:#000;margin-bottom:8px">Al firmar este contrato, aceptas actuar como <strong>intermediaria comercial independiente</strong> de ENIGME Honduras, conforme al Código de Comercio de Honduras (Decreto No. 73-50). No existe relación laboral entre tú y la empresa.</p>'
+  +'<h3 style="font-size:15px;color:#8B6914;margin:20px 0 10px;border-bottom:1px solid #eee;padding-bottom:6px">Tu Comisión</h3>'
+  +'<p style="font-size:13px;line-height:1.8;color:#000;margin-bottom:8px">Recibirás una comisión del <strong style="color:#27ae60">15% sobre la venta neta</strong> de cada pedido que gestiones.</p>'
+  +'<h3 style="font-size:15px;color:#8B6914;margin:20px 0 10px;border-bottom:1px solid #eee;padding-bottom:6px">Condiciones de Pago de Pedidos</h3>'
+  +'<table style="width:100%;font-size:13px;border-collapse:collapse;margin-bottom:16px">'
+  +'<tr><td style="padding:10px;border-bottom:1px solid #eee;color:#000"><strong>30%</strong> al momento de solicitar el pedido</td></tr>'
+  +'<tr><td style="padding:10px;border-bottom:1px solid #eee;color:#000"><strong>40%</strong> al momento de recibir la mercadería</td></tr>'
+  +'<tr><td style="padding:10px;border-bottom:1px solid #eee;color:#000"><strong>30%</strong> restante en un plazo máximo de <strong>14 días calendario</strong></td></tr></table>'
+  +'<p style="font-size:13px;line-height:1.8;color:#000;margin-bottom:8px">Te comprometes a realizar todos los pagos <strong>al día</strong>, sin atrasos ni demoras. El incumplimiento reiterado será causal de rescisión inmediata del contrato.</p>'
+  +'<h3 style="font-size:15px;color:#8B6914;margin:20px 0 10px;border-bottom:1px solid #eee;padding-bottom:6px">Tus Obligaciones</h3>'
+  +'<ul style="font-size:13px;line-height:1.8;color:#000;padding-left:20px;margin-bottom:16px">'
+  +'<li>Promocionar y distribuir los productos ENIGME de manera ética y profesional</li>'
+  +'<li>No alterar, modificar ni reenvasar los productos</li>'
+  +'<li>Respetar los precios de venta sugeridos en el catálogo oficial</li>'
+  +'<li>Mantener la confidencialidad de la información comercial</li>'
+  +'<li>Operar dentro de la zona geográfica y sector asignados</li>'
+  +'<li>Eres responsable de tus obligaciones fiscales ante el SAR</li></ul>'
+  +'<h3 style="font-size:15px;color:#8B6914;margin:20px 0 10px;border-bottom:1px solid #eee;padding-bottom:6px">Datos de tu Contrato</h3>'
+  +'<table style="width:100%;font-size:13px;border-collapse:collapse;margin-bottom:20px">'
+  +'<tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888;width:40%">Zona:</td><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold;color:#8B6914">'+(d.zona_oro||'—')+'</td></tr>'
+  +'<tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888">DNI:</td><td style="padding:8px;border-bottom:1px solid #eee">'+d.dni+'</td></tr>'
+  +'<tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888">Teléfono:</td><td style="padding:8px;border-bottom:1px solid #eee">'+d.telefono+'</td></tr>'
+  +'<tr><td style="padding:8px;color:#888">Vigencia:</td><td style="padding:8px;font-weight:bold">Indefinida (con 15 días de preaviso para terminación)</td></tr></table>'
+  +'<p style="font-size:12px;line-height:1.7;color:#000;background:#FAF6F0;padding:14px;margin-bottom:20px">Este contrato tiene <strong>plena validez legal</strong> conforme a la Ley de Firma Electrónica de Honduras (Decreto No. 149-2013). La marca ENIGME, logotipos y catálogos son propiedad exclusiva de la empresa.</p>'
   +'<div style="text-align:center;margin:24px 0"><a href="https://www.enigmeofficial.com" style="display:inline-block;padding:12px 30px;background:#8B6914;color:#fff;text-decoration:none;font-size:13px;letter-spacing:2px">VISITAR ENIGME</a></div>'
-  +'<p style="font-size:12px;color:#999;text-align:center">Tu gerente de zona está disponible para apoyarte. ¡Éxito!</p></div>'
-  +'<div style="padding:16px;background:#FAF6F0;text-align:center;border-top:1px solid #e0d8c8"><p style="font-size:10px;color:#bbb;margin:0">© 2026 ENIGME Honduras | <a href="https://www.enigmeofficial.com" style="color:#8B6914">www.enigmeofficial.com</a></p></div></div>';
+  +'<p style="font-size:12px;color:#000;text-align:center">Tu gerente de zona está disponible para apoyarte. ¡Éxito en esta nueva etapa!</p></div>'
+  +'<div style="padding:16px;background:#FAF6F0;text-align:center;border-top:1px solid #e0d8c8"><p style="font-size:10px;color:#888;margin:0">© 2026 ENIGME Honduras | <a href="https://www.enigmeofficial.com" style="color:#8B6914">www.enigmeofficial.com</a></p></div></div>';
 }
 
 // ========== SUBMIT ==========
@@ -535,24 +567,21 @@ async function enviar(){
     const vr=await api('vendedoras',{method:'POST',body:JSON.stringify(vd)});
     if(vr.ok){const v=await vr.json();if(v&&v[0])await api('contratos_vendedoras?id=eq.'+contrato[0].id,{method:'PATCH',body:JSON.stringify({vendedora_id:v[0].id})});}
 
-    // 3. Welcome email
+    // 3. Welcome email to vendedora (via Resend)
     $('loaderMsg').textContent='Enviando correo de bienvenida...';
-    await api('email_queue',{method:'POST',body:JSON.stringify({destinatario:cd.email,asunto:'¡Bienvenida a ENIGME! Tu Código: '+codigo,tipo:'bienvenida_vendedora',estado:'pendiente',contenido_html:emailHTML(cd)})});
+    await sendEmail(cd.email,'¡Bienvenida a ENIGME! Tu Código: '+codigo,emailHTML(cd));
 
     // 4. Notify gerente zona
     $('loaderMsg').textContent='Notificando a Gerencia de Zona...';
-    if(GZ&&GZ.email){await api('email_queue',{method:'POST',body:JSON.stringify({destinatario:GZ.email,asunto:'Nuevo Contrato — '+cd.nombre_completo+' ('+codigo+')',tipo:'notificacion_contrato_zona',estado:'pendiente',
-      contenido_html:'<div style="font-family:Arial;padding:20px"><h2>Nuevo Contrato de Asesora</h2><p><strong>Nombre:</strong> '+cd.nombre_completo+'</p><p><strong>DNI:</strong> '+cd.dni+'</p><p><strong>Código:</strong> '+codigo+'</p><p><strong>Teléfono:</strong> '+cd.telefono+'</p><p><strong>Correo:</strong> '+cd.email+'</p><p><strong>Contrato:</strong> '+nContrato+'</p><p><strong>Sector:</strong> '+$('f_sector').value+'</p><hr><p style="color:#888;font-size:12px">Revise en el panel de Gerencia de Zona.</p></div>'})});}
+    if(GZ&&GZ.email){await sendEmail(GZ.email,'Nuevo Contrato — '+cd.nombre_completo+' ('+codigo+')','<div style="font-family:Arial;padding:20px"><h2>Nuevo Contrato de Asesora</h2><p><strong>Nombre:</strong> '+cd.nombre_completo+'</p><p><strong>DNI:</strong> '+cd.dni+'</p><p><strong>Código:</strong> '+codigo+'</p><p><strong>Zona:</strong> '+cd.zona_oro+'</p><p><strong>Teléfono:</strong> '+cd.telefono+'</p><p><strong>Correo:</strong> '+cd.email+'</p><p><strong>Contrato:</strong> '+nContrato+'</p><p><strong>Sector:</strong> '+$('f_sector').value+'</p><hr><p style="color:#888;font-size:12px">Revise en el panel de Gerencia.</p></div>');}
 
     // 5. Notify divisional
     $('loaderMsg').textContent='Notificando a Gerencia Divisional...';
-    if(DV&&DV.email){await api('email_queue',{method:'POST',body:JSON.stringify({destinatario:DV.email,asunto:'Nuevo Contrato — Zona '+(ZN?.nombre||'')+' — '+cd.nombre_completo,tipo:'notificacion_contrato_divisional',estado:'pendiente',
-      contenido_html:'<div style="font-family:Arial;padding:20px"><h2>Nuevo Contrato en su División</h2><p><strong>Asesora:</strong> '+cd.nombre_completo+' ('+codigo+')</p><p><strong>Zona:</strong> '+(ZN?.nombre||'')+'</p><p><strong>Gerente:</strong> '+(GZ?.nombre||'')+'</p><p><strong>Contrato:</strong> '+nContrato+'</p><hr><p style="color:#888;font-size:12px">Revise en su panel de Gerencia Divisional.</p></div>'})});}
+    if(DV&&DV.email){await sendEmail(DV.email,'Nuevo Contrato — Zona '+(ZN?.nombre||'')+' — '+cd.nombre_completo,'<div style="font-family:Arial;padding:20px"><h2>Nuevo Contrato en su División</h2><p><strong>Asesora:</strong> '+cd.nombre_completo+' ('+codigo+')</p><p><strong>Zona:</strong> '+(ZN?.nombre||'')+'</p><p><strong>Gerente:</strong> '+(GZ?.nombre||'N/A')+'</p><p><strong>Contrato:</strong> '+nContrato+'</p><hr><p style="color:#888;font-size:12px">Revise en su panel de Gerencia Divisional.</p></div>');}
 
     // 6. Notify admin info@enigmeofficial.com
     $('loaderMsg').textContent='Enviando justificante a administración...';
-    await api('email_queue',{method:'POST',body:JSON.stringify({destinatario:'info@enigmeofficial.com',asunto:'Justificante — Nuevo Contrato '+nContrato+' — '+cd.nombre_completo+' ('+cd.zona_oro+')',tipo:'justificante_contrato_admin',estado:'pendiente',
-      contenido_html:'<div style="font-family:Arial;padding:20px;max-width:600px;margin:0 auto"><div style="background:#FAF6F0;padding:24px;text-align:center;border-bottom:2px solid #8B6914"><h1 style="font-family:serif;font-size:22px;letter-spacing:6px;color:#000;margin:0">ENIGME</h1><p style="font-size:10px;letter-spacing:4px;color:#8B6914;margin-top:4px">JUSTIFICANTE DE CONTRATO</p></div><div style="padding:24px;background:#fff"><h2 style="font-size:16px;color:#000;margin-bottom:16px">Nuevo Contrato Registrado</h2><table style="width:100%;font-size:13px;border-collapse:collapse"><tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888;width:40%">Contrato:</td><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold">'+nContrato+'</td></tr><tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888">Nombre:</td><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold">'+cd.nombre_completo+'</td></tr><tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888">DNI:</td><td style="padding:8px;border-bottom:1px solid #eee">'+cd.dni+'</td></tr><tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888">Código:</td><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold;color:#8B6914">'+codigo+'</td></tr><tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888">Zona Oro:</td><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold;color:#8B6914">'+cd.zona_oro+'</td></tr><tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888">Teléfono:</td><td style="padding:8px;border-bottom:1px solid #eee">'+cd.telefono+'</td></tr><tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888">Email:</td><td style="padding:8px;border-bottom:1px solid #eee">'+cd.email+'</td></tr><tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888">Gerente Zona:</td><td style="padding:8px;border-bottom:1px solid #eee">'+(GZ?.nombre||'N/A')+'</td></tr><tr><td style="padding:8px;color:#888">Fecha:</td><td style="padding:8px">'+fechaTexto()+'</td></tr></table></div><div style="padding:12px;background:#FAF6F0;text-align:center;font-size:10px;color:#999">© 2026 ENIGME Honduras — Justificante automático</div></div>'})});
+    await sendEmail('info@enigmeofficial.com','Justificante — Nuevo Contrato '+nContrato+' — '+cd.nombre_completo+' ('+cd.zona_oro+')','<div style="font-family:Arial;padding:20px;max-width:600px;margin:0 auto"><div style="background:#FAF6F0;padding:24px;text-align:center;border-bottom:2px solid #8B6914"><h1 style="font-family:serif;font-size:22px;letter-spacing:6px;color:#000;margin:0">ENIGME</h1><p style="font-size:10px;letter-spacing:4px;color:#8B6914;margin-top:4px">JUSTIFICANTE DE CONTRATO</p></div><div style="padding:24px;background:#fff"><h2 style="font-size:16px;color:#000;margin-bottom:16px">Nuevo Contrato Registrado</h2><table style="width:100%;font-size:13px;border-collapse:collapse"><tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888;width:40%">Contrato:</td><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold">'+nContrato+'</td></tr><tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888">Nombre:</td><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold">'+cd.nombre_completo+'</td></tr><tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888">DNI:</td><td style="padding:8px;border-bottom:1px solid #eee">'+cd.dni+'</td></tr><tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888">Código:</td><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold;color:#8B6914">'+codigo+'</td></tr><tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888">Zona:</td><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold;color:#8B6914">'+cd.zona_oro+'</td></tr><tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888">Teléfono:</td><td style="padding:8px;border-bottom:1px solid #eee">'+cd.telefono+'</td></tr><tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888">Email:</td><td style="padding:8px;border-bottom:1px solid #eee">'+cd.email+'</td></tr><tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888">Gerente Zona:</td><td style="padding:8px;border-bottom:1px solid #eee">'+(GZ?.nombre||'N/A')+'</td></tr><tr><td style="padding:8px;color:#888">Fecha:</td><td style="padding:8px">'+fechaTexto()+'</td></tr></table></div><div style="padding:12px;background:#FAF6F0;text-align:center;font-size:10px;color:#999">© 2026 ENIGME Honduras — Justificante automático</div></div>');
 
     // 7. Generate PDF
     $('loaderMsg').textContent='Generando PDF del contrato...';
