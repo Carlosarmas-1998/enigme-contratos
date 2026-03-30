@@ -399,7 +399,8 @@ async function init(){
 }
 async function loadDeps(){const r=await api('departamentos?select=id,nombre,codigo&order=nombre');if(!r.ok){console.error('Deps:',r.status);return;}const d=await r.json();const s=$('f_dep');d.forEach(x=>{const o=document.createElement('option');o.value=x.id;o.textContent=x.nombre;s.appendChild(o);});}
 async function loadGZ(){const r=await api('gerentes_zona?select=id,codigo,nombre,departamento_id,zona_id,email');if(r.ok)allGZ=await r.json();
-  const zr=await api('zonas?select=id,codigo,nombre,departamento_id,gerencia_divisional_id&nombre=in.(ORO I,ORO II,RODIO I,RODIO II,OCEANO I,OCEANO II,COSMOS)');if(zr.ok)allZonas=await zr.json();}
+  const zr=await api('zonas?select=id,codigo,nombre,departamento_id,gerencia_divisional_id&departamento_id=not.is.null');if(zr.ok)allZonas=await zr.json();
+  console.log('Zonas cargadas:',allZonas.length,allZonas.map(z=>z.nombre+':dep'+z.departamento_id));}
 async function onDepChange(){
   const id=$('f_dep').value;await loadMun(id);
   // Reset assignments
