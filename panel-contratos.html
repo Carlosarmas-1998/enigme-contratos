@@ -101,11 +101,26 @@
 
 <!-- PANEL -->
 <div class="container panel" id="panelScreen">
-  <div class="stats">
+  <div class="stats" id="statsGrid">
     <div class="stat-card"><div class="num" id="statTotal">0</div><div class="lbl">Total Contratos</div></div>
-    <div class="stat-card"><div class="num" id="statOro1">0</div><div class="lbl">Zona ORO I</div></div>
-    <div class="stat-card"><div class="num" id="statOro2">0</div><div class="lbl">Zona ORO II</div></div>
-    <div class="stat-card"><div class="num" id="statActivos">0</div><div class="lbl">Activos</div></div>
+    <div class="stat-card"><div class="num" id="statOro1">0</div><div class="lbl">ORO I</div></div>
+    <div class="stat-card"><div class="num" id="statOro2">0</div><div class="lbl">ORO II</div></div>
+    <div class="stat-card"><div class="num" id="statRodio1">0</div><div class="lbl">RODIO I</div></div>
+    <div class="stat-card"><div class="num" id="statRodio2">0</div><div class="lbl">RODIO II</div></div>
+    <div class="stat-card"><div class="num" id="statOceano1">0</div><div class="lbl">OCEANO I</div></div>
+    <div class="stat-card"><div class="num" id="statOceano2">0</div><div class="lbl">OCEANO II</div></div>
+    <div class="stat-card"><div class="num" id="statCosmos">0</div><div class="lbl">COSMOS</div></div>
+  </div>
+
+  <!-- GESTION DE GERENTES POR ZONA -->
+  <div style="margin-bottom:32px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px"><h2 style="font-family:'Cinzel',serif;font-size:1rem;font-weight:300;letter-spacing:.12em;color:#000">Gerentes de Zona</h2><span style="font-size:.5rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted)">Asignar gerente a cada zona</span></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Zona</th><th>Departamento</th><th>Gerente Asignado</th><th>Acción</th></tr></thead>
+        <tbody id="tZonas"></tbody>
+      </table>
+    </div>
   </div>
   <div class="panel-header">
     <div><h2>Contratos Registrados</h2><span class="count" id="resultCount">0 resultados</span></div>
@@ -152,27 +167,73 @@
 const SB='https://hajmyntnvurlcuwshjdd.supabase.co/rest/v1/';
 const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhham15bnRudnVybGN1d3NoamRkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwMDM2MjEsImV4cCI6MjA4ODU3OTYyMX0.XGF5wPX1sI9VgG11bnr41lCxeqTfFVHEhBIfBXXYAkw';
 const PASS='administracionenigme123';
-function api(ep,o){const h={'apikey':SK,'Authorization':'Bearer '+SK};return fetch(SB+ep,{...o,headers:h});}
+function api(ep,o){const h={'apikey':SK,'Authorization':'Bearer '+SK};if(o&&o.method&&o.method!=='GET'){h['Content-Type']='application/json';h['Prefer']='return=representation';}return fetch(SB+ep,{...o,headers:h});}
 function $(id){return document.getElementById(id);}
 
-let contratos=[],filtro='todos',authed=false;
+let contratos=[],filtro='todos',authed=false,zonas=[],gerentes=[],depMap={};
+const ZONAS_NOMBRES=['ORO I','ORO II','RODIO I','RODIO II','OCEANO I','OCEANO II','COSMOS'];
+const DEP_MAP={'ORO I':'Choluteca','ORO II':'Valle','RODIO I':'Francisco Morazán','RODIO II':'El Paraíso','OCEANO I':'La Paz','OCEANO II':'Comayagua','COSMOS':'Olancho'};
 
 function doLogin(){
   const v=$('passInput').value;
-  if(v===PASS){authed=true;$('loginScreen').style.display='none';$('panelScreen').classList.add('active');$('topActions').style.display='block';loadContratos();}
+  if(v===PASS){authed=true;$('loginScreen').style.display='none';$('panelScreen').classList.add('active');$('topActions').style.display='block';loadAll();}
   else{$('loginErr').style.display='block';$('passInput').value='';$('passInput').focus();}
 }
 function logout(){authed=false;contratos=[];$('panelScreen').classList.remove('active');$('topActions').style.display='none';$('loginScreen').style.display='block';$('passInput').value='';$('loginErr').style.display='none';}
+
+async function loadAll(){await Promise.all([loadContratos(),loadZonasGerentes()]);}
 
 async function loadContratos(){
   try{const r=await api('contratos_vendedoras?select=*&order=created_at.desc');if(!r.ok)throw new Error(r.status);contratos=await r.json();updateStats();renderTable();}
   catch(e){console.error(e);$('tBody').innerHTML='<tr><td colspan="10" style="text-align:center;color:var(--red);padding:20px">Error al cargar contratos</td></tr>';}
 }
+async function loadZonasGerentes(){
+  try{
+    const zr=await api('zonas?nombre=in.(ORO I,ORO II,RODIO I,RODIO II,OCEANO I,OCEANO II,COSMOS)&select=id,nombre,codigo');
+    if(zr.ok)zonas=await zr.json();
+    const gr=await api('gerentes_zona?select=id,nombre,codigo,zona_id,email');
+    if(gr.ok)gerentes=await gr.json();
+    renderZonas();
+  }catch(e){console.error(e);}
+}
+function renderZonas(){
+  const gerenteOpts=gerentes.map(g=>'<option value="'+g.id+'">'+g.nombre+' ('+g.codigo+')</option>').join('');
+  $('tZonas').innerHTML=ZONAS_NOMBRES.map(zn=>{
+    const z=zonas.find(x=>x.nombre===zn);
+    const gAsignado=z?gerentes.find(g=>String(g.zona_id)===String(z.id)):null;
+    return '<tr><td style="font-family:Cinzel,serif;color:var(--gold);font-weight:400">'+zn+'</td>'
+      +'<td>'+DEP_MAP[zn]+'</td>'
+      +'<td>'+(gAsignado?'<span style="font-weight:400">'+gAsignado.nombre+' <span style="color:var(--muted)">('+gAsignado.codigo+')</span></span>':'<span style="color:var(--muted)">Sin asignar</span>')+'</td>'
+      +'<td><select class="search-input" style="width:auto;padding:6px 10px;font-size:.72rem" id="selGZ_'+zn.replace(/\s/g,'_')+'">'
+      +'<option value="">Seleccionar gerente...</option>'+gerenteOpts+'</select> '
+      +'<button class="filter-btn" style="padding:6px 14px" onclick="asignarGerente(\''+zn+'\')">Asignar</button></td></tr>';
+  }).join('');
+}
+async function asignarGerente(zonaNombre){
+  const selId='selGZ_'+zonaNombre.replace(/\s/g,'_');
+  const gerenteId=$(selId).value;
+  if(!gerenteId){alert('Selecciona un gerente primero.');return;}
+  const z=zonas.find(x=>x.nombre===zonaNombre);
+  if(!z){alert('Zona no encontrada.');return;}
+  try{
+    // Remove old assignment from any gerente that had this zona
+    const oldG=gerentes.filter(g=>String(g.zona_id)===String(z.id));
+    for(const og of oldG){await api('gerentes_zona?id=eq.'+og.id,{method:'PATCH',body:JSON.stringify({zona_id:null})});}
+    // Assign new gerente to this zona
+    await api('gerentes_zona?id=eq.'+gerenteId,{method:'PATCH',body:JSON.stringify({zona_id:z.id})});
+    alert('Gerente asignado a '+zonaNombre+' correctamente.');
+    await loadZonasGerentes();
+  }catch(e){console.error(e);alert('Error al asignar: '+e.message);}
+}
 function updateStats(){
   $('statTotal').textContent=contratos.length;
   $('statOro1').textContent=contratos.filter(c=>c.zona_oro==='ORO I').length;
   $('statOro2').textContent=contratos.filter(c=>c.zona_oro==='ORO II').length;
-  $('statActivos').textContent=contratos.filter(c=>c.estado==='activo').length;
+  $('statRodio1').textContent=contratos.filter(c=>c.zona_oro==='RODIO I').length;
+  $('statRodio2').textContent=contratos.filter(c=>c.zona_oro==='RODIO II').length;
+  $('statOceano1').textContent=contratos.filter(c=>c.zona_oro==='OCEANO I').length;
+  $('statOceano2').textContent=contratos.filter(c=>c.zona_oro==='OCEANO II').length;
+  $('statCosmos').textContent=contratos.filter(c=>c.zona_oro==='COSMOS').length;
 }
 function setFilter(f){
   filtro=f;

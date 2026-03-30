@@ -220,8 +220,7 @@
       <div class="form-group"><label class="form-label">Departamento *</label><select class="form-select" id="f_dep" onchange="onDepChange()"><option value="">Selecciona departamento</option></select><div class="error-msg">Selecciona un departamento</div></div>
       <div class="form-group"><label class="form-label">Municipio *</label><select class="form-select" id="f_mun" disabled><option value="">Primero selecciona departamento</option></select><div class="error-msg">Selecciona un municipio</div></div>
       <div class="form-group"><label class="form-label">Sector *</label><select class="form-select" id="f_sector"><option value="">Selecciona sector</option><option value="1">Sector 1</option><option value="2">Sector 2</option><option value="3">Sector 3</option><option value="4">Sector 4</option><option value="5">Sector 5</option><option value="6">Sector 6</option><option value="7">Sector 7</option><option value="8">Sector 8</option><option value="9">Sector 9</option><option value="10">Sector 10</option><option value="11">Sector 11</option><option value="12">Sector 12</option><option value="13">Sector 13</option><option value="14">Sector 14</option><option value="15">Sector 15</option><option value="16">Sector 16</option><option value="17">Sector 17</option><option value="18">Sector 18</option><option value="19">Sector 19</option><option value="20">Sector 20</option></select><div class="error-msg">Selecciona un sector</div></div>
-      <div class="form-group"><label class="form-label">Zona *</label><select class="form-select" id="f_zona_oro" onchange="onZonaOroChange()"><option value="">Selecciona zona</option><option value="ORO I">ORO I</option><option value="ORO II">ORO II</option><option value="RODIO I">RODIO I</option><option value="RODIO II">RODIO II</option><option value="OCEANO I">OCEANO I</option><option value="OCEANO II">OCEANO II</option><option value="COSMOS">COSMOS</option></select><div class="error-msg">Selecciona una zona</div></div>
-      <div class="form-group"><label class="form-label">Zona</label><input type="text" class="form-input" id="f_zona_txt" readonly placeholder="Se asigna automáticamente" style="background:var(--gold-bg)"/><input type="hidden" id="f_zona_id"/></div>
+      <div class="form-group"><label class="form-label">Zona (Asignación Automática)</label><input type="text" class="form-input" id="f_zona_oro" readonly placeholder="Se asigna según departamento" style="background:var(--gold-bg);font-family:'Cinzel',serif;color:var(--gold);font-size:.95rem"/><input type="hidden" id="f_zona_id"/></div>
       <div class="form-group"><label class="form-label">Gerente de Zona</label><input type="text" class="form-input" id="f_gz_txt" readonly placeholder="Se asigna automáticamente" style="background:var(--gold-bg)"/><input type="hidden" id="f_gz_id"/></div>
       <div class="form-group"><label class="form-label">Gerencia Divisional</label><input type="text" class="form-input" id="f_div_txt" readonly placeholder="Se asigna automáticamente" style="background:var(--gold-bg)"/><input type="hidden" id="f_div_id"/></div>
       <div class="form-group"><label class="form-label">Código de Asesora (Automático)</label><input type="text" class="form-input" id="f_codigo" readonly style="background:var(--gold-bg);font-family:'Cinzel',serif;font-size:1.1rem;color:var(--gold);text-align:center;letter-spacing:.1em"/></div>
@@ -336,7 +335,7 @@ function api(ep,o){const h={'apikey':SK,'Authorization':'Bearer '+SK};if(o&&o.me
 
 // ========== STATE ==========
 const ses=JSON.parse(sessionStorage.getItem('enigme_session')||'null');
-let GZ=null,ZN=null,DV=null,allGZ=[],munC={},step=1,codigo='',nContrato='',dniOK=false,archivos=[],archB64=[];
+let GZ=null,ZN=null,DV=null,allGZ=[],allZonas=[],munC={},step=1,codigo='',nContrato='',dniOK=false,archivos=[],archB64=[];
 let contratoFinal=null; // saved for PDF reprint
 
 // ========== SIGNATURE ==========
@@ -398,31 +397,30 @@ async function init(){
   try{await Promise.all([loadDeps(),loadGZ(),genNumContrato()]);}catch(e){console.error('Init error:',e);}
 }
 async function loadDeps(){const r=await api('departamentos?select=id,nombre,codigo&order=nombre');if(!r.ok){console.error('Deps:',r.status);return;}const d=await r.json();const s=$('f_dep');d.forEach(x=>{const o=document.createElement('option');o.value=x.id;o.textContent=x.nombre;s.appendChild(o);});}
-async function loadGZ(){const r=await api('gerentes_zona?select=id,codigo,nombre,departamento_id,zona_id,email');if(r.ok)allGZ=await r.json();}
-async function onDepChange(){const id=$('f_dep').value;await loadMun(id);}
-async function onZonaOroChange(){const zonaName=$('f_zona_oro').value;if(!zonaName){$('f_gz_txt').value='';$('f_gz_id').value='';$('f_zona_txt').value='';$('f_zona_id').value='';$('f_div_txt').value='';$('f_div_id').value='';$('f_codigo').value='';GZ=null;ZN=null;DV=null;return;}
-  try{const zr=await api('zonas?nombre=eq.'+encodeURIComponent(zonaName)+'&select=id,codigo,nombre,gerencia_divisional_id');const zd=await zr.json();
-    if(zd[0]){ZN=zd[0];$('f_zona_txt').value=ZN.nombre+' ('+ZN.codigo+')';$('f_zona_id').value=ZN.id;
-      const g=allGZ.find(x=>String(x.zona_id)===String(ZN.id));
-      if(g){GZ=g;$('f_gz_txt').value=g.nombre+' ('+g.codigo+')';$('f_gz_id').value=g.id;}
-      else{GZ=null;$('f_gz_txt').value='Sin gerente asignado a esta zona';$('f_gz_id').value='';}
-      if(ZN.gerencia_divisional_id){const dr2=await api('gerencias_divisionales?id=eq.'+ZN.gerencia_divisional_id+'&select=id,nombre,codigo,email');const dd=await dr2.json();
-        if(dd[0]){DV=dd[0];$('f_div_txt').value=DV.nombre+' ('+DV.codigo+')';$('f_div_id').value=DV.id;}}
-      if(GZ)await genCodigo();
-    }else{$('f_zona_txt').value='Zona no encontrada';}}catch(e){console.error(e);}}
+async function loadGZ(){const r=await api('gerentes_zona?select=id,codigo,nombre,departamento_id,zona_id,email');if(r.ok)allGZ=await r.json();
+  const zr=await api('zonas?select=id,codigo,nombre,departamento_id,gerencia_divisional_id&nombre=in.(ORO I,ORO II,RODIO I,RODIO II,OCEANO I,OCEANO II,COSMOS)');if(zr.ok)allZonas=await zr.json();}
+async function onDepChange(){
+  const id=$('f_dep').value;await loadMun(id);
+  // Reset assignments
+  $('f_zona_oro').value='';$('f_zona_id').value='';$('f_gz_txt').value='';$('f_gz_id').value='';$('f_div_txt').value='';$('f_div_id').value='';$('f_codigo').value='';GZ=null;ZN=null;DV=null;
+  if(!id)return;
+  // Find zona by departamento
+  const z=allZonas.find(x=>String(x.departamento_id)===String(id));
+  if(!z){$('f_zona_oro').value='Departamento sin zona asignada';return;}
+  ZN=z;$('f_zona_oro').value=z.nombre;$('f_zona_id').value=z.id;
+  // Find gerente for this zona
+  const g=allGZ.find(x=>String(x.zona_id)===String(z.id));
+  if(g){GZ=g;$('f_gz_txt').value=g.nombre+' ('+g.codigo+')';$('f_gz_id').value=g.id;}
+  else{$('f_gz_txt').value='Sin gerente asignado';$('f_gz_id').value='';}
+  // Find gerencia divisional
+  if(z.gerencia_divisional_id){try{const dr2=await api('gerencias_divisionales?id=eq.'+z.gerencia_divisional_id+'&select=id,nombre,codigo,email');const dd=await dr2.json();
+    if(dd[0]){DV=dd[0];$('f_div_txt').value=DV.nombre+' ('+DV.codigo+')';$('f_div_id').value=DV.id;}}catch(e){}}
+  if(GZ)await genCodigo();
+}
 async function loadMun(id){const s=$('f_mun');s.innerHTML='<option value="">Cargando...</option>';s.disabled=true;if(!id){s.innerHTML='<option value="">Primero selecciona departamento</option>';return;}
   if(!munC[id]){const r=await api('municipios?departamento_id=eq.'+id+'&select=id,nombre&order=nombre');munC[id]=await r.json();}
   s.innerHTML='<option value="">Selecciona municipio ('+munC[id].length+')</option>';munC[id].forEach(m=>{const o=document.createElement('option');o.value=m.id;o.textContent=m.nombre;s.appendChild(o);});s.disabled=false;}
-async function assignGZ(depId){
-  $('f_gz_txt').value='';$('f_gz_id').value='';$('f_zona_txt').value='';$('f_zona_id').value='';$('f_div_txt').value='';$('f_div_id').value='';$('f_codigo').value='';GZ=null;ZN=null;DV=null;
-  if(!depId)return;const g=allGZ.find(x=>String(x.departamento_id)===String(depId));
-  if(!g){$('f_gz_txt').value='Sin gerente asignado';return;}
-  GZ=g;$('f_gz_txt').value=g.nombre+' ('+g.codigo+')';$('f_gz_id').value=g.id;
-  if(g.zona_id){try{const zr=await api('zonas?id=eq.'+g.zona_id+'&select=id,codigo,nombre,gerencia_divisional_id');const zd=await zr.json();
-    if(zd[0]){ZN=zd[0];$('f_zona_txt').value=ZN.nombre+' ('+ZN.codigo+')';$('f_zona_id').value=ZN.id;
-      if(ZN.gerencia_divisional_id){const dr2=await api('gerencias_divisionales?id=eq.'+ZN.gerencia_divisional_id+'&select=id,nombre,codigo,email');const dd=await dr2.json();
-        if(dd[0]){DV=dd[0];$('f_div_txt').value=DV.nombre+' ('+DV.codigo+')';$('f_div_id').value=DV.id;}}}}catch(e){}}
-  await genCodigo();}
+// assignGZ removed - zona now auto-assigned by departamento in onDepChange
 async function genCodigo(){if(!GZ)return;try{
   const r=await api('vendedoras?gerente_id=eq.'+GZ.id+'&select=codigo&order=codigo.desc&limit=1');const d=await r.json();
   let n=d.length>0?parseInt(d[0].codigo)+1:parseInt(GZ.codigo)+1;
@@ -446,7 +444,7 @@ function valStep(s){
   if(s===1){if(!dniOK){alert('Primero verifica el DNI.');return false;}let ok=true;
     [{id:'f_nombre'},{id:'f_telefono'},{id:'f_email',p:/^[^\s@]+@[^\s@]+\.[^\s@]+$/},{id:'f_fechanac'},{id:'f_direccion'}].forEach(f=>{const el=$(f.id),v=el.value.trim();let g=!!v;if(f.p&&v&&!f.p.test(v))g=false;if(f.id==='f_fechanac'&&v&&calcEdad(v)<18)g=false;if(!g){el.classList.add('error');ok=false;}else el.classList.remove('error');});
     if(archivos.length<2){$('f_files_err').style.display='block';ok=false;}else $('f_files_err').style.display='none';return ok;}
-  if(s===2){let ok=true;['f_dep','f_mun','f_sector','f_zona_oro'].forEach(id=>{const el=$(id);if(!el.value){el.classList.add('error');ok=false;}else el.classList.remove('error');});return ok;}
+  if(s===2){let ok=true;['f_dep','f_mun','f_sector'].forEach(id=>{const el=$(id);if(!el.value){el.classList.add('error');ok=false;}else el.classList.remove('error');});if(!$('f_zona_oro').value||$('f_zona_oro').value==='Departamento sin zona asignada'){alert('El departamento seleccionado no tiene zona asignada.');ok=false;}return ok;}
   if(s===3){const ok=['chk1','chk2','chk3','chk4','chk5'].every(id=>$(id).checked);if(!ok)alert('Debes aceptar todas las cláusulas para continuar.');return ok;}
   return true;}
 
@@ -477,7 +475,7 @@ function generarPDFHTML(cd){
   +'<tr><td class="label">Municipio:</td><td>'+mun+'</td></tr>'
   +'<tr><td class="label">Sector:</td><td>'+sec+'</td></tr>'
   +'<tr><td class="label">Zona Oro:</td><td><strong style="color:#8B6914">'+cd.zona_oro+'</strong></td></tr>'
-  +'<tr><td class="label">Zona:</td><td>'+($('f_zona_txt').value||'—')+'</td></tr>'
+  +'<tr><td class="label">Zona:</td><td>'+($('f_zona_oro').value||'—')+'</td></tr>'
   +'<tr><td class="label">Gerente de Zona:</td><td>'+($('f_gz_txt').value||'—')+'</td></tr>'
   +'<tr><td class="label">Gerencia Divisional:</td><td>'+($('f_div_txt').value||'—')+'</td></tr>'
   +'<tr><td class="label">Código Asesora:</td><td><strong style="font-size:16px">'+cd.codigo_vendedora+'</strong></td></tr>'
@@ -566,7 +564,7 @@ async function enviar(){
     // Done
     $('loader').classList.remove('active');
     $('s_codigo').textContent=codigo;$('s_contrato').textContent=nContrato;$('s_nombre').textContent=cd.nombre_completo;
-    $('s_zona').textContent=$('f_zona_txt').value||'N/A';$('s_zona_oro').textContent=cd.zona_oro||'N/A';$('s_gerente').textContent=$('f_gz_txt').value||'N/A';
+    $('s_zona').textContent=$('f_zona_oro').value||'N/A';$('s_zona_oro').textContent=cd.zona_oro||'N/A';$('s_gerente').textContent=$('f_gz_txt').value||'N/A';
     $('s_div').textContent=$('f_div_txt').value||'N/A';$('s_fecha').textContent=new Date().toLocaleDateString('es-HN',{year:'numeric',month:'long',day:'numeric'});
     document.querySelectorAll('.form-section').forEach(x=>x.classList.remove('active'));
     document.querySelector('.steps').style.display='none';document.querySelector('.contract-header').style.display='none';
