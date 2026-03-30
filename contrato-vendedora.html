@@ -1122,6 +1122,22 @@ async function enviar(){
     var vr=await api('vendedoras',{method:'POST',body:JSON.stringify(vd)});
     if(vr.ok){var v=await vr.json();if(v&&v[0])await api('contratos_vendedoras?id=eq.'+contrato[0].id,{method:'PATCH',body:JSON.stringify({vendedora_id:v[0].id})});}
 
+    // 2b. Save to nombramientos (para que aparezca en admin)
+    $('loaderMsg').textContent='Registrando nombramiento...';
+    try{await api('nombramientos',{method:'POST',body:JSON.stringify({
+      nombre:cd.nombre_completo,
+      dni:cd.dni,
+      codigo_nombramiento:codigo,
+      gerente_id:cd.gerente_id||null,
+      telefono:cd.telefono,
+      email:cd.email,
+      direccion:cd.direccion,
+      ano:new Date().getFullYear(),
+      fecha_ingreso:new Date().toISOString().split('T')[0],
+      observaciones:'Contrato '+nContrato+' | Zona: '+(cd.zona_oro||'N/A'),
+      archivado:false
+    })});}catch(e){console.error('Nombramiento:',e);}
+
     // 3. Welcome email to vendedora
     $('loaderMsg').textContent='Enviando correo de bienvenida...';
     await sendEmail(cd.email,'Bienvenida a ENIGME - Tu C\u00F3digo: '+codigo,emailHTML(cd));
