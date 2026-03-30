@@ -854,18 +854,31 @@ async function loadMun(id){
 
 async function genCodigo(){
   try{
-    // Always generate from base 301200+
-    var base=301200;
-    // Check last codigo in contratos_vendedoras
-    var cr=await api('contratos_vendedoras?select=codigo_vendedora&order=codigo_vendedora.desc&limit=1');
-    var cd=await cr.json();
-    var n=base+1;
-    if(cd.length>0){var cn=parseInt(cd[0].codigo_vendedora);if(cn>=n)n=cn+1;}
-    // Also check vendedoras table
-    var vr=await api('vendedoras?select=codigo&order=codigo.desc&limit=1');
-    var vd=await vr.json();
-    if(vd.length>0){var vn=parseInt(vd[0].codigo);if(vn>=n)n=vn+1;}
-    codigo=String(n);
+    if(GZ&&GZ.codigo){
+      // Codigo basado en el gerente de zona: GZ.codigo + secuencia
+      // Ej: gerente 301201 → vendedoras 30120101, 30120102...
+      var gzCode=GZ.codigo;
+      var prefix=gzCode;
+      // Buscar ultimo codigo con ese prefijo
+      var cr=await api('contratos_vendedoras?codigo_vendedora=like.'+prefix+'*&select=codigo_vendedora&order=codigo_vendedora.desc&limit=1');
+      var cd=await cr.json();
+      var n=parseInt(prefix+'01');
+      if(cd.length>0){var cn=parseInt(cd[0].codigo_vendedora);if(cn>=n)n=cn+1;}
+      var vr=await api('vendedoras?codigo=like.'+prefix+'*&select=codigo&order=codigo.desc&limit=1');
+      var vd=await vr.json();
+      if(vd.length>0){var vn=parseInt(vd[0].codigo);if(vn>=n)n=vn+1;}
+      codigo=String(n);
+    }else{
+      // Sin gerente: codigo base 301200 + secuencia
+      var cr=await api('contratos_vendedoras?select=codigo_vendedora&order=codigo_vendedora.desc&limit=1');
+      var cd=await cr.json();
+      var n=301201;
+      if(cd.length>0){var cn=parseInt(cd[0].codigo_vendedora);if(cn>=n)n=cn+1;}
+      var vr=await api('vendedoras?select=codigo&order=codigo.desc&limit=1');
+      var vd=await vr.json();
+      if(vd.length>0){var vn=parseInt(vd[0].codigo);if(vn>=n)n=vn+1;}
+      codigo=String(n);
+    }
     $('f_codigo').value=codigo;
   }catch(e){codigo=String(301201);$('f_codigo').value=codigo;}
 }

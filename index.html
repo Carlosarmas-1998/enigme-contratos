@@ -3,28 +3,45 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ENIGME · Portal de Contratos</title>
-  <meta name="description" content="Portal de contratos para Asesoras Independientes de ENIGME Honduras. Registro, firma digital y gestión de contratos mercantiles."/>
-  <meta name="keywords" content="ENIGME, Honduras, contratos, asesoras, venta directa, multinivel, cosméticos, belleza"/>
-  <meta name="author" content="ENIGME Honduras"/>
-  <meta name="robots" content="index, follow"/>
-  <meta property="og:title" content="ENIGME Honduras · Portal de Contratos"/>
-  <meta property="og:description" content="Registro de Asesoras Independientes de ENIGME Honduras. Firma digital de contratos mercantiles."/>
-  <meta property="og:type" content="website"/>
-  <meta property="og:url" content="https://www.enigmeofficial.com"/>
+  <title>ENIGME Honduras · Portal</title>
+  <meta name="description" content="Portal de contratos y tienda virtual para Asesoras Independientes de ENIGME Honduras."/>
   <meta name="theme-color" content="#FAF6F0"/>
-  <meta name="apple-mobile-web-app-capable" content="yes"/>
-  <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-  <meta name="apple-mobile-web-app-title" content="ENIGME"/>
   <link rel="manifest" href="manifest.json"/>
-  <link rel="canonical" href="https://www.enigmeofficial.com"/>
-  <script>window.location.href='contrato-vendedora.html';</script>
+  <link rel="icon" href="icon-192.svg" type="image/svg+xml"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@300;400;500&family=Jost:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{background:#FAF6F0;color:#000;font-family:'Jost',sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;}
+    .portal{text-align:center;padding:40px 24px;max-width:480px;width:100%;}
+    .brand{font-family:'Cinzel',serif;font-size:2rem;letter-spacing:.3em;font-weight:300;margin-bottom:4px;}
+    .sub{font-size:.6rem;letter-spacing:4px;color:#8B6914;text-transform:uppercase;margin-bottom:40px;}
+    .links{display:flex;flex-direction:column;gap:16px;}
+    .link-btn{display:block;padding:18px 24px;border:1px solid rgba(139,105,20,.2);background:#fff;text-decoration:none;color:#000;font-family:'Jost',sans-serif;font-size:.85rem;letter-spacing:1px;transition:all .2s;}
+    .link-btn:hover{border-color:#8B6914;background:rgba(139,105,20,.04);}
+    .link-btn strong{display:block;font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:3px;text-transform:uppercase;color:#8B6914;margin-bottom:6px;}
+    .link-btn span{font-size:.75rem;color:rgba(0,0,0,.5);}
+    .footer{margin-top:40px;font-size:.55rem;color:rgba(0,0,0,.3);letter-spacing:1px;}
+  </style>
 </head>
-<body style="background:#FAF6F0;color:#000;font-family:'Georgia',serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;">
-  <div style="text-align:center">
-    <h1 style="font-size:28px;letter-spacing:10px;font-weight:300;color:#000">ENIGME</h1>
-    <p style="margin-top:6px;font-size:10px;letter-spacing:4px;color:#8B6914">HONDURAS</p>
-    <p style="margin-top:16px"><a href="contrato-vendedora.html" style="color:#000;text-decoration:none;font-size:13px;letter-spacing:2px;border-bottom:1px solid #8B6914;padding-bottom:2px">Ir al Portal de Contratos</a></p>
+<body>
+  <div class="portal">
+    <h1 class="brand">ENIGME</h1>
+    <p class="sub">Honduras</p>
+    <div class="links">
+      <a href="contrato-vendedora.html" class="link-btn">
+        <strong>Nuevo Contrato</strong>
+        <span>Registrar nueva Asesora Independiente</span>
+      </a>
+      <a href="mi-tienda.html" class="link-btn">
+        <strong>Mi Tienda Virtual</strong>
+        <span>Acceso para asesoras (DNI + fecha de nacimiento)</span>
+      </a>
+      <a href="panel-contratos.html" class="link-btn">
+        <strong>Panel de Gerencia</strong>
+        <span>Base de datos de contratos (acceso con contrase&ntilde;a)</span>
+      </a>
+    </div>
+    <p class="footer">&copy; 2026 ENIGME Honduras</p>
   </div>
 </body>
 </html>
