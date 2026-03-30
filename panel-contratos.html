@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ENIGME · Panel de Contratos</title>
+  <meta name="theme-color" content="#FAF6F0"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="icon" href="icon-192.svg" type="image/svg+xml"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--bg:#FAF6F0;--white:#2C2118;--gold:#8B6914;--gold-dim:#6B5310;--text:#3D3024;--muted:rgba(61,48,36,0.45);--border:rgba(139,105,20,0.15);--surface:rgba(139,105,20,0.04);--green:#27ae60;--red:#c0392b;--cream-light:#FFFCF7}
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{height:100%}
+    body{min-height:100%;background:var(--bg);color:var(--text);font-family:'Jost',sans-serif;font-weight:300}
+    .topbar{position:sticky;top:0;z-index:50;padding:16px 40px;border-bottom:1px solid rgba(139,105,20,.2);display:flex;align-items:center;justify-content:space-between;background:rgba(250,246,240,.97);backdrop-filter:blur(12px)}
+    .brand{font-family:'Cinzel',serif;font-size:.85rem;letter-spacing:.35em;font-weight:400;color:#2C2118}
+    .topbar-title{font-size:.5rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:300;margin-left:16px}
+    .topbar-left{display:flex;align-items:center;gap:16px}
+    .divider-v{width:1px;height:16px;background:var(--border)}
+    .container{max-width:1200px;margin:0 auto;padding:40px 20px}
+
+    /* LOGIN */
+    .login-screen{display:flex;align-items:center;justify-content:center;min-height:80vh;animation:fadeUp .6s ease}
+    .login-box{background:#fff;border:1px solid var(--border);padding:48px 40px;max-width:400px;width:100%;text-align:center}
+    .login-box h1{font-family:'Cinzel',serif;font-size:1.6rem;font-weight:300;letter-spacing:.2em;color:#2C2118;margin-bottom:4px}
+    .login-box .sub{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-style:italic;color:var(--muted);margin-bottom:32px}
+    .login-box .label{font-size:.5rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;text-align:left;display:block}
+    .login-input{width:100%;padding:14px 16px;background:var(--cream-light);border:1px solid var(--border);color:var(--text);font-family:'Jost',sans-serif;font-size:.85rem;font-weight:300;outline:none;transition:border-color .3s;margin-bottom:20px}
+    .login-input:focus{border-color:rgba(139,105,20,.5)}
+    .login-input::placeholder{color:rgba(61,48,36,.25)}
+    .login-btn{width:100%;padding:14px;border:1px solid var(--gold);background:var(--gold);color:#FFFCF7;font-family:'Jost',sans-serif;font-size:.6rem;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all .3s}
+    .login-btn:hover{background:var(--gold-dim)}
+    .login-error{color:var(--red);font-size:.75rem;margin-top:12px;display:none}
+    .login-note{font-size:.6rem;color:var(--muted);margin-top:20px;letter-spacing:1px}
+
+    /* PANEL */
+    .panel{display:none;animation:fadeUp .6s ease}
+    .panel.active{display:block}
+    .panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;flex-wrap:wrap;gap:16px}
+    .panel-header h2{font-family:'Cinzel',serif;font-size:1.1rem;font-weight:300;letter-spacing:.12em;color:#2C2118}
+    .panel-header .count{font-size:.5rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+    .filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    .filter-btn{padding:8px 20px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'Jost',sans-serif;font-size:.55rem;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .3s}
+    .filter-btn.active,.filter-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(139,105,20,.06)}
+    .search-input{padding:8px 16px;border:1px solid var(--border);background:var(--cream-light);color:var(--text);font-family:'Jost',sans-serif;font-size:.8rem;font-weight:300;outline:none;width:220px;transition:border-color .3s}
+    .search-input:focus{border-color:rgba(139,105,20,.5)}
+    .search-input::placeholder{color:rgba(61,48,36,.25)}
+    .btn-logout{padding:8px 20px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'Jost',sans-serif;font-size:.5rem;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .3s}
+    .btn-logout:hover{border-color:var(--red);color:var(--red)}
+
+    /* TABLE */
+    .table-wrap{overflow-x:auto;background:#fff;border:1px solid var(--border)}
+    table{width:100%;border-collapse:collapse;font-size:.78rem}
+    thead{background:rgba(139,105,20,.06)}
+    th{font-family:'Cinzel',serif;font-size:.5rem;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:var(--gold);padding:14px 12px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+    td{padding:12px;border-bottom:1px solid rgba(139,105,20,.08);color:var(--text);vertical-align:middle}
+    tr:hover td{background:rgba(139,105,20,.02)}
+    .badge{display:inline-block;padding:3px 10px;font-size:.5rem;letter-spacing:1px;text-transform:uppercase;font-weight:400}
+    .badge-oro{background:rgba(139,105,20,.1);color:var(--gold);border:1px solid rgba(139,105,20,.2)}
+    .badge-activo{background:rgba(39,174,96,.08);color:var(--green);border:1px solid rgba(39,174,96,.2)}
+    .badge-inactivo{background:rgba(192,57,43,.08);color:var(--red);border:1px solid rgba(192,57,43,.2)}
+    .empty-state{text-align:center;padding:60px 20px;color:var(--muted)}
+    .empty-state h3{font-family:'Cinzel',serif;font-size:1rem;font-weight:300;letter-spacing:.1em;margin-bottom:8px;color:#2C2118}
+    .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:32px}
+    .stat-card{background:#fff;border:1px solid var(--border);padding:20px;text-align:center}
+    .stat-card .num{font-family:'Cinzel',serif;font-size:1.6rem;color:var(--gold);margin-bottom:4px}
+    .stat-card .lbl{font-size:.5rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+    .footer-bar{padding:20px 40px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;margin-top:40px}
+    .footer-copy{font-size:.48rem;letter-spacing:3px;text-transform:uppercase;color:rgba(61,48,36,.25)}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+    @media(max-width:700px){.topbar{padding:14px 16px}.container{padding:20px 12px}.panel-header{flex-direction:column;align-items:flex-start}.filters{width:100%}.search-input{width:100%}th,td{padding:8px 6px;font-size:.7rem}}
+  </style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="brand">ENIGME</div>
+    <div class="divider-v"></div>
+    <div class="topbar-title">Panel de Contratos — Gerencia</div>
+  </div>
+  <div id="topActions" style="display:none">
+    <button class="btn-logout" onclick="logout()">Cerrar Sesión</button>
+  </div>
+</div>
+
+<!-- LOGIN -->
+<div class="container" id="loginScreen">
+  <div class="login-screen">
+    <div class="login-box">
+      <h1>ENIGME</h1>
+      <p class="sub">Panel de Administración de Contratos</p>
+      <label class="label">Contraseña de Acceso</label>
+      <input type="password" class="login-input" id="passInput" placeholder="Ingresa la contraseña" onkeydown="if(event.key==='Enter')doLogin()"/>
+      <button class="login-btn" onclick="doLogin()">Acceder al Panel</button>
+      <div class="login-error" id="loginErr">Contraseña incorrecta. Intenta de nuevo.</div>
+      <p class="login-note">Acceso exclusivo para Gerencia ENIGME</p>
+    </div>
+  </div>
+</div>
+
+<!-- PANEL -->
+<div class="container panel" id="panelScreen">
+  <div class="stats">
+    <div class="stat-card"><div class="num" id="statTotal">0</div><div class="lbl">Total Contratos</div></div>
+    <div class="stat-card"><div class="num" id="statOro1">0</div><div class="lbl">Zona ORO I</div></div>
+    <div class="stat-card"><div class="num" id="statOro2">0</div><div class="lbl">Zona ORO II</div></div>
+    <div class="stat-card"><div class="num" id="statActivos">0</div><div class="lbl">Activos</div></div>
+  </div>
+  <div class="panel-header">
+    <div><h2>Contratos Registrados</h2><span class="count" id="resultCount">0 resultados</span></div>
+    <div class="filters">
+      <button class="filter-btn active" onclick="setFilter('todos')" id="fAll">Todos</button>
+      <button class="filter-btn" onclick="setFilter('ORO I')" id="fOro1">ORO I</button>
+      <button class="filter-btn" onclick="setFilter('ORO II')" id="fOro2">ORO II</button>
+      <input type="text" class="search-input" id="searchBox" placeholder="Buscar por nombre, DNI..." oninput="renderTable()"/>
+    </div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>N° Contrato</th>
+          <th>Nombre</th>
+          <th>DNI</th>
+          <th>Teléfono</th>
+          <th>Email</th>
+          <th>Zona Oro</th>
+          <th>Sector</th>
+          <th>Código</th>
+          <th>Fecha</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody id="tBody"></tbody>
+    </table>
+    <div class="empty-state" id="emptyState" style="display:none">
+      <h3>Sin contratos</h3>
+      <p>No se encontraron contratos con los filtros seleccionados.</p>
+    </div>
+  </div>
+</div>
+
+<div class="footer-bar"><div class="footer-copy">© 2026 ENIGME Honduras · Panel de Gerencia</div></div>
+
+<script>
+const SB='https://hajmyntnvurlcuwshjdd.supabase.co/rest/v1/';
+const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhham15bnRudnVybGN1d3NoamRkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwMDM2MjEsImV4cCI6MjA4ODU3OTYyMX0.XGF5wPX1sI9VgG11bnr41lCxeqTfFVHEhBIfBXYAkw';
+const PASS='administracionenigme123';
+function api(ep,o){const h={'apikey':SK,'Authorization':'Bearer '+SK};return fetch(SB+ep,{...o,headers:h});}
+function $(id){return document.getElementById(id);}
+
+let contratos=[],filtro='todos',authed=false;
+
+function doLogin(){
+  const v=$('passInput').value;
+  if(v===PASS){authed=true;$('loginScreen').style.display='none';$('panelScreen').classList.add('active');$('topActions').style.display='block';loadContratos();}
+  else{$('loginErr').style.display='block';$('passInput').value='';$('passInput').focus();}
+}
+function logout(){authed=false;contratos=[];$('panelScreen').classList.remove('active');$('topActions').style.display='none';$('loginScreen').style.display='block';$('passInput').value='';$('loginErr').style.display='none';}
+
+async function loadContratos(){
+  try{const r=await api('contratos_vendedoras?select=*&order=created_at.desc');if(!r.ok)throw new Error(r.status);contratos=await r.json();updateStats();renderTable();}
+  catch(e){console.error(e);$('tBody').innerHTML='<tr><td colspan="10" style="text-align:center;color:var(--red);padding:20px">Error al cargar contratos</td></tr>';}
+}
+function updateStats(){
+  $('statTotal').textContent=contratos.length;
+  $('statOro1').textContent=contratos.filter(c=>c.zona_oro==='ORO I').length;
+  $('statOro2').textContent=contratos.filter(c=>c.zona_oro==='ORO II').length;
+  $('statActivos').textContent=contratos.filter(c=>c.estado==='activo').length;
+}
+function setFilter(f){
+  filtro=f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  if(f==='todos')$('fAll').classList.add('active');
+  else if(f==='ORO I')$('fOro1').classList.add('active');
+  else if(f==='ORO II')$('fOro2').classList.add('active');
+  renderTable();
+}
+function renderTable(){
+  const q=($('searchBox').value||'').toLowerCase().trim();
+  let data=contratos;
+  if(filtro!=='todos')data=data.filter(c=>c.zona_oro===filtro);
+  if(q)data=data.filter(c=>(c.nombre_completo||'').toLowerCase().includes(q)||(c.dni||'').includes(q)||(c.numero_contrato||'').toLowerCase().includes(q)||(c.codigo_vendedora||'').includes(q));
+  $('resultCount').textContent=data.length+' resultado'+(data.length!==1?'s':'');
+  if(data.length===0){$('tBody').innerHTML='';$('emptyState').style.display='block';return;}
+  $('emptyState').style.display='none';
+  $('tBody').innerHTML=data.map(c=>{
+    const fecha=c.created_at?new Date(c.created_at).toLocaleDateString('es-HN',{year:'numeric',month:'short',day:'numeric'}):'—';
+    const estado=c.estado==='activo'?'<span class="badge badge-activo">Activo</span>':'<span class="badge badge-inactivo">Inactivo</span>';
+    const zona=c.zona_oro?'<span class="badge badge-oro">'+c.zona_oro+'</span>':'—';
+    return '<tr><td style="font-family:Cinzel,serif;font-size:.7rem;color:var(--gold)">'+c.numero_contrato+'</td><td style="font-weight:400">'+c.nombre_completo+'</td><td>'+c.dni+'</td><td>'+(c.telefono||'—')+'</td><td>'+(c.email||'—')+'</td><td>'+zona+'</td><td>'+(c.sector_id||'—')+'</td><td style="font-family:Cinzel,serif;color:var(--gold)">'+(c.codigo_vendedora||'—')+'</td><td>'+fecha+'</td><td>'+estado+'</td></tr>';
+  }).join('');
+}
+</script>
+</body>
+</html>
