@@ -1252,7 +1252,8 @@ if(dz){
 }
 
 init();
-if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(e){console.log('SW:',e);});}
+// SW disabled - was causing cache redirect issues
+// if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(e){console.log('SW:',e);});}
 </script>
 </body>
 </html>

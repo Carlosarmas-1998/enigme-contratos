@@ -6,6 +6,17 @@
   <title>ENIGME Honduras · Portal</title>
   <meta name="description" content="Portal de contratos y tienda virtual para Asesoras Independientes de ENIGME Honduras."/>
   <meta name="theme-color" content="#FAF6F0"/>
+  <script>
+  // Limpiar service worker y cache viejo que redirige
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.getRegistrations().then(function(regs){
+      regs.forEach(function(r){r.unregister();});
+    });
+    caches.keys().then(function(names){
+      names.forEach(function(n){caches.delete(n);});
+    });
+  }
+  </script>
   <link rel="manifest" href="manifest.json"/>
   <link rel="icon" href="icon-192.svg" type="image/svg+xml"/>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@300;400;500&family=Jost:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap" rel="stylesheet"/>
