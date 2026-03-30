@@ -540,7 +540,10 @@
         <h3>CLÁUSULA DUODÉCIMA: SOLUCIÓN DE CONTROVERSIAS</h3>
         <p>Las partes se someten a mediación y conciliación conforme a la Ley de Conciliación y Arbitraje (Decreto No. 161-2000).</p>
 
-        <h3>CLÁUSULA DÉCIMA TERCERA: ACEPTACIÓN INTEGRAL</h3>
+        <h3>CLÁUSULA DÉCIMA TERCERA: TIENDA VIRTUAL</h3>
+        <p>LA EMPRESA proporcionará a LA ASESORA INDEPENDIENTE una <span class="bold">tienda virtual personalizada</span> con catálogo de productos ENIGME, accesible mediante enlace único. LA ASESORA INDEPENDIENTE es la <span class="bold">única responsable</span> de la gestión fiscal, legal y comercial de su microempresa, incluyendo las obligaciones tributarias ante el SAR. ENIGME Honduras no mantiene relación laboral con la asesora y no se hace responsable de las transacciones individuales entre la asesora y sus clientes. Los productos exhibidos son propiedad intelectual de ENIGME Honduras.</p>
+
+        <h3>CLÁUSULA DÉCIMA CUARTA: ACEPTACIÓN INTEGRAL</h3>
         <p>La firma digital tiene plena validez legal conforme a la Ley de Firma Electrónica de Honduras (Decreto No. 149-2013).</p>
 
         <p class="center" style="margin-top:24px"><span class="bold">EN FE DE LO CUAL</span>, se firma el presente contrato en formato digital a través de la plataforma oficial de ENIGME Honduras.</p>
@@ -617,6 +620,19 @@
       <div class="success-row"><span class="label">Divisional</span><span class="value" id="s_div">-</span></div>
       <div class="success-row"><span class="label">Fecha</span><span class="value" id="s_fecha">-</span></div>
     </div>
+
+    <!-- TIENDA VIRTUAL -->
+    <div style="background:#fff;border:1px solid rgba(139,105,20,.2);padding:20px;max-width:500px;margin:0 auto 24px;text-align:center;">
+      <div style="font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:.1em;color:#8B6914;margin-bottom:10px;">TIENDA VIRTUAL DE LA ASESORA</div>
+      <div style="background:#FAF6F0;border:1px solid rgba(139,105,20,.2);padding:12px;font-size:.78rem;word-break:break-all;color:#8B6914;font-weight:500;margin-bottom:10px;" id="s_tienda_link">-</div>
+      <p style="font-size:.65rem;color:rgba(0,0,0,.4);margin-bottom:10px;">La asesora puede compartir este enlace con sus clientes para que vean el cat&aacute;logo ENIGME.</p>
+      <button class="btn btn-small" onclick="copiarLinkTienda()" style="font-size:.55rem;"><span>Copiar Enlace</span></button>
+    </div>
+    <div style="background:#fff;border:1px solid rgba(139,105,20,.15);padding:14px 20px;max-width:500px;margin:0 auto 24px;text-align:center;">
+      <div style="font-size:.6rem;letter-spacing:2px;color:rgba(0,0,0,.4);margin-bottom:6px;">PANEL DE LA ASESORA</div>
+      <a href="mi-tienda.html" target="_blank" style="color:#8B6914;font-size:.8rem;font-weight:500;text-decoration:underline;">Acceder a Mi Tienda (login con DNI)</a>
+    </div>
+
     <div class="actions">
       <button class="btn" onclick="nuevoContrato()"><span>Registrar Otra Asesora</span></button>
       <button class="btn btn-secondary" onclick="imprimirPDF()"><span>Descargar / Imprimir PDF</span></button>
@@ -1173,6 +1189,7 @@ async function enviar(){
     $('s_gerente').textContent=$('f_gz_txt').value||'N/A';
     $('s_div').textContent=$('f_div_txt').value||'N/A';
     $('s_fecha').textContent=new Date().toLocaleDateString('es-HN',{year:'numeric',month:'long',day:'numeric'});
+    $('s_tienda_link').textContent=window.location.origin+'/tienda.html?c='+encodeURIComponent(codigo);
     document.querySelectorAll('.form-section').forEach(function(x){x.classList.remove('active');});
     document.querySelector('.steps').style.display='none';
     document.querySelector('.contract-header').style.display='none';
@@ -1189,6 +1206,8 @@ async function enviar(){
 // =====================================================
 // NUEVO CONTRATO (RESET)
 // =====================================================
+function copiarLinkTienda(){var l=document.getElementById('s_tienda_link').textContent;navigator.clipboard.writeText(l).then(function(){alert('Enlace de tienda copiado.');}).catch(function(){alert('Enlace: '+l);});}
+
 function nuevoContrato(){
   document.querySelectorAll('.form-input').forEach(function(i){if(!i.readOnly)i.value='';});
   document.querySelectorAll('.form-select').forEach(function(s){s.selectedIndex=0;});

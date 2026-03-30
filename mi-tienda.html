@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mi Tienda ENIGME</title>
+  <meta name="theme-color" content="#FAF6F0"/>
+  <link rel="icon" href="icon-192.svg" type="image/svg+xml"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@300;400;500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{background:#FAF6F0;color:#000;font-family:'Jost',sans-serif;font-weight:400;min-height:100vh;}
+    .topbar{padding:16px 24px;border-bottom:1px solid rgba(139,105,20,.15);background:rgba(250,246,240,.97);display:flex;align-items:center;justify-content:space-between;}
+    .brand{font-family:'Cinzel',serif;font-size:.8rem;letter-spacing:.3em;}
+    .btn-logout{padding:6px 16px;border:1px solid rgba(139,105,20,.2);background:transparent;font-family:'Jost',sans-serif;font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:rgba(0,0,0,.5);cursor:pointer;}
+    .btn-logout:hover{border-color:#c0392b;color:#c0392b;}
+    .container{max-width:700px;margin:0 auto;padding:32px 20px;}
+    /* LOGIN */
+    .login-screen{display:flex;align-items:center;justify-content:center;min-height:80vh;}
+    .login-box{background:#fff;border:1px solid rgba(139,105,20,.15);padding:48px 36px;max-width:380px;width:100%;text-align:center;}
+    .login-box h1{font-family:'Cinzel',serif;font-size:1.4rem;font-weight:300;letter-spacing:.2em;margin-bottom:4px;}
+    .login-box .sub{font-size:.75rem;color:rgba(0,0,0,.4);margin-bottom:28px;}
+    .login-box label{display:block;text-align:left;font-size:.55rem;letter-spacing:2px;text-transform:uppercase;color:#8B6914;margin-bottom:6px;}
+    .login-box input{width:100%;padding:12px 14px;border:1px solid rgba(139,105,20,.15);background:#fff;font-family:'Jost',sans-serif;font-size:.85rem;outline:none;margin-bottom:16px;}
+    .login-box input:focus{border-color:#8B6914;}
+    .login-btn{width:100%;padding:14px;border:1px solid #8B6914;background:#8B6914;color:#fff;font-family:'Jost',sans-serif;font-size:.65rem;letter-spacing:3px;text-transform:uppercase;cursor:pointer;}
+    .login-btn:hover{background:#6B5310;}
+    .login-err{color:#c0392b;font-size:.75rem;margin-top:10px;display:none;}
+    /* DASHBOARD */
+    .dash{display:none;}
+    .dash.active{display:block;}
+    .card{background:#fff;border:1px solid rgba(139,105,20,.12);padding:24px;margin-bottom:20px;}
+    .card-title{font-family:'Cinzel',serif;font-size:.9rem;letter-spacing:.1em;color:#000;margin-bottom:12px;}
+    .card-title span{color:#8B6914;}
+    .link-box{background:#FAF6F0;border:1px solid rgba(139,105,20,.2);padding:14px;font-size:.8rem;word-break:break-all;color:#8B6914;font-weight:500;margin-bottom:10px;}
+    .btn-copy{padding:8px 20px;border:1px solid #8B6914;background:transparent;color:#8B6914;font-family:'Jost',sans-serif;font-size:.6rem;letter-spacing:2px;text-transform:uppercase;cursor:pointer;}
+    .btn-copy:hover{background:#8B6914;color:#fff;}
+    .stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:16px;}
+    .stat{background:#FAF6F0;border:1px solid rgba(139,105,20,.1);padding:16px;text-align:center;}
+    .stat .num{font-family:'Cinzel',serif;font-size:1.4rem;color:#8B6914;font-weight:700;}
+    .stat .lbl{font-size:.55rem;letter-spacing:2px;text-transform:uppercase;color:rgba(0,0,0,.4);margin-top:4px;}
+    .info-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(139,105,20,.08);font-size:.85rem;}
+    .info-row .label{color:rgba(0,0,0,.5);font-size:.6rem;letter-spacing:1px;text-transform:uppercase;}
+    .info-row .value{font-weight:500;}
+    .disclaimer{font-size:.65rem;color:rgba(0,0,0,.4);line-height:1.7;margin-top:20px;padding:14px;background:#fff;border-left:3px solid #8B6914;}
+    @media(max-width:500px){.container{padding:20px 14px;}.card{padding:18px;}.login-box{padding:32px 24px;}}
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">ENIGME</div>
+  <button class="btn-logout" id="logoutBtn" style="display:none;" onclick="logout()">Cerrar Sesi&oacute;n</button>
+</div>
+
+<!-- LOGIN -->
+<div class="container" id="loginScreen">
+  <div class="login-screen">
+    <div class="login-box">
+      <h1>ENIGME</h1>
+      <p class="sub">Acceso a Mi Tienda Virtual</p>
+      <label>N&uacute;mero de Identidad (DNI)</label>
+      <input type="text" id="loginDni" placeholder="0000-0000-00000" maxlength="15"/>
+      <label>Fecha de Nacimiento</label>
+      <input type="date" id="loginFecha"/>
+      <button class="login-btn" onclick="doLogin()">Acceder</button>
+      <div class="login-err" id="loginErr"></div>
+    </div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="container dash" id="dashScreen">
+  <div class="card">
+    <div class="card-title">Tu <span>Tienda Virtual</span></div>
+    <p style="font-size:.8rem;color:rgba(0,0,0,.5);margin-bottom:12px;">Comparte este enlace con tus clientes para que vean tu cat&aacute;logo ENIGME:</p>
+    <div class="link-box" id="tiendaLink"></div>
+    <button class="btn-copy" onclick="copyLink()">Copiar Enlace</button>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat"><div class="num" id="statProductos">0</div><div class="lbl">Productos</div></div>
+    <div class="stat"><div class="num">15%</div><div class="lbl">Tu Comisi&oacute;n</div></div>
+    <div class="stat"><div class="num" id="statZona">-</div><div class="lbl">Tu Zona</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Tus <span>Datos</span></div>
+    <div id="datosVendedora"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Condiciones del <span>Contrato</span></div>
+    <div class="info-row"><span class="label">Comisi&oacute;n</span><span class="value" style="color:#27ae60;">15% sobre venta neta</span></div>
+    <div class="info-row"><span class="label">Pago Pedido</span><span class="value">30% al pedir, 40% al recibir, 30% en 14 d&iacute;as</span></div>
+    <div class="info-row"><span class="label">Vigencia</span><span class="value">Indefinida (15 d&iacute;as preaviso para terminar)</span></div>
+  </div>
+
+  <div class="disclaimer">
+    <strong>Aviso Legal:</strong> Como asesora independiente de ENIGME Honduras, usted opera como comerciante individual conforme al C&oacute;digo de Comercio de Honduras (Decreto No. 73-50). Usted es responsable de sus obligaciones fiscales ante el SAR y de la gesti&oacute;n legal de su microempresa. ENIGME Honduras no mantiene relaci&oacute;n laboral con las asesoras independientes.
+  </div>
+</div>
+
+<script>
+var SB='https://hajmyntnvurlcuwshjdd.supabase.co/rest/v1/';
+var SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhham15bnRudnVybGN1d3NoamRkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwMDM2MjEsImV4cCI6MjA4ODU3OTYyMX0.XGF5wPX1sI9VgG11bnr41lCxeqTfFVHEhBIfBXXYAkw';
+var H={'apikey':SK,'Authorization':'Bearer '+SK};
+var vendedora=null;
+var TIENDA_BASE=window.location.origin+'/tienda.html?c=';
+
+async function doLogin(){
+  var dni=document.getElementById('loginDni').value.trim();
+  var fecha=document.getElementById('loginFecha').value;
+  var err=document.getElementById('loginErr');
+  err.style.display='none';
+  if(!dni||!fecha){err.textContent='Ingresa tu DNI y fecha de nacimiento.';err.style.display='block';return;}
+  try{
+    // Search in vendedoras
+    var r=await fetch(SB+'vendedoras?dni=eq.'+encodeURIComponent(dni)+'&select=*',{headers:H});
+    var d=await r.json();
+    if(d.length&&d[0].fecha_nacimiento===fecha){vendedora=d[0];showDash();return;}
+    // Search in contratos
+    var r2=await fetch(SB+'contratos_vendedoras?dni=eq.'+encodeURIComponent(dni)+'&select=*',{headers:H});
+    var d2=await r2.json();
+    if(d2.length&&d2[0].fecha_nacimiento===fecha){
+      vendedora={nombre:d2[0].nombre_completo,dni:d2[0].dni,telefono:d2[0].telefono,email:d2[0].email,codigo:d2[0].codigo_vendedora,zona_oro:d2[0].zona_oro,direccion:d2[0].direccion,fecha_nacimiento:d2[0].fecha_nacimiento};
+      showDash();return;
+    }
+    err.textContent='DNI o fecha de nacimiento incorrectos.';err.style.display='block';
+  }catch(e){err.textContent='Error de conexi\u00f3n.';err.style.display='block';console.error(e);}
+}
+
+async function showDash(){
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('dashScreen').classList.add('active');
+  document.getElementById('logoutBtn').style.display='';
+  var link=TIENDA_BASE+encodeURIComponent(vendedora.codigo);
+  document.getElementById('tiendaLink').textContent=link;
+  document.getElementById('statZona').textContent=vendedora.zona_oro||'-';
+  // Count productos
+  try{
+    var r=await fetch(SB+'catalogo_productos?activo=eq.true&select=id',{headers:H});
+    var p=await r.json();
+    document.getElementById('statProductos').textContent=p.length;
+  }catch(e){}
+  // Datos
+  document.getElementById('datosVendedora').innerHTML=
+    '<div class="info-row"><span class="label">Nombre</span><span class="value">'+esc(vendedora.nombre)+'</span></div>'+
+    '<div class="info-row"><span class="label">C\u00f3digo</span><span class="value" style="color:#8B6914;font-family:Cinzel,serif;">'+esc(vendedora.codigo)+'</span></div>'+
+    '<div class="info-row"><span class="label">DNI</span><span class="value">'+esc(vendedora.dni)+'</span></div>'+
+    '<div class="info-row"><span class="label">Tel\u00e9fono</span><span class="value">'+esc(vendedora.telefono)+'</span></div>'+
+    '<div class="info-row"><span class="label">Email</span><span class="value">'+esc(vendedora.email)+'</span></div>'+
+    '<div class="info-row"><span class="label">Zona</span><span class="value" style="color:#8B6914;">'+esc(vendedora.zona_oro||'-')+'</span></div>';
+}
+
+function copyLink(){
+  var link=document.getElementById('tiendaLink').textContent;
+  navigator.clipboard.writeText(link).then(function(){alert('Enlace copiado al portapapeles.');}).catch(function(){
+    var t=document.createElement('textarea');t.value=link;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);alert('Enlace copiado.');
+  });
+}
+
+function logout(){
+  vendedora=null;
+  document.getElementById('dashScreen').classList.remove('active');
+  document.getElementById('loginScreen').style.display='';
+  document.getElementById('logoutBtn').style.display='none';
+  document.getElementById('loginDni').value='';
+  document.getElementById('loginFecha').value='';
+}
+
+function esc(s){var d=document.createElement('div');d.textContent=s||'';return d.innerHTML;}
+</script>
+</body>
+</html>
