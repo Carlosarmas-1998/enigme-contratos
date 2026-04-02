@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Boutique ENIGME</title>
+  <meta name="theme-color" content="#0a0a0a"/>
+  <link rel="icon" href="icon-192.svg" type="image/svg+xml"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@300;400;500;600;700&family=Jost:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap" rel="stylesheet"/>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{background:#FAF6F0;color:#1a1a1a;font-family:'Jost',sans-serif;font-weight:400;min-height:100vh;}
+    a{color:#8B6914;text-decoration:none;}
+
+    /* SHIMMER ANIMATION */
+    @keyframes shimmer{
+      0%{background-position:-200% center;}
+      100%{background-position:200% center;}
+    }
+    @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+    @keyframes fadeIn{0%{opacity:0;transform:translateY(20px);}100%{opacity:1;transform:translateY(0);}}
+    @keyframes modalFadeIn{0%{opacity:0;}100%{opacity:1;}}
+    @keyframes modalSlideUp{0%{opacity:0;transform:translateY(40px) scale(.97);}100%{opacity:1;transform:translateY(0) scale(1);}}
+    @keyframes glowPulse{0%,100%{box-shadow:0 0 20px rgba(203,170,99,.15);}50%{box-shadow:0 0 35px rgba(203,170,99,.3);}}
+
+    /* TOPBAR */
+    .topbar{position:sticky;top:0;z-index:50;padding:16px 28px;border-bottom:1px solid rgba(139,105,20,.12);background:rgba(250,246,240,.97);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+    .brand{font-family:'Cinzel',serif;font-size:.85rem;letter-spacing:.35em;color:#1a1a1a;font-weight:500;}
+    .seller-badge{text-align:right;font-size:.65rem;color:rgba(0,0,0,.45);letter-spacing:1px;}
+    .seller-badge strong{color:#8B6914;font-weight:500;display:block;font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:2px;}
+
+    /* HERO */
+    .hero{text-align:center;padding:52px 24px 20px;position:relative;}
+    .hero::after{content:'';display:block;width:80px;height:1px;background:linear-gradient(90deg,transparent,#8B6914,transparent);margin:24px auto 0;}
+    .hero-label{font-size:.5rem;letter-spacing:5px;text-transform:uppercase;color:#8B6914;margin-bottom:8px;}
+    .hero h1{font-family:'Cinzel',serif;font-size:clamp(1.3rem,4vw,2rem);font-weight:500;letter-spacing:.15em;color:#1a1a1a;margin-bottom:8px;}
+    .hero p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:rgba(0,0,0,.5);letter-spacing:1px;}
+    .hero-tagline{margin-top:16px;font-size:.55rem;letter-spacing:4px;text-transform:uppercase;color:#8B6914;opacity:.5;}
+
+    /* FILTERS */
+    .filters{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;padding:28px 20px 32px;}
+    .filter-btn{padding:12px 24px;border:2px solid #8B6914;background:#fff;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:3px;text-transform:uppercase;color:#8B6914;cursor:pointer;transition:all .3s;border-radius:0;font-weight:600;animation:filterPulse 2.5s ease-in-out infinite;}
+    .filter-btn.active,.filter-btn:hover{border-color:#8B6914;color:#fff;background:#8B6914;}
+
+    /* PRODUCT GRID */
+    .grid{max-width:1300px;margin:0 auto;padding:0 24px 50px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+
+    /* PRODUCT CARD */
+    .card{background:#fff;border:1px solid rgba(139,105,20,.1);overflow:hidden;transition:all .4s ease;position:relative;animation:fadeIn .6s ease both;}
+    .card:nth-child(2){animation-delay:.05s;}.card:nth-child(3){animation-delay:.1s;}.card:nth-child(4){animation-delay:.15s;}
+    .card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(139,105,20,.2),transparent);transition:all .4s;}
+    .card:hover{border-color:rgba(139,105,20,.25);box-shadow:0 8px 30px rgba(139,105,20,.08);transform:translateY(-4px);}
+    .card:hover::before{background:linear-gradient(90deg,transparent,rgba(203,170,99,.5),transparent);}
+
+    /* IMAGE VITRINE */
+    .card-img-wrap{position:relative;background:#fff;margin:12px;border:1px solid rgba(203,170,99,.2);overflow:hidden;}
+    .card-img-wrap::after{content:'';position:absolute;top:3px;left:3px;right:3px;bottom:3px;border:1px solid rgba(203,170,99,.15);pointer-events:none;}
+    .card-img{width:100%;aspect-ratio:1;object-fit:contain;display:block;padding:8px;background:#fff;}
+
+    /* CARD BODY */
+    .card-body{padding:18px 20px 20px;}
+    .card-cat{font-size:.45rem;letter-spacing:3px;text-transform:uppercase;color:#8B6914;margin-bottom:6px;font-weight:500;}
+    .card-name{font-family:'Cinzel',serif;font-size:.88rem;font-weight:500;letter-spacing:.08em;color:#1a1a1a;margin-bottom:6px;line-height:1.3;}
+    .card-lema{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.85rem;color:#333;line-height:1.4;margin-bottom:8px;font-weight:400;}
+    .card-material{font-size:.6rem;color:#8B6914;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;font-weight:600;}
+
+    /* PRICES */
+    .card-prices{margin-bottom:16px;}
+    .card-prices::before{content:'';display:block;width:30px;height:1px;background:rgba(203,170,99,.2);margin-bottom:10px;}
+    .price-old{font-family:'Cinzel',serif;font-size:.8rem;color:#D4A034;text-decoration:line-through;opacity:.7;margin-bottom:4px;letter-spacing:1px;}
+    .price-current{font-family:'Cinzel',serif;font-size:1.35rem;font-weight:600;letter-spacing:2px;background:linear-gradient(90deg,#CBAA63 30%,#fff 50%,#CBAA63 70%);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 3s linear infinite;}
+
+    /* WHATSAPP BUTTON */
+    .btn-wa{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:14px;border:none;background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;font-family:'Jost',sans-serif;font-size:.7rem;font-weight:400;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .3s;text-decoration:none;}
+    .btn-wa:hover{opacity:.9;box-shadow:0 4px 16px rgba(37,211,102,.2);}
+    .btn-wa svg{width:18px;height:18px;fill:#fff;flex-shrink:0;}
+
+    /* MANIFESTO + EMPIRE BUTTONS */
+    .manifesto-section{text-align:center;padding:40px 24px 10px;position:relative;display:flex;flex-direction:column;align-items:center;gap:14px;}
+    .manifesto-section::before{content:'';display:block;width:60px;height:1px;background:linear-gradient(90deg,transparent,rgba(139,105,20,.3),transparent);margin:0 auto 20px;}
+    .btn-empire{display:inline-block;padding:16px 36px;border:2px solid #CBAA63;background:linear-gradient(135deg,#8B6914,#CBAA63,#8B6914);background-size:200% auto;font-family:'Cinzel',serif;font-size:.75rem;color:#0a0a0a;cursor:pointer;transition:all .4s;letter-spacing:4px;text-transform:uppercase;text-decoration:none;font-weight:600;animation:shimmer 4s linear infinite;width:90%;max-width:500px;text-align:center;}
+    .btn-empire:hover{transform:translateY(-3px);box-shadow:0 6px 30px rgba(203,170,99,.35);}
+    .btn-empire-star{font-size:.9rem;vertical-align:middle;}
+
+    /* SELECT ARROW */
+    @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(8px);}}
+    .select-hint{text-align:center;padding:24px 0 8px;font-family:'Cinzel',serif;font-size:1rem;font-weight:700;color:#8B6914;letter-spacing:3px;animation:bounce 1.5s ease-in-out infinite;}
+
+    /* FILTER BUTTONS ANIMATED */
+    @keyframes filterPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.03);}}
+
+    /* MODAL */
+    .modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:1000;background:rgba(0,0,0,.85);backdrop-filter:blur(12px);justify-content:center;align-items:center;padding:20px;overflow-y:auto;}
+    .modal-overlay.active{display:flex;animation:modalFadeIn .4s ease;}
+    .modal-content{background:linear-gradient(135deg,#111,#0a0a0a);border:1px solid rgba(203,170,99,.2);max-width:600px;width:100%;padding:50px 40px;position:relative;animation:modalSlideUp .5s ease;max-height:90vh;overflow-y:auto;}
+    .modal-close{position:absolute;top:16px;right:20px;background:none;border:none;color:rgba(203,170,99,.5);font-size:1.5rem;cursor:pointer;transition:color .3s;font-family:'Jost',sans-serif;line-height:1;}
+    .modal-close:hover{color:#CBAA63;}
+    .modal-deco{text-align:center;margin-bottom:24px;}
+    .modal-deco-line{display:inline-block;width:40px;height:1px;background:#CBAA63;vertical-align:middle;}
+    .modal-deco-diamond{display:inline-block;width:6px;height:6px;background:#CBAA63;transform:rotate(45deg);margin:0 12px;vertical-align:middle;}
+    .modal-title{font-family:'Cinzel',serif;font-size:1.4rem;color:#CBAA63;text-align:center;letter-spacing:.12em;font-weight:300;margin-bottom:8px;}
+    .modal-subtitle{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:rgba(203,170,99,.5);text-align:center;margin-bottom:30px;}
+    .modal-body p{font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.7;color:rgba(232,224,208,.8);margin-bottom:18px;text-align:center;}
+    .modal-body p strong{color:#CBAA63;font-weight:500;}
+    .modal-body .modal-highlight{font-family:'Cinzel',serif;font-size:1rem;color:#CBAA63;letter-spacing:.1em;text-align:center;margin:28px 0;font-weight:400;}
+    .modal-body .modal-tagline{font-size:.6rem;letter-spacing:4px;text-transform:uppercase;color:rgba(203,170,99,.35);text-align:center;margin-top:30px;}
+
+    /* FOOTER */
+    .footer{text-align:center;padding:40px 24px;border-top:1px solid rgba(203,170,99,.08);}
+    .footer-brand{font-family:'Cinzel',serif;font-size:1.1rem;letter-spacing:.3em;color:#1a1a1a;font-weight:400;margin-bottom:6px;}
+    .footer-tagline{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.85rem;color:#8B6914;margin-bottom:16px;letter-spacing:2px;opacity:.6;}
+    .footer p{font-size:.55rem;color:rgba(0,0,0,.3);line-height:1.8;max-width:600px;margin:0 auto;}
+
+    /* STATES */
+    .loading{text-align:center;padding:100px 20px;}
+    .loading .loader-brand{font-family:'Cinzel',serif;font-size:1.4rem;letter-spacing:.3em;color:#8B6914;margin-bottom:12px;animation:pulse 2s ease-in-out infinite;}
+    .loading p{font-size:.7rem;color:rgba(0,0,0,.3);letter-spacing:3px;text-transform:uppercase;}
+    .error{text-align:center;padding:100px 20px;}
+    .error h2{font-family:'Cinzel',serif;font-size:1.2rem;color:#8B6914;font-weight:400;letter-spacing:.15em;margin-bottom:10px;}
+    .error p{font-size:.85rem;color:rgba(0,0,0,.4);}
+    .empty{text-align:center;padding:60px 20px;color:rgba(203,170,99,.3);font-size:.85rem;grid-column:1/-1;}
+
+    /* RESPONSIVE */
+    @media(max-width:1100px){
+      .grid{grid-template-columns:repeat(3,1fr);gap:20px;}
+    }
+    @media(max-width:768px){
+      .grid{grid-template-columns:repeat(2,1fr);gap:14px;padding:0 14px 40px;}
+      .card-img-wrap{margin:8px;}
+      .card-body{padding:12px 14px 16px;}
+      .card-name{font-size:.75rem;}
+      .card-lema{font-size:.78rem;}
+      .price-current{font-size:1.1rem;}
+      .price-old{font-size:.7rem;}
+      .topbar{padding:12px 16px;}
+      .hero{padding:36px 16px 16px;}
+      .hero h1{font-size:clamp(1.1rem,5vw,1.5rem);}
+      .btn-wa{font-size:.6rem;padding:12px;}
+      .filters{gap:6px;padding:20px 14px 24px;}
+      .filter-btn{padding:8px 14px;font-size:.5rem;letter-spacing:2px;}
+      .btn-manifesto{padding:14px 28px;font-size:.95rem;}
+      .modal-content{padding:36px 24px;}
+      .modal-title{font-size:1.15rem;}
+      .modal-body p{font-size:.95rem;}
+    }
+    @media(max-width:380px){
+      .grid{grid-template-columns:1fr;gap:16px;padding:0 12px 30px;max-width:320px;}
+      .card-body{padding:14px 16px 18px;}
+      .card-name{font-size:.82rem;}
+      .card-lema{font-size:.82rem;}
+      .price-current{font-size:1.2rem;}
+      .hero h1{font-size:1.1rem;}
+      .seller-badge strong{font-size:.6rem;}
+      .brand{font-size:.75rem;}
+    }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">ENIGME</div>
+  <div class="seller-badge" id="sellerInfo"></div>
+</div>
+
+<div id="mainContent">
+  <div class="loading" id="loadingScreen">
+    <div class="loader-brand">ENIGME</div>
+    <p>Cargando colecci&oacute;n...</p>
+  </div>
+</div>
+
+<!-- MANIFESTO MODAL -->
+<div class="modal-overlay" id="manifestoModal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeManifesto()">&times;</button>
+    <div class="modal-deco">
+      <span class="modal-deco-line"></span>
+      <span class="modal-deco-diamond"></span>
+      <span class="modal-deco-line"></span>
+    </div>
+    <div class="modal-title" id="modalTitle">MANIFIESTO</div>
+    <div class="modal-subtitle" id="modalSubtitle"></div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+var _h='aGFqbXludG52dXJsY3V3c2hqZGQ=';function _u(){return 'https://'+atob(_h)+'.supabase.co';}
+var SB=_u()+'/rest/v1/';
+var SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhham15bnRudnVybGN1d3NoamRkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwMDM2MjEsImV4cCI6MjA4ODU3OTYyMX0.XGF5wPX1sI9VgG11bnr41lCxeqTfFVHEhBIfBXXYAkw';
+var H={'apikey':SK,'Authorization':'Bearer '+SK};
+var IMG_BASE='https://enigmeofficial.com/';
+var vendedora=null, productos=[], filtro='todos';
+
+function getParam(k){return new URLSearchParams(window.location.search).get(k);}
+function firstName(full){return (full||'').split(' ')[0];}
+
+async function init(){
+  var code=getParam('c');
+  if(!code){showError('Sin c\u00f3digo','Agrega ?c=TU_CODIGO a la URL');return;}
+  try{
+    var r=await fetch(SB+'vendedoras?codigo=eq.'+encodeURIComponent(code)+'&select=*',{headers:H});
+    var d=await r.json();
+    if(!d.length){
+      var r2=await fetch(SB+'contratos_vendedoras?codigo_vendedora=eq.'+encodeURIComponent(code)+'&select=*',{headers:H});
+      var d2=await r2.json();
+      if(!d2.length){showError('Boutique no encontrada','El c\u00f3digo '+code+' no existe');return;}
+      vendedora={nombre:d2[0].nombre_completo,telefono:d2[0].telefono,email:d2[0].email,codigo:d2[0].codigo_vendedora,zona_oro:d2[0].zona_oro};
+    }else{
+      vendedora={nombre:d[0].nombre,telefono:d[0].telefono,email:d[0].email,codigo:d[0].codigo,zona_oro:''};
+    }
+    var rp=await fetch(SB+'catalogo_productos?activo=eq.true&select=*&order=categoria,nombre',{headers:H});
+    productos=await rp.json();
+    var nombre=firstName(vendedora.nombre);
+    document.title='Boutique de '+nombre+' \u2014 ENIGME';
+    render();
+  }catch(e){console.error(e);showError('Error','No se pudo cargar la tienda');}
+}
+
+function showError(title,msg){
+  document.getElementById('mainContent').innerHTML='<div class="error"><h2>'+title+'</h2><p>'+msg+'</p></div>';
+  document.getElementById('sellerInfo').textContent='';
+}
+
+function render(){
+  var nombre=firstName(vendedora.nombre);
+  var tel=vendedora.telefono||'';
+  var waNum=tel.replace(/\D/g,'');
+  if(waNum.length<=8)waNum='504'+waNum;
+  document.getElementById('sellerInfo').innerHTML='<strong>'+esc(nombre)+'</strong>Asesora Independiente';
+
+  var catLabels={'joyeria':'Alta Joyer\u00eda','boutique':'Boutique','plata':'Plata 925','liquidacion':'Ofertas Exclusivas','vestidos':'Vestidos'};
+  var catOrder=['joyeria','plata','boutique','liquidacion','vestidos'];
+  var cats=catOrder.filter(function(c){return productos.some(function(p){return p.categoria===c;});});
+  var filterHtml='';
+  cats.forEach(function(c){filterHtml+='<button class="filter-btn" onclick="setFilter(\''+c+'\',this)">'+(catLabels[c]||c)+'</button>';});
+
+  var html='<div class="hero">';
+  html+='<div class="hero-label">Colecci\u00f3n Exclusiva</div>';
+  html+='<h1>Boutique de '+esc(nombre)+'</h1>';
+  html+='<p>Asesora Independiente ENIGME Honduras</p>';
+  html+='<div class="hero-tagline">Aura &middot; Misterio &middot; Presencia</div>';
+  html+='</div>';
+
+  // ENIGME message + Empire button - ARRIBA antes de filtros
+  html+='<div class="manifesto-section">';
+  html+='<button class="btn-empire" onclick="openManifesto()" style="margin-top:0;">';
+  html+='<span class="btn-empire-star">&#10022;</span> Somos \u00c9NIGME y queremos decirte que... <span class="btn-empire-star">&#10022;</span>';
+  html+='</button>';
+  html+='<a href="https://www.enigmeofficial.com/soporte.html" target="_blank" class="btn-empire">';
+  html+='<span class="btn-empire-star">&#10022;</span> Crea Tu Imperio Aqu\u00ed <span class="btn-empire-star">&#10022;</span>';
+  html+='</a>';
+  html+='</div>';
+
+  html+='<div class="select-hint">\u2193 SELECCIONA TU COLECCI\u00d3N \u2193</div>';
+  html+='<div class="filters" id="filtersRow">'+filterHtml+'</div>';
+  html+='<div class="grid" id="productsGrid"></div>';
+
+  // Footer
+  html+='<div class="footer">';
+  html+='<div class="footer-brand">ENIGME</div>';
+  html+='<div class="footer-tagline">Aura &middot; Misterio &middot; Presencia</div>';
+  html+='<p>&copy; 2026 ENIGME Honduras. Productos comercializados por asesora independiente '+esc(nombre)+'. La gesti\u00f3n fiscal y comercial es responsabilidad exclusiva de la asesora conforme al C\u00f3digo de Comercio de Honduras.</p>';
+  html+='</div>';
+  document.getElementById('mainContent').innerHTML=html;
+  // NO renderizar productos al inicio - esperar a que elijan categoria
+  document.getElementById('productsGrid').innerHTML='<div class="empty" style="font-family:Cormorant Garamond,serif;font-style:italic;font-size:1rem;color:rgba(203,170,99,.4);padding:40px 20px;">Elige una colecci\u00f3n para descubrir el misterio \u2728</div>';
+  buildManifesto(nombre);
+}
+
+function setFilter(f,btn){
+  filtro=f;
+  document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});
+  if(btn)btn.classList.add('active');
+  var tel=vendedora.telefono||'';var waNum=tel.replace(/\D/g,'');if(waNum.length<=8)waNum='504'+waNum;
+  renderProducts(waNum);
+  // Scroll suave al grid
+  var grid=document.getElementById('productsGrid');
+  if(grid)grid.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function renderProducts(waNum){
+  var nombre=firstName(vendedora.nombre);
+  var data=filtro==='todos'?productos:productos.filter(function(p){return p.categoria===filtro;});
+  var grid=document.getElementById('productsGrid');
+  if(!data.length){grid.innerHTML='<div class="empty">No hay productos en esta categor\u00eda</div>';return;}
+  var catLabels={'joyeria':'Joyer\u00eda','boutique':'Boutique','plata':'Plata 925','liquidacion':'Liquidaci\u00f3n','vestidos':'Vestidos'};
+  grid.innerHTML=data.map(function(p){
+    var img=p.imagen?IMG_BASE+p.imagen:IMG_BASE+'logo.png';
+    var precio='L '+Number(p.precio).toLocaleString('es-HN');
+    var waMsg=encodeURIComponent('Hola '+nombre+', me interesa:\n\n*'+p.nombre+'*\nRef: '+p.codigo+'\nPrecio: '+precio+'\n\n\u00bfEst\u00e1 disponible?');
+
+    var priceHtml='';
+    if(p.precio_antes && Number(p.precio_antes)>0){
+      priceHtml+='<div class="price-old">L '+Number(p.precio_antes).toLocaleString('es-HN')+'</div>';
+    }
+    priceHtml+='<div class="price-current">'+precio+'</div>';
+
+    var lemaHtml=p.lema?'<div class="card-lema">'+esc(p.lema)+'</div>':'';
+    var materialHtml=p.material?'<div class="card-material">'+esc(p.material)+'</div>':'';
+
+    return '<div class="card">'
+      +'<div class="card-img-wrap"><img class="card-img" src="'+img+'" alt="'+esc(p.nombre)+'" loading="lazy" onerror="this.src=\''+IMG_BASE+'logo.png\'"/></div>'
+      +'<div class="card-body">'
+      +'<div class="card-cat">'+(catLabels[p.categoria]||p.categoria)+'</div>'
+      +'<div class="card-name">'+esc(p.nombre)+'</div>'
+      +lemaHtml
+      +materialHtml
+      +'<div class="card-prices">'+priceHtml+'</div>'
+      +'<a href="https://wa.me/'+waNum+'?text='+waMsg+'" target="_blank" class="btn-wa"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.611.611l4.458-1.495A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-2.34 0-4.508-.794-6.24-2.128l-.436-.344-3.202 1.073 1.073-3.202-.344-.436A9.956 9.956 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>Comprar por WhatsApp</a>'
+      +'</div></div>';
+  }).join('');
+}
+
+function buildManifesto(nombre){
+  document.getElementById('modalTitle').textContent='\u00c9NIGME';
+  document.getElementById('modalSubtitle').textContent='Queremos decirte algo, '+nombre;
+  var body=document.getElementById('modalBody');
+  body.innerHTML=''
+    +'<p>Si est\u00e1s leyendo esto, no es casualidad. <strong>Es una se\u00f1al.</strong></p>'
+    +'<p>Nacimos para quienes creen que la vida se construye, no se espera. Para quienes sienten que hay algo m\u00e1s all\u00e1 de lo ordinario. Para ti.</p>'
+    +'<div class="modal-highlight">\u2726 Imagina esto \u2726</div>'
+    +'<p>Tu propia tienda online. Tu marca. Tu negocio. Sin jefes, sin horarios, sin l\u00edmites. Solo t\u00fa y tu ambici\u00f3n.</p>'
+    +'<p>En <strong>\u00c9NIGME</strong> creamos un universo donde mujeres y hombres como t\u00fa se convierten en <strong>empresarias independientes</strong>, due\u00f1as de su tiempo y de su destino.</p>'
+    +'<div class="modal-highlight">\u2726 Lo que te espera \u2726</div>'
+    +'<p>\u2714 <strong>Descuentos exclusivos</strong> en toda nuestra colecci\u00f3n de joyer\u00eda premium</p>'
+    +'<p>\u2714 <strong>Atractivas comisiones y descuentos</strong> por ser Agente ENIGME</p>'
+    +'<p>\u2714 <strong>Incentivos materiales</strong> y premios por cumplimiento de metas</p>'
+    +'<p>\u2714 Tu <strong>tienda virtual propia</strong> con tu nombre, lista para compartir</p>'
+    +'<p>\u2714 <strong>Cat\u00e1logo digital completo</strong> con m\u00e1s de 48 piezas de lujo</p>'
+    +'<p>\u2714 <strong>Capacitaci\u00f3n y acompa\u00f1amiento</strong> de tu gerente de zona</p>'
+    +'<div class="modal-highlight">\u2726 No necesitas experiencia \u2726</div>'
+    +'<p>Solo necesitas ganas. Nosotros ponemos las herramientas, los productos, la tecnolog\u00eda y el respaldo. <strong>T\u00fa pones el sue\u00f1o.</strong></p>'
+    +'<p>Cientos de asesoras en Honduras ya est\u00e1n construyendo su imperio desde su celular. Con una inversi\u00f3n m\u00ednima, sin riesgo y con productos que <strong>se venden solos.</strong></p>'
+    +'<div class="modal-highlight">\u2726 Hoy puede ser tu d\u00eda \u2726</div>'
+    +'<p>El d\u00eda que dejaste de so\u00f1ar y empezaste a construir. El d\u00eda que dijiste: <strong>\u201cYo tambi\u00e9n puedo.\u201d</strong></p>'
+    +'<p>Porque s\u00ed puedes. Y lo mereces.</p>'
+    +'<div style="text-align:center;margin:28px 0 16px"><a href="https://www.enigmeofficial.com/soporte.html" target="_blank" style="display:inline-block;padding:16px 36px;border:2px solid #CBAA63;background:linear-gradient(135deg,#8B6914,#CBAA63,#8B6914);background-size:200% auto;font-family:Cinzel,serif;font-size:.75rem;color:#0a0a0a;letter-spacing:4px;text-transform:uppercase;text-decoration:none;font-weight:600;animation:shimmer 4s linear infinite;">&#10022; Crea Tu Imperio Aqu\u00ed &#10022;</a></div>'
+    +'<p style="text-align:center;font-size:.85rem;color:rgba(203,170,99,.5);">Bienvenida al misterio. Bienvenida a <strong>\u00c9NIGME.</strong></p>'
+    +'<p class="modal-tagline">Aura &middot; Misterio &middot; Presencia</p>';
+}
+
+function openManifesto(){
+  document.getElementById('manifestoModal').classList.add('active');
+  document.body.style.overflow='hidden';
+}
+function closeManifesto(){
+  document.getElementById('manifestoModal').classList.remove('active');
+  document.body.style.overflow='';
+}
+document.getElementById('manifestoModal').addEventListener('click',function(e){
+  if(e.target===this)closeManifesto();
+});
+
+function esc(s){var d=document.createElement('div');d.textContent=s||'';return d.innerHTML;}
+
+init();
+</script>
+</body>
+</html>

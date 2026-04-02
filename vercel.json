@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/catalogo.pdf",
+      "destination": "https://hajmyntnvurlcuwshjdd.supabase.co/storage/v1/object/public/catalogo/CATALOGO_ENIGME_2026.pdf"
+    }
+  ]
+}

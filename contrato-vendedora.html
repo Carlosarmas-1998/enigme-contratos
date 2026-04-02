@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ENIGME · Contrato de Asesora Independiente</title>
+  <meta name="description" content="Contrato de Distribución Independiente para Asesoras de ENIGME Honduras. Firma digital con validez legal."/>
+  <meta name="keywords" content="ENIGME, Honduras, contrato, asesora, venta directa, multinivel, firma digital"/>
+  <meta name="author" content="ENIGME Honduras"/>
+  <meta name="robots" content="index, follow"/>
+  <meta property="og:title" content="ENIGME Honduras · Contrato de Asesora Independiente"/>
+  <meta property="og:description" content="Registro y firma digital de contratos para Asesoras Independientes de ENIGME Honduras."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://www.enigmeofficial.com"/>
+  <meta name="theme-color" content="#FAF6F0"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+  <meta name="apple-mobile-web-app-title" content="ENIGME Contratos"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="icon" href="icon-192.svg" type="image/svg+xml"/>
+  <link rel="apple-touch-icon" href="icon-192.svg"/>
+  <link rel="canonical" href="https://www.enigmeofficial.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{height:100%;scroll-behavior:smooth}
+    body{
+      min-height:100%;
+      background:#FAF6F0;
+      color:#000;
+      font-family:'Jost',sans-serif;
+      font-weight:300;
+      font-size:16px;
+      line-height:1.6;
+    }
+
+    /* === TOPBAR === */
+    .topbar{
+      position:sticky;top:0;z-index:50;
+      padding:14px 24px;
+      border-bottom:1px solid rgba(139,105,20,.15);
+      display:flex;align-items:center;justify-content:space-between;
+      background:rgba(250,246,240,.97);
+      backdrop-filter:blur(12px);
+    }
+    .topbar-left{display:flex;align-items:center;gap:14px}
+    .brand{font-family:'Cinzel',serif;font-size:.85rem;letter-spacing:.35em;font-weight:400;color:#000}
+    .divider-v{width:1px;height:16px;background:rgba(139,105,20,.15)}
+    .topbar-title{font-size:.5rem;letter-spacing:3px;text-transform:uppercase;color:#8B6914;font-weight:300}
+    .topbar-right{display:flex;align-items:center;gap:16px}
+    .user-pill{
+      display:flex;align-items:center;gap:8px;
+      padding:6px 14px;
+      border:1px solid rgba(139,105,20,.2);
+      font-size:.55rem;letter-spacing:1px;color:#8B6914;
+      background:rgba(139,105,20,.03);
+    }
+    .user-avatar{
+      width:24px;height:24px;
+      border:1px solid rgba(139,105,20,.35);
+      display:flex;align-items:center;justify-content:center;
+      font-family:'Cinzel',serif;font-size:.6rem;color:#8B6914;
+    }
+    .btn-back{
+      padding:6px 16px;
+      border:1px solid rgba(139,105,20,.2);
+      background:transparent;color:rgba(0,0,0,.45);
+      font-family:'Jost',sans-serif;font-size:.5rem;letter-spacing:2px;text-transform:uppercase;
+      cursor:pointer;transition:all .3s;text-decoration:none;
+    }
+    .btn-back:hover{border-color:#8B6914;color:#8B6914}
+
+    /* === CONTAINER === */
+    .container{position:relative;z-index:10;max-width:860px;margin:0 auto;padding:32px 16px}
+
+    /* === CONTRACT HEADER === */
+    .contract-header{text-align:center;margin-bottom:40px;animation:fadeUp .8s ease both}
+    .contract-header .eyebrow{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:14px}
+    .contract-header .eyebrow-line{width:36px;height:1px;background:rgba(139,105,20,.25)}
+    .contract-header .eyebrow-text{font-size:.5rem;letter-spacing:5px;text-transform:uppercase;color:#8B6914;font-weight:300}
+    .contract-header h1{font-family:'Cinzel',serif;font-size:clamp(1.05rem,3vw,1.5rem);font-weight:300;letter-spacing:.15em;color:#000;margin-bottom:6px}
+    .contract-header p{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-style:italic;color:rgba(0,0,0,.5)}
+    .contract-header .contract-num{margin-top:14px;font-size:.5rem;letter-spacing:3px;text-transform:uppercase;color:rgba(139,105,20,.4)}
+
+    /* === STEPS === */
+    .steps{display:flex;justify-content:center;gap:0;margin-bottom:32px;animation:fadeUp .8s .1s ease both;flex-wrap:wrap}
+    .step{display:flex;align-items:center;gap:8px;padding:10px 16px}
+    .step-num{
+      width:28px;height:28px;
+      border:1px solid rgba(139,105,20,.15);
+      display:flex;align-items:center;justify-content:center;
+      font-family:'Cinzel',serif;font-size:.65rem;color:rgba(0,0,0,.35);
+      transition:all .4s;
+    }
+    .step-label{font-size:.5rem;letter-spacing:2px;text-transform:uppercase;color:rgba(0,0,0,.35);transition:color .4s}
+    .step.active .step-num{border-color:#8B6914;color:#8B6914;background:rgba(139,105,20,.06)}
+    .step.active .step-label{color:#8B6914}
+    .step.completed .step-num{border-color:#27ae60;color:#27ae60;background:rgba(39,174,96,.08)}
+    .step.completed .step-label{color:#27ae60}
+    .step-connector{width:24px;height:1px;background:rgba(139,105,20,.12);margin:0 2px}
+
+    /* === FORM SECTIONS === */
+    .form-section{display:none;animation:fadeUp .5s ease both}
+    .form-section.active{display:block}
+    .section{margin-bottom:28px}
+    .section-header{
+      display:flex;align-items:center;justify-content:space-between;
+      margin-bottom:20px;padding-bottom:14px;
+      border-bottom:1px solid rgba(139,105,20,.12);
+    }
+    .section-title{font-family:'Cinzel',serif;font-size:.85rem;font-weight:400;letter-spacing:.1em;color:#000}
+    .section-badge{padding:4px 12px;border:1px solid rgba(139,105,20,.15);font-size:.48rem;letter-spacing:2px;text-transform:uppercase;color:#8B6914}
+
+    /* === CLAUSULAS === */
+    .clausulas{
+      background:#fff;
+      border:1px solid rgba(139,105,20,.12);
+      padding:28px;margin-bottom:24px;
+      max-height:400px;overflow-y:auto;line-height:1.8;
+    }
+    .clausulas::-webkit-scrollbar{width:4px}
+    .clausulas::-webkit-scrollbar-thumb{background:rgba(139,105,20,.2);border-radius:2px}
+    .clausulas h2{font-family:'Cinzel',serif;font-size:.85rem;font-weight:400;letter-spacing:.08em;color:#8B6914;margin:20px 0 10px;text-align:center}
+    .clausulas h2:first-child{margin-top:0}
+    .clausulas h3{font-family:'Cinzel',serif;font-size:.75rem;font-weight:400;letter-spacing:.06em;color:#000;margin:16px 0 8px}
+    .clausulas p{font-size:.8rem;color:#000;margin-bottom:10px;text-align:justify}
+    .clausulas .art{color:#8B6914;font-weight:400}
+    .clausulas .bold{color:#000;font-weight:500}
+    .clausulas ol{padding-left:24px;margin-bottom:12px}
+    .clausulas li{font-size:.8rem;color:#000;margin-bottom:6px}
+    .clausulas .center{text-align:center}
+
+    /* === FORM ELEMENTS === */
+    .form-grid{display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:16px}
+    @media(min-width:540px){.form-grid{grid-template-columns:repeat(2,1fr)}}
+    .form-group{margin-bottom:4px}
+    .form-label{display:block;font-size:.5rem;letter-spacing:3px;text-transform:uppercase;color:#8B6914;margin-bottom:8px;font-weight:400}
+    .form-input,.form-select{
+      width:100%;padding:12px 14px;
+      background:#fff;
+      border:1px solid rgba(139,105,20,.15);
+      color:#000;
+      font-family:'Jost',sans-serif;font-size:.85rem;font-weight:300;
+      outline:none;transition:border-color .3s;
+      border-radius:0;
+    }
+    .form-input:focus,.form-select:focus{border-color:#8B6914}
+    .form-input::placeholder{color:rgba(0,0,0,.25)}
+    .form-select{
+      cursor:pointer;appearance:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238B6914' fill='none'/%3E%3C/svg%3E");
+      background-repeat:no-repeat;background-position:right 12px center;background-size:12px;padding-right:40px;
+      background-color:#fff;
+    }
+    .form-select option{background:#fff;color:#000}
+    .form-input.error,.form-select.error{border-color:#c0392b}
+    .form-input[readonly]{background:rgba(139,105,20,.04);color:#8B6914;font-weight:400}
+    .error-msg{font-size:.65rem;color:#c0392b;margin-top:4px;display:none}
+
+    /* === CHECKBOXES === */
+    .checkbox-wrap{
+      display:flex;align-items:flex-start;gap:12px;
+      padding:14px;background:#fff;
+      border:1px solid rgba(139,105,20,.12);
+      margin-bottom:12px;cursor:pointer;transition:border-color .3s;
+    }
+    .checkbox-wrap:hover{border-color:rgba(139,105,20,.3)}
+    .checkbox-wrap input{display:none}
+    .check-box{
+      flex-shrink:0;width:20px;height:20px;
+      border:1px solid rgba(139,105,20,.2);
+      display:flex;align-items:center;justify-content:center;
+      transition:all .3s;margin-top:2px;
+    }
+    .checkbox-wrap input:checked~.check-box{border-color:#8B6914;background:rgba(139,105,20,.08)}
+    .checkbox-wrap input:checked~.check-box::after{content:'\2713';color:#8B6914;font-size:.7rem}
+    .check-text{font-size:.78rem;color:#000;line-height:1.6}
+    .check-text .bold{color:#000;font-weight:500}
+
+    /* === SIGNATURE === */
+    .signature-area{text-align:center;margin:24px 0}
+    .signature-canvas{border:1px solid rgba(139,105,20,.15);background:#fff;cursor:crosshair;touch-action:none;max-width:100%}
+
+    /* === BUTTONS === */
+    .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px;justify-content:center}
+    .btn{
+      padding:14px 32px;
+      border:1px solid #8B6914;
+      background:transparent;
+      color:#8B6914;
+      font-family:'Jost',sans-serif;font-size:.6rem;letter-spacing:3px;text-transform:uppercase;
+      cursor:pointer;position:relative;overflow:hidden;
+      transition:color .4s,background .4s,border-color .4s;
+    }
+    .btn:hover{background:#8B6914;color:#fff}
+    .btn span{position:relative;z-index:1}
+    .btn-secondary{border-color:rgba(0,0,0,.15);color:rgba(0,0,0,.45)}
+    .btn-secondary:hover{background:rgba(0,0,0,.06);color:#000;border-color:rgba(0,0,0,.3)}
+    .btn-small{padding:8px 16px;font-size:.5rem;letter-spacing:2px}
+    .btn:disabled{opacity:.35;cursor:not-allowed}
+    .btn:disabled:hover{background:transparent;color:#8B6914}
+    .btn-danger{border-color:rgba(192,57,43,.3);color:rgba(192,57,43,.7)}
+    .btn-danger:hover{background:rgba(192,57,43,.1);color:#c0392b;border-color:#c0392b}
+
+    /* === SUCCESS SCREEN === */
+    .success-screen{display:none;text-align:center;padding:48px 16px;animation:fadeUp .8s ease both}
+    .success-screen.active{display:block}
+    .success-icon{
+      width:72px;height:72px;
+      border:2px solid #27ae60;
+      margin:0 auto 20px;
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.8rem;color:#27ae60;animation:scaleIn .5s ease;
+    }
+    .success-screen h2{font-family:'Cinzel',serif;font-size:1.2rem;font-weight:300;letter-spacing:.12em;color:#000;margin-bottom:8px}
+    .success-screen .code{font-family:'Cinzel',serif;font-size:1.8rem;color:#8B6914;margin:16px 0;letter-spacing:.1em}
+    .success-screen p{font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:rgba(0,0,0,.5);max-width:480px;margin:0 auto 20px}
+    .success-detail{background:#fff;border:1px solid rgba(139,105,20,.12);padding:20px;max-width:480px;margin:0 auto 20px;text-align:left}
+    .success-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(139,105,20,.08)}
+    .success-row:last-child{border:none}
+    .success-row .label{font-size:.5rem;letter-spacing:2px;text-transform:uppercase;color:rgba(0,0,0,.4)}
+    .success-row .value{font-size:.8rem;color:#000}
+
+    /* === ALERTS === */
+    .alert{padding:14px;margin-bottom:18px;border-left:3px solid;font-size:.78rem}
+    .alert-info{background:rgba(52,152,219,.06);border-left-color:#2980b9;color:#2980b9}
+    .alert-error{background:rgba(192,57,43,.06);border-left-color:#c0392b;color:#c0392b}
+
+    /* === LOADING === */
+    .loading-overlay{
+      display:none;position:fixed;inset:0;z-index:200;
+      background:rgba(250,246,240,.92);backdrop-filter:blur(8px);
+      align-items:center;justify-content:center;flex-direction:column;gap:20px;
+    }
+    .loading-overlay.active{display:flex}
+    .spinner{width:36px;height:36px;border:2px solid rgba(139,105,20,.12);border-top-color:#8B6914;border-radius:50%;animation:spin 1s linear infinite}
+    .loading-text{font-size:.55rem;letter-spacing:4px;text-transform:uppercase;color:#8B6914}
+
+    /* === FOOTER === */
+    .footer-bar{
+      position:relative;z-index:10;
+      padding:16px 24px;
+      border-top:1px solid rgba(139,105,20,.1);
+      display:flex;align-items:center;justify-content:space-between;
+      margin-top:32px;flex-wrap:wrap;gap:8px;
+    }
+    .footer-copy{font-size:.48rem;letter-spacing:3px;text-transform:uppercase;color:rgba(0,0,0,.2)}
+    .footer-status{display:flex;align-items:center;gap:6px;font-size:.48rem;letter-spacing:2px;text-transform:uppercase;color:rgba(0,0,0,.25)}
+    .status-dot{width:4px;height:4px;border-radius:50%;background:#27ae60;animation:blink 2s infinite}
+
+    /* === ANIMATIONS === */
+    @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+    @keyframes scaleIn{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+    /* === MOBILE === */
+    @media(max-width:600px){
+      .topbar{padding:12px 12px;gap:8px}
+      .topbar-left{gap:8px}
+      .brand{font-size:.75rem;letter-spacing:.25em}
+      .topbar-title{font-size:.42rem;letter-spacing:2px}
+      .topbar-right{gap:8px}
+      .user-pill{padding:4px 10px;font-size:.48rem}
+      .btn-back{padding:5px 10px;font-size:.42rem}
+      .container{padding:20px 12px}
+      .contract-header{margin-bottom:28px}
+      .contract-header h1{font-size:1rem}
+      .steps{gap:2px}
+      .step{padding:8px 10px}
+      .step-label{font-size:.42rem}
+      .step-connector{width:12px}
+      .form-grid{grid-template-columns:1fr}
+      .clausulas{padding:16px;max-height:280px}
+      .signature-canvas{width:100%!important;height:180px!important}
+      .btn{padding:12px 24px;font-size:.52rem}
+      .actions{gap:8px}
+      .footer-bar{padding:12px;flex-direction:column;text-align:center}
+      .section-header{flex-direction:column;align-items:flex-start;gap:8px}
+    }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="brand">ENIGME</div>
+    <div class="divider-v"></div>
+    <div class="topbar-title">Contrato de Asesora</div>
+  </div>
+  <div class="topbar-right">
+    <div class="user-pill">
+      <div class="user-avatar" id="gerenteInitial">G</div>
+      <div style="display:flex;flex-direction:column;gap:2px;">
+        <span id="gerenteNombre" style="color:#000;font-size:.6rem;">Gerente</span>
+        <span id="gerenteCodigo" style="font-size:.45rem;color:rgba(0,0,0,.4);">Zona</span>
+      </div>
+    </div>
+    <button class="btn-back" onclick="nuevoContrato()">Nuevo</button>
+  </div>
+</div>
+
+<div class="container">
+  <div class="contract-header">
+    <div class="eyebrow">
+      <div class="eyebrow-line"></div>
+      <span class="eyebrow-text">República de Honduras</span>
+      <div class="eyebrow-line"></div>
+    </div>
+    <h1>Contrato de Distribución Independiente</h1>
+    <p>Contrato Mercantil de Intermediación Comercial Independiente</p>
+    <div class="contract-num" id="contractNum">CONTRATO N.° ENI-2026-0001</div>
+  </div>
+
+  <div class="steps">
+    <div class="step active" data-step="1"><div class="step-num">1</div><div class="step-label">Datos</div></div>
+    <div class="step-connector"></div>
+    <div class="step" data-step="2"><div class="step-num">2</div><div class="step-label">Ubicación</div></div>
+    <div class="step-connector"></div>
+    <div class="step" data-step="3"><div class="step-num">3</div><div class="step-label">Cláusulas</div></div>
+    <div class="step-connector"></div>
+    <div class="step" data-step="4"><div class="step-num">4</div><div class="step-label">Firma</div></div>
+  </div>
+
+  <!-- ============ PASO 1: DATOS ============ -->
+  <div class="form-section active" id="step-1">
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">Datos Personales</div>
+        <div class="section-badge">Paso 1 de 4</div>
+      </div>
+      <div class="alert alert-info">Todos los campos marcados son obligatorios. Los datos serán validados conforme al Código de Comercio de Honduras (Decreto No. 73-50).</div>
+
+      <div class="form-group" style="margin-bottom:16px">
+        <label class="form-label">Número de Identidad (DNI) *</label>
+        <div style="display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap">
+          <input type="text" class="form-input" id="f_dni" placeholder="0801-1990-00001" maxlength="15" style="flex:1;min-width:200px" oninput="formatDNI(this)"/>
+          <button class="btn btn-small" onclick="verificarDNI()" id="btnVerDNI"><span>Verificar DNI</span></button>
+        </div>
+        <div class="error-msg" id="f_dni_error">Formato: 0000-0000-00000</div>
+      </div>
+
+      <div id="dniExistenteBox" style="display:none;background:rgba(192,57,43,.05);border:1px solid rgba(192,57,43,.2);padding:20px;margin-bottom:20px;animation:fadeUp .4s ease">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+          <div style="width:8px;height:8px;background:#c0392b;border-radius:50%"></div>
+          <span style="font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.1em;color:#c0392b">ASESORA YA REGISTRADA</span>
+        </div>
+        <div class="form-grid" style="gap:8px">
+          <div><span style="font-size:.48rem;letter-spacing:2px;text-transform:uppercase;color:rgba(0,0,0,.4);display:block;margin-bottom:2px">Nombre</span><span id="ex_nombre" style="color:#000;font-size:.82rem">-</span></div>
+          <div><span style="font-size:.48rem;letter-spacing:2px;text-transform:uppercase;color:rgba(0,0,0,.4);display:block;margin-bottom:2px">Código</span><span id="ex_codigo" style="color:#8B6914;font-family:'Cinzel',serif;font-size:.95rem">-</span></div>
+          <div><span style="font-size:.48rem;letter-spacing:2px;text-transform:uppercase;color:rgba(0,0,0,.4);display:block;margin-bottom:2px">DNI</span><span id="ex_dni" style="color:#000;font-size:.82rem">-</span></div>
+          <div><span style="font-size:.48rem;letter-spacing:2px;text-transform:uppercase;color:rgba(0,0,0,.4);display:block;margin-bottom:2px">Teléfono</span><span id="ex_telefono" style="color:#000;font-size:.82rem">-</span></div>
+          <div><span style="font-size:.48rem;letter-spacing:2px;text-transform:uppercase;color:rgba(0,0,0,.4);display:block;margin-bottom:2px">Email</span><span id="ex_email" style="color:#000;font-size:.82rem">-</span></div>
+          <div><span style="font-size:.48rem;letter-spacing:2px;text-transform:uppercase;color:rgba(0,0,0,.4);display:block;margin-bottom:2px">Dirección</span><span id="ex_direccion" style="color:#000;font-size:.82rem">-</span></div>
+          <div><span style="font-size:.48rem;letter-spacing:2px;text-transform:uppercase;color:rgba(0,0,0,.4);display:block;margin-bottom:2px">Estado</span><span id="ex_estado" style="font-size:.82rem">-</span></div>
+          <div><span style="font-size:.48rem;letter-spacing:2px;text-transform:uppercase;color:rgba(0,0,0,.4);display:block;margin-bottom:2px">Fecha Ingreso</span><span id="ex_fecha" style="color:#000;font-size:.82rem">-</span></div>
+        </div>
+        <div id="ex_deuda_box" style="display:none;margin-top:14px;padding:12px;background:rgba(192,57,43,.06);border:1px solid rgba(192,57,43,.15)">
+          <div style="font-size:.48rem;letter-spacing:2px;text-transform:uppercase;color:#c0392b;margin-bottom:4px">Deuda Pendiente</div>
+          <div id="ex_deuda" style="font-family:'Cinzel',serif;font-size:1.2rem;color:#c0392b">L 0.00</div>
+          <div id="ex_deuda_notas" style="font-size:.7rem;color:rgba(192,57,43,.6);margin-top:4px"></div>
+        </div>
+        <p style="font-size:.72rem;color:rgba(192,57,43,.6);margin-top:12px">Esta persona ya cuenta con un contrato vigente en ENIGME. No es posible crear un nuevo contrato.</p>
+      </div>
+
+      <div id="dniOkBox" style="display:none;background:rgba(39,174,96,.05);border:1px solid rgba(39,174,96,.25);padding:14px 20px;margin-bottom:20px;align-items:center;gap:10px">
+        <div style="width:8px;height:8px;background:#27ae60;border-radius:50%"></div>
+        <span style="font-size:.78rem;color:#27ae60">DNI disponible. Puedes continuar con el registro.</span>
+      </div>
+
+      <div id="formDatos" style="display:none">
+        <div class="form-grid">
+          <div class="form-group" style="grid-column:1/-1">
+            <label class="form-label">Nombre Completo *</label>
+            <input type="text" class="form-input" id="f_nombre" placeholder="Nombre completo según identidad"/>
+            <div class="error-msg">Este campo es requerido</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">RTN (Opcional)</label>
+            <input type="text" class="form-input" id="f_rtn" placeholder="08011990000010"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Teléfono *</label>
+            <input type="tel" class="form-input" id="f_telefono" placeholder="+504 9999-9999"/>
+            <div class="error-msg">Ingresa un número válido</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Correo Electrónico *</label>
+            <input type="email" class="form-input" id="f_email" placeholder="correo@ejemplo.com"/>
+            <div class="error-msg">Correo electrónico inválido</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Fecha de Nacimiento *</label>
+            <input type="date" class="form-input" id="f_fechanac" onchange="validarEdad()"/>
+            <div class="error-msg" id="f_edad_err">Debe ser mayor de 18 años</div>
+            <div id="edadInfo" style="display:none;font-size:.72rem;margin-top:6px"></div>
+          </div>
+          <div class="form-group" style="grid-column:1/-1">
+            <label class="form-label">Dirección de Domicilio *</label>
+            <input type="text" class="form-input" id="f_direccion" placeholder="Colonia, calle, número de casa, referencia"/>
+            <div class="error-msg">Este campo es requerido</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Documento de Identidad (Foto o PDF) * — Mínimo 2 archivos (frente y reverso)</label>
+          <div style="border:1px dashed rgba(139,105,20,.25);padding:20px;text-align:center;cursor:pointer;background:#fff" id="dropZone" onclick="document.getElementById('f_files').click()">
+            <div style="font-size:.78rem;color:rgba(0,0,0,.4);margin-bottom:4px">Haz clic o arrastra los archivos aquí</div>
+            <div style="font-size:.55rem;letter-spacing:2px;text-transform:uppercase;color:#8B6914">JPG, PNG o PDF — Máximo 5MB cada uno</div>
+            <input type="file" id="f_files" multiple accept=".jpg,.jpeg,.png,.pdf" style="display:none" onchange="onFiles()"/>
+          </div>
+          <div id="filesList" style="margin-top:10px"></div>
+          <div class="error-msg" id="f_files_err" style="display:none">Debes subir al menos 2 archivos del DNI (frente y reverso)</div>
+        </div>
+        <div class="actions"><button class="btn" onclick="goToStep(2)"><span>Continuar</span></button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ PASO 2: UBICACIÓN ============ -->
+  <div class="form-section" id="step-2">
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">Ubicación y Asignación</div>
+        <div class="section-badge">Paso 2 de 4</div>
+      </div>
+      <div class="alert alert-info">Selecciona tu ubicación geográfica. El sistema asignará automáticamente tu zona y gerente responsable.</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Departamento *</label>
+          <select class="form-select" id="f_dep" onchange="onDepChange()"><option value="">Selecciona departamento</option></select>
+          <div class="error-msg">Selecciona un departamento</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Municipio *</label>
+          <select class="form-select" id="f_mun" disabled><option value="">Primero selecciona departamento</option></select>
+          <div class="error-msg">Selecciona un municipio</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Sector *</label>
+          <select class="form-select" id="f_sector">
+            <option value="">Selecciona sector</option>
+            <option value="1">Sector 1</option><option value="2">Sector 2</option><option value="3">Sector 3</option><option value="4">Sector 4</option><option value="5">Sector 5</option>
+            <option value="6">Sector 6</option><option value="7">Sector 7</option><option value="8">Sector 8</option><option value="9">Sector 9</option><option value="10">Sector 10</option>
+            <option value="11">Sector 11</option><option value="12">Sector 12</option><option value="13">Sector 13</option><option value="14">Sector 14</option><option value="15">Sector 15</option>
+            <option value="16">Sector 16</option><option value="17">Sector 17</option><option value="18">Sector 18</option><option value="19">Sector 19</option><option value="20">Sector 20</option>
+          </select>
+          <div class="error-msg">Selecciona un sector</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Zona (Asignación Automática)</label>
+          <input type="text" class="form-input" id="f_zona_oro" readonly placeholder="Se asigna según departamento" style="font-family:'Cinzel',serif;font-size:.95rem"/>
+          <input type="hidden" id="f_zona_id"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Gerente de Zona</label>
+          <input type="text" class="form-input" id="f_gz_txt" readonly placeholder="Se asigna automáticamente"/>
+          <input type="hidden" id="f_gz_id"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Gerencia Divisional</label>
+          <input type="text" class="form-input" id="f_div_txt" readonly placeholder="Se asigna automáticamente"/>
+          <input type="hidden" id="f_div_id"/>
+        </div>
+        <div class="form-group" style="grid-column:1/-1">
+          <label class="form-label">Código de Asesora (Automático)</label>
+          <input type="text" class="form-input" id="f_codigo" readonly style="font-family:'Cinzel',serif;font-size:1.1rem;text-align:center;letter-spacing:.1em"/>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-secondary" onclick="goToStep(1)"><span>Anterior</span></button>
+        <button class="btn" onclick="goToStep(3)"><span>Continuar</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ PASO 3: CLÁUSULAS ============ -->
+  <div class="form-section" id="step-3">
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">Cláusulas del Contrato</div>
+        <div class="section-badge">Paso 3 de 4</div>
+      </div>
+      <div class="clausulas">
+        <h2>CONTRATO MERCANTIL DE INTERMEDIACIÓN COMERCIAL INDEPENDIENTE</h2>
+        <p class="center"><span class="bold">ENIGME HONDURAS</span></p>
+        <p class="center" style="font-size:.65rem;color:rgba(0,0,0,.4)">Fundamentado en el Código de Comercio de Honduras (Decreto No. 73-50), Ley de Protección al Consumidor (Decreto No. 24-2008), y normativa aplicable a la venta directa y multinivel conforme al Derecho Mercantil hondureño.</p>
+        <p>En la ciudad de <span class="bold" id="cl_city">__________</span>, Departamento de <span class="bold" id="cl_dep">__________</span>, República de Honduras, a los <span class="bold" id="cl_date">__________</span>, comparecen:</p>
+        <p><span class="art">PRIMERA PARTE:</span> <span class="bold">ENIGME HONDURAS</span>, sociedad mercantil debidamente constituida conforme a las leyes de la República de Honduras, en adelante denominada <span class="bold">"LA EMPRESA"</span>.</p>
+        <p><span class="art">SEGUNDA PARTE:</span> <span class="bold" id="cl_name">__________</span>, mayor de edad, con Tarjeta de Identidad número <span class="bold" id="cl_dni">__________</span>, con domicilio en <span class="bold" id="cl_addr">__________</span>, en adelante denominada <span class="bold">"LA ASESORA INDEPENDIENTE"</span>.</p>
+
+        <h3>CLÁUSULA PRIMERA: OBJETO DEL CONTRATO</h3>
+        <p>El presente contrato tiene por objeto establecer la relación comercial independiente entre LA EMPRESA y LA ASESORA INDEPENDIENTE para la distribución, promoción y venta al detalle de los productos de la marca ENIGME, conforme a los artículos 632 al 649 del Código de Comercio de Honduras.</p>
+
+        <h3>CLÁUSULA SEGUNDA: COMISIÓN POR VENTAS</h3>
+        <p>LA ASESORA INDEPENDIENTE percibirá una <span class="bold">comisión del quince por ciento (15%)</span> sobre la venta neta de cada pedido que gestione.</p>
+
+        <h3>CLÁUSULA TERCERA: CONDICIONES DE PAGO DE PEDIDOS</h3>
+        <ol>
+          <li><span class="bold">Treinta por ciento (30%)</span> del valor total del pedido al momento de realizar la solicitud.</li>
+          <li><span class="bold">Cuarenta por ciento (40%)</span> del valor total del pedido al momento de recibir la mercadería.</li>
+          <li><span class="bold">Treinta por ciento (30%)</span> restante en un plazo máximo de <span class="bold">catorce (14) días calendario</span>.</li>
+        </ol>
+
+        <h3>CLÁUSULA CUARTA: COMPROMISO DE PAGO PUNTUAL</h3>
+        <p>LA ASESORA INDEPENDIENTE se compromete a realizar todos los pagos <span class="bold">al día</span>, sin atrasos ni demoras. El incumplimiento reiterado será causal de rescisión inmediata.</p>
+
+        <h3>CLÁUSULA QUINTA: INDEPENDENCIA COMERCIAL</h3>
+        <p>LA ASESORA INDEPENDIENTE actúa como <span class="bold">comerciante individual independiente</span>. No existe relación laboral con LA EMPRESA. Es responsable de sus obligaciones fiscales ante el SAR.</p>
+
+        <h3>CLÁUSULA SEXTA: OBLIGACIONES DE LA ASESORA</h3>
+        <ol>
+          <li>Promocionar y distribuir los productos ENIGME de manera ética y profesional.</li>
+          <li>No alterar, modificar ni reenvasar los productos.</li>
+          <li>Respetar los precios de venta sugeridos en el catálogo oficial.</li>
+          <li>Mantener la confidencialidad de la información comercial.</li>
+          <li>No realizar declaraciones falsas o engañosas sobre los productos.</li>
+          <li>Operar dentro de la zona geográfica y sector asignados.</li>
+        </ol>
+
+        <h3>CLÁUSULA SÉPTIMA: OBLIGACIONES DE LA EMPRESA</h3>
+        <ol>
+          <li>Suministrar los productos en condiciones de calidad establecidas.</li>
+          <li>Proveer material de apoyo para la venta.</li>
+          <li>Liquidar oportunamente las comisiones devengadas.</li>
+          <li>Proporcionar capacitación comercial periódica.</li>
+        </ol>
+
+        <h3>CLÁUSULA OCTAVA: RESPONSABILIDAD SOBRE LA MERCADERÍA</h3>
+        <p>Una vez recibida la mercadería, LA ASESORA INDEPENDIENTE asume la <span class="bold">custodia total y responsabilidad</span> sobre la misma.</p>
+
+        <h3>CLÁUSULA NOVENA: VIGENCIA Y TERMINACIÓN</h3>
+        <p>Contrato de vigencia <span class="bold">indefinida</span>. Puede terminarse con <span class="bold">quince (15) días</span> de anticipación por escrito.</p>
+
+        <h3>CLÁUSULA DÉCIMA: PROTECCIÓN DE DATOS PERSONALES</h3>
+        <p>LA EMPRESA se compromete a proteger los datos personales conforme a las mejores prácticas vigentes en Honduras.</p>
+
+        <h3>CLÁUSULA UNDÉCIMA: PROPIEDAD INTELECTUAL</h3>
+        <p>La marca ENIGME, logotipos, diseños y catálogos son propiedad exclusiva de LA EMPRESA (Ley de Propiedad Industrial, Decreto No. 12-99-E).</p>
+
+        <h3>CLÁUSULA DUODÉCIMA: SOLUCIÓN DE CONTROVERSIAS</h3>
+        <p>Las partes se someten a mediación y conciliación conforme a la Ley de Conciliación y Arbitraje (Decreto No. 161-2000).</p>
+
+        <h3>CLÁUSULA DÉCIMA TERCERA: TIENDA VIRTUAL</h3>
+        <p>LA EMPRESA proporcionará a LA ASESORA INDEPENDIENTE una <span class="bold">tienda virtual personalizada</span> con catálogo de productos ENIGME, accesible mediante enlace único. LA ASESORA INDEPENDIENTE es la <span class="bold">única responsable</span> de la gestión fiscal, legal y comercial de su microempresa, incluyendo las obligaciones tributarias ante el SAR. ENIGME Honduras no mantiene relación laboral con la asesora y no se hace responsable de las transacciones individuales entre la asesora y sus clientes. Los productos exhibidos son propiedad intelectual de ENIGME Honduras.</p>
+
+        <h3>CLÁUSULA DÉCIMA CUARTA: ACEPTACIÓN INTEGRAL</h3>
+        <p>La firma digital tiene plena validez legal conforme a la Ley de Firma Electrónica de Honduras (Decreto No. 149-2013).</p>
+
+        <p class="center" style="margin-top:24px"><span class="bold">EN FE DE LO CUAL</span>, se firma el presente contrato en formato digital a través de la plataforma oficial de ENIGME Honduras.</p>
+      </div>
+
+      <label class="checkbox-wrap"><input type="checkbox" id="chk1"/><div class="check-box"></div><div class="check-text">Declaro que he leído y comprendido <span class="bold">todas las cláusulas del presente contrato</span>, incluyendo las condiciones de pago (30%-40%-30%) y la comisión del 15%.</div></label>
+      <label class="checkbox-wrap"><input type="checkbox" id="chk2"/><div class="check-box"></div><div class="check-text">Me comprometo a realizar los pagos <span class="bold">al día</span>: 30% al solicitar, 40% al recibir, y 30% restante en máximo 14 días.</div></label>
+      <label class="checkbox-wrap"><input type="checkbox" id="chk3"/><div class="check-box"></div><div class="check-text">Confirmo que actúo como <span class="bold">intermediaria comercial independiente</span> y soy responsable de mis obligaciones fiscales.</div></label>
+      <label class="checkbox-wrap"><input type="checkbox" id="chk4"/><div class="check-box"></div><div class="check-text">Autorizo el tratamiento de mis <span class="bold">datos personales</span> para fines del presente contrato.</div></label>
+      <label class="checkbox-wrap"><input type="checkbox" id="chk5"/><div class="check-box"></div><div class="check-text">Declaro ser <span class="bold">mayor de edad</span> (18 años cumplidos) y estar en pleno uso de mis facultades legales.</div></label>
+
+      <div class="actions">
+        <button class="btn btn-secondary" onclick="goToStep(2)"><span>Anterior</span></button>
+        <button class="btn" onclick="goToStep(4)"><span>Continuar a Firma</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ PASO 4: FIRMA ============ -->
+  <div class="form-section" id="step-4">
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">Firma Digital</div>
+        <div class="section-badge">Paso 4 de 4</div>
+      </div>
+      <div class="alert alert-info">Dibuja tu firma con el dedo (en móvil) o con el mouse. Tiene validez legal conforme a la Ley de Firma Electrónica (Decreto No. 149-2013).</div>
+
+      <div style="background:#fff;border:1px solid rgba(139,105,20,.12);padding:20px;margin-bottom:24px">
+        <div style="font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.1em;color:#8B6914;margin-bottom:16px">RESUMEN DEL CONTRATO</div>
+        <div class="form-grid" style="gap:10px">
+          <div><span style="font-size:.5rem;letter-spacing:2px;text-transform:uppercase;color:rgba(0,0,0,.4);display:block;margin-bottom:4px">Nombre</span><span id="r_nombre" style="color:#000;font-size:.85rem">-</span></div>
+          <div><span style="font-size:.5rem;letter-spacing:2px;text-transform:uppercase;color:rgba(0,0,0,.4);display:block;margin-bottom:4px">DNI</span><span id="r_dni" style="color:#000;font-size:.85rem">-</span></div>
+          <div><span style="font-size:.5rem;letter-spacing:2px;text-transform:uppercase;color:rgba(0,0,0,.4);display:block;margin-bottom:4px">Correo</span><span id="r_email" style="color:#000;font-size:.85rem">-</span></div>
+          <div><span style="font-size:.5rem;letter-spacing:2px;text-transform:uppercase;color:rgba(0,0,0,.4);display:block;margin-bottom:4px">Teléfono</span><span id="r_telefono" style="color:#000;font-size:.85rem">-</span></div>
+          <div><span style="font-size:.5rem;letter-spacing:2px;text-transform:uppercase;color:rgba(0,0,0,.4);display:block;margin-bottom:4px">Ubicación</span><span id="r_ubic" style="color:#000;font-size:.85rem">-</span></div>
+          <div><span style="font-size:.5rem;letter-spacing:2px;text-transform:uppercase;color:rgba(0,0,0,.4);display:block;margin-bottom:4px">Código Asignado</span><span id="r_codigo" style="color:#8B6914;font-family:'Cinzel',serif;font-size:1.1rem">-</span></div>
+          <div><span style="font-size:.5rem;letter-spacing:2px;text-transform:uppercase;color:rgba(0,0,0,.4);display:block;margin-bottom:4px">Zona</span><span id="r_zona_oro" style="color:#8B6914;font-family:'Cinzel',serif;font-size:.95rem">-</span></div>
+          <div><span style="font-size:.5rem;letter-spacing:2px;text-transform:uppercase;color:rgba(0,0,0,.4);display:block;margin-bottom:4px">Comisión</span><span style="color:#27ae60;font-size:.85rem">15% sobre venta neta</span></div>
+          <div><span style="font-size:.5rem;letter-spacing:2px;text-transform:uppercase;color:rgba(0,0,0,.4);display:block;margin-bottom:4px">Esquema de Pago</span><span style="color:#000;font-size:.85rem">30% - 40% - 30% (14 días)</span></div>
+        </div>
+      </div>
+
+      <div class="signature-area">
+        <div style="font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.1em;color:#8B6914;margin-bottom:12px">FIRMA DE LA ASESORA INDEPENDIENTE</div>
+        <canvas id="sigCanvas" class="signature-canvas" width="600" height="220"></canvas>
+        <div style="display:flex;justify-content:center;gap:12px;margin-top:12px">
+          <button class="btn btn-small btn-danger" onclick="clearSig()"><span>Limpiar Firma</span></button>
+        </div>
+        <div style="font-size:.55rem;letter-spacing:2px;text-transform:uppercase;color:rgba(0,0,0,.35);margin-top:8px">Firma con tu dedo o mouse dentro del recuadro</div>
+      </div>
+
+      <div id="sigErr" class="alert alert-error" style="display:none">Debes firmar el contrato para continuar.</div>
+
+      <div class="actions">
+        <button class="btn btn-secondary" onclick="goToStep(3)"><span>Anterior</span></button>
+        <button class="btn" onclick="enviar()" id="btnEnviar"><span>Firmar y Enviar Contrato</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ PANTALLA ÉXITO ============ -->
+  <div class="success-screen" id="okScreen">
+    <div class="success-icon">&#10003;</div>
+    <h2>Contrato Registrado Exitosamente</h2>
+    <p>Bienvenida a la familia ENIGME. Tu contrato ha sido registrado y se ha enviado un correo de bienvenida.</p>
+    <div class="code" id="s_codigo">-</div>
+    <div style="font-size:.5rem;letter-spacing:3px;text-transform:uppercase;color:rgba(0,0,0,.35);margin-bottom:20px">Tu Código de Asesora</div>
+    <div class="success-detail">
+      <div class="success-row"><span class="label">Contrato</span><span class="value" id="s_contrato">-</span></div>
+      <div class="success-row"><span class="label">Nombre</span><span class="value" id="s_nombre">-</span></div>
+      <div class="success-row"><span class="label">Zona</span><span class="value" id="s_zona">-</span></div>
+      <div class="success-row"><span class="label">Zona Oro</span><span class="value" id="s_zona_oro" style="color:#8B6914;font-family:'Cinzel',serif">-</span></div>
+      <div class="success-row"><span class="label">Gerente</span><span class="value" id="s_gerente">-</span></div>
+      <div class="success-row"><span class="label">Divisional</span><span class="value" id="s_div">-</span></div>
+      <div class="success-row"><span class="label">Fecha</span><span class="value" id="s_fecha">-</span></div>
+    </div>
+
+    <!-- TIENDA VIRTUAL -->
+    <div style="background:#fff;border:1px solid rgba(139,105,20,.2);padding:20px;max-width:500px;margin:0 auto 24px;text-align:center;">
+      <div style="font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:.1em;color:#8B6914;margin-bottom:10px;">TIENDA VIRTUAL DE LA ASESORA</div>
+      <div style="background:#FAF6F0;border:1px solid rgba(139,105,20,.2);padding:12px;font-size:.78rem;word-break:break-all;color:#8B6914;font-weight:500;margin-bottom:10px;" id="s_tienda_link">-</div>
+      <p style="font-size:.65rem;color:rgba(0,0,0,.4);margin-bottom:10px;">La asesora puede compartir este enlace con sus clientes para que vean el cat&aacute;logo ENIGME.</p>
+      <button class="btn btn-small" onclick="copiarLinkTienda()" style="font-size:.55rem;"><span>Copiar Enlace</span></button>
+    </div>
+    <div style="background:#fff;border:1px solid rgba(139,105,20,.15);padding:14px 20px;max-width:500px;margin:0 auto 24px;text-align:center;">
+      <div style="font-size:.6rem;letter-spacing:2px;color:rgba(0,0,0,.4);margin-bottom:6px;">PANEL DE LA ASESORA</div>
+      <a href="mi-tienda.html" target="_blank" style="color:#8B6914;font-size:.8rem;font-weight:500;text-decoration:underline;">Acceder a Mi Tienda (login con DNI)</a>
+    </div>
+
+    <div class="actions">
+      <button class="btn" onclick="nuevoContrato()"><span>Registrar Otra Asesora</span></button>
+      <button class="btn btn-secondary" onclick="imprimirPDF()"><span>Descargar / Imprimir PDF</span></button>
+    </div>
+  </div>
+</div>
+
+<div class="footer-bar">
+  <div class="footer-copy">&copy; 2026 ENIGME Honduras &middot; Contrato Mercantil</div>
+  <div class="footer-status"><div class="status-dot"></div>Sistema operativo</div>
+</div>
+
+<div class="loading-overlay" id="loader">
+  <div class="spinner"></div>
+  <div class="loading-text" id="loaderMsg">Procesando contrato...</div>
+</div>
+
+<script>
+// =====================================================
+// SUPABASE CONFIG
+// =====================================================
+var _h='aGFqbXludG52dXJsY3V3c2hqZGQ=';function _u(){return 'https://'+atob(_h)+'.supabase.co';}
+const SB=_u()+'/rest/v1/';
+const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhham15bnRudnVybGN1d3NoamRkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwMDM2MjEsImV4cCI6MjA4ODU3OTYyMX0.XGF5wPX1sI9VgG11bnr41lCxeqTfFVHEhBIfBXXYAkw';
+
+function api(ep,o){
+  const h={'apikey':SK,'Authorization':'Bearer '+SK};
+  if(o&&o.method&&o.method!=='GET'){h['Content-Type']='application/json';h['Prefer']='return=representation';}
+  return fetch(SB+ep,{...o,headers:h});
+}
+
+async function sendEmail(to,subject,html){
+  try{
+    await fetch(_u()+'/functions/v1/send-email',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({to,subject,html})
+    });
+  }catch(e){console.error('Email error:',e);}
+}
+
+// =====================================================
+// STATE
+// =====================================================
+const ses=JSON.parse(sessionStorage.getItem('enigme_session')||'null');
+let GZ=null, ZN=null, DV=null, allGZ=[], allZonas=[], munC={};
+let step=1, codigo='', nContrato='', dniOK=false, archivos=[], archB64=[];
+let contratoFinal=null;
+
+// Zone mapping: departamento_id -> zone name
+const ZONE_MAP={
+  '2':'ORO I',      // Choluteca
+  '17':'ORO II',     // Valle
+  '8':'RODIO I',     // Francisco Morazán
+  '7':'RODIO II',    // El Paraíso
+  '12':'OCEANO I',   // La Paz
+  '4':'OCEANO II',   // Comayagua
+  '15':'COSMOS'      // Olancho
+};
+
+// =====================================================
+// SIGNATURE CANVAS
+// =====================================================
+const cv=document.getElementById('sigCanvas');
+const cx=cv.getContext('2d');
+let dr=false, sig=false;
+cx.strokeStyle='#000'; cx.lineWidth=2; cx.lineCap='round'; cx.lineJoin='round';
+
+cv.onmousedown=function(e){dr=true;sig=true;cx.beginPath();cx.moveTo(e.offsetX,e.offsetY);};
+cv.onmousemove=function(e){if(dr){cx.lineTo(e.offsetX,e.offsetY);cx.stroke();}};
+cv.onmouseup=cv.onmouseleave=function(){dr=false;};
+cv.addEventListener('touchstart',function(e){
+  e.preventDefault();var r=cv.getBoundingClientRect(),t=e.touches[0];
+  dr=true;sig=true;cx.beginPath();cx.moveTo(t.clientX-r.left,t.clientY-r.top);
+},{passive:false});
+cv.addEventListener('touchmove',function(e){
+  e.preventDefault();if(!dr)return;var r=cv.getBoundingClientRect(),t=e.touches[0];
+  cx.lineTo(t.clientX-r.left,t.clientY-r.top);cx.stroke();
+},{passive:false});
+cv.addEventListener('touchend',function(e){e.preventDefault();dr=false;});
+function clearSig(){cx.clearRect(0,0,cv.width,cv.height);sig=false;}
+
+// =====================================================
+// HELPERS
+// =====================================================
+function $(id){return document.getElementById(id);}
+function selTxt(id){var s=$(id);return s.options[s.selectedIndex]?s.options[s.selectedIndex].text:'';}
+function formatDNI(i){var v=i.value.replace(/\D/g,'');if(v.length>4)v=v.slice(0,4)+'-'+v.slice(4);if(v.length>9)v=v.slice(0,9)+'-'+v.slice(9);i.value=v.slice(0,15);}
+function calcEdad(d){var b=new Date(d),t=new Date(),a=t.getFullYear()-b.getFullYear();if(t.getMonth()<b.getMonth()||(t.getMonth()===b.getMonth()&&t.getDate()<b.getDate()))a--;return a;}
+function validarEdad(){
+  var v=$('f_fechanac').value, d=$('edadInfo'), i=$('f_fechanac');
+  if(!v){d.style.display='none';return;}
+  var a=calcEdad(v); d.style.display='block';
+  if(a<18){d.innerHTML='<span style="color:#c0392b">Edad: '+a+' -- MENOR DE EDAD</span>';i.classList.add('error');}
+  else{d.innerHTML='<span style="color:#27ae60">Edad: '+a+' -- Mayor de edad</span>';i.classList.remove('error');}
+}
+function fechaTexto(){
+  var n=new Date(),m=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  return n.getDate()+' de '+m[n.getMonth()]+' de '+n.getFullYear();
+}
+
+// =====================================================
+// DNI VERIFICATION
+// =====================================================
+async function verificarDNI(){
+  var dni=$('f_dni').value.trim();
+  if(!/^\d{4}-\d{4}-\d{5}$/.test(dni)){$('f_dni').classList.add('error');$('f_dni_error').style.display='block';return;}
+  $('f_dni').classList.remove('error');$('f_dni_error').style.display='none';
+  $('btnVerDNI').disabled=true;$('btnVerDNI').querySelector('span').textContent='Verificando...';
+  try{
+    var r1=await api('vendedoras?dni=eq.'+encodeURIComponent(dni)+'&select=*');var d1=await r1.json();
+    var r2=await api('contratos_vendedoras?dni=eq.'+encodeURIComponent(dni)+'&select=*');var d2=await r2.json();
+    if(d1.length>0){showEx(d1[0]);dniOK=false;}
+    else if(d2.length>0){showEx(d2[0]);dniOK=false;}
+    else{$('dniExistenteBox').style.display='none';$('dniOkBox').style.display='flex';$('formDatos').style.display='block';dniOK=true;}
+  }catch(e){$('dniOkBox').style.display='flex';$('formDatos').style.display='block';dniOK=true;}
+  $('btnVerDNI').disabled=false;$('btnVerDNI').querySelector('span').textContent='Verificar DNI';
+}
+function showEx(v){
+  $('ex_nombre').textContent=v.nombre||v.nombre_completo||'-';
+  $('ex_codigo').textContent=v.codigo||v.codigo_vendedora||'-';
+  $('ex_dni').textContent=v.dni||'-';
+  $('ex_telefono').textContent=v.telefono||'-';
+  $('ex_email').textContent=v.email||'-';
+  $('ex_direccion').textContent=v.direccion||'-';
+  $('ex_estado').innerHTML=(v.activo||v.estado==='activo')?'<span style="color:#27ae60">Activa</span>':'<span style="color:#c0392b">Inactiva</span>';
+  $('ex_fecha').textContent=v.fecha_ingreso||v.created_at?.split('T')[0]||'-';
+  var deuda=v.monto_deuda||v.deuda_actual||0;
+  if(v.tiene_deuda||deuda>0){$('ex_deuda').textContent='L '+Number(deuda).toLocaleString('es-HN',{minimumFractionDigits:2});$('ex_deuda_notas').textContent=v.notas_deuda||'';$('ex_deuda_box').style.display='block';}else{$('ex_deuda_box').style.display='none';}
+  $('dniExistenteBox').style.display='block';$('dniOkBox').style.display='none';$('formDatos').style.display='none';
+}
+
+// =====================================================
+// FILE UPLOADS
+// =====================================================
+function onFiles(){archivos=Array.from($('f_files').files);renderFiles();readB64();}
+function renderFiles(){
+  $('filesList').innerHTML=archivos.map(function(f,i){
+    return '<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#fff;border:1px solid rgba(139,105,20,.1);margin-bottom:6px">'
+      +'<span style="font-size:.78rem;color:#000">'+(f.type.includes('pdf')?'PDF: ':'IMG: ')+f.name+' <span style="color:rgba(0,0,0,.35)">('+((f.size/1024)|0)+' KB)</span></span>'
+      +'<button onclick="rmFile('+i+')" style="background:none;border:none;color:#c0392b;cursor:pointer;font-size:1rem;padding:0 4px">x</button></div>';
+  }).join('');
+  $('f_files_err').style.display=archivos.length<2?'block':'none';
+}
+function rmFile(i){archivos.splice(i,1);archB64.splice(i,1);renderFiles();}
+function readB64(){archB64=[];archivos.forEach(function(f,i){var r=new FileReader();r.onload=function(e){archB64[i]=e.target.result;};r.readAsDataURL(f);});}
+
+// =====================================================
+// INIT & DATA LOADING
+// =====================================================
+async function init(){
+  if(ses&&ses.rol==='zona'){
+    $('gerenteNombre').textContent=ses.nombre||'Gerente';
+    $('gerenteInitial').textContent=(ses.nombre||'G')[0];
+    $('gerenteCodigo').textContent='Zona: '+(ses.zona||ses.codigo||'');
+  }
+  try{await Promise.all([loadDeps(),loadGZ(),genNumContrato()]);}catch(e){console.error('Init error:',e);}
+}
+
+async function loadDeps(){
+  var r=await api('departamentos?select=id,nombre,codigo&order=nombre');
+  if(!r.ok){console.error('Deps:',r.status);return;}
+  var d=await r.json(), s=$('f_dep');
+  d.forEach(function(x){var o=document.createElement('option');o.value=x.id;o.textContent=x.nombre;s.appendChild(o);});
+}
+
+async function loadGZ(){
+  var r=await api('gerentes_zona?select=id,codigo,nombre,departamento_id,zona_id,email');
+  if(r.ok)allGZ=await r.json();
+  var zr=await api('zonas?select=id,codigo,nombre,departamento_id,gerencia_divisional_id&departamento_id=not.is.null');
+  if(zr.ok)allZonas=await zr.json();
+  console.log('Zonas cargadas:',allZonas.length,allZonas.map(function(z){return z.nombre+':dep'+z.departamento_id;}));
+}
+
+async function onDepChange(){
+  var id=$('f_dep').value;
+  await loadMun(id);
+  // Reset
+  $('f_zona_oro').value='';$('f_zona_id').value='';
+  $('f_gz_txt').value='';$('f_gz_id').value='';
+  $('f_div_txt').value='';$('f_div_id').value='';
+  $('f_codigo').value='';
+  GZ=null;ZN=null;DV=null;
+  if(!id)return;
+
+  // Find zona by departamento_id
+  var z=allZonas.find(function(x){return String(x.departamento_id)===String(id);});
+  if(!z){$('f_zona_oro').value='Departamento sin zona asignada';return;}
+  ZN=z;
+  // Use ZONE_MAP for the display name, fallback to DB name
+  var zoneName=ZONE_MAP[String(id)]||z.nombre;
+  $('f_zona_oro').value=zoneName;
+  $('f_zona_id').value=z.id;
+
+  // Find gerente for this zona
+  var g=allGZ.find(function(x){return String(x.zona_id)===String(z.id);});
+  if(g){GZ=g;$('f_gz_txt').value=g.nombre+' ('+g.codigo+')';$('f_gz_id').value=g.id;}
+  else{$('f_gz_txt').value='Sin gerente asignado';$('f_gz_id').value='';}
+
+  // Find gerencia divisional
+  if(z.gerencia_divisional_id){
+    try{
+      var dr2=await api('gerencias_divisionales?id=eq.'+z.gerencia_divisional_id+'&select=id,nombre,codigo,email');
+      var dd=await dr2.json();
+      if(dd[0]){DV=dd[0];$('f_div_txt').value=DV.nombre+' ('+DV.codigo+')';$('f_div_id').value=DV.id;}
+    }catch(e){}
+  }
+  await genCodigo();
+}
+
+async function loadMun(id){
+  var s=$('f_mun');
+  s.innerHTML='<option value="">Cargando...</option>';s.disabled=true;
+  if(!id){s.innerHTML='<option value="">Primero selecciona departamento</option>';return;}
+  if(!munC[id]){var r=await api('municipios?departamento_id=eq.'+id+'&select=id,nombre&order=nombre');munC[id]=await r.json();}
+  s.innerHTML='<option value="">Selecciona municipio ('+munC[id].length+')</option>';
+  munC[id].forEach(function(m){var o=document.createElement('option');o.value=m.id;o.textContent=m.nombre;s.appendChild(o);});
+  s.disabled=false;
+}
+
+async function genCodigo(){
+  try{
+    // Todos los codigos son secuenciales desde 301200 en adelante
+    // Gerentes de zona, coordinadores y vendedoras comparten la misma secuencia
+    var n=301201;
+    // Buscar el mayor codigo en contratos, vendedoras, coordinadores y gerentes
+    var sources=await Promise.all([
+      api('contratos_vendedoras?select=codigo_vendedora&order=codigo_vendedora.desc&limit=1').then(function(r){return r.json();}),
+      api('vendedoras?select=codigo&order=codigo.desc&limit=1').then(function(r){return r.json();}),
+      api('coordinadores?select=codigo&order=codigo.desc&limit=1').then(function(r){return r.json();}),
+      api('gerentes_zona?select=codigo&order=codigo.desc&limit=1').then(function(r){return r.json();})
+    ]);
+    if(sources[0].length){var c=parseInt(sources[0][0].codigo_vendedora);if(c>=n)n=c+1;}
+    if(sources[1].length){var c=parseInt(sources[1][0].codigo);if(c>=n)n=c+1;}
+    if(sources[2].length){var c=parseInt(sources[2][0].codigo);if(c>=n)n=c+1;}
+    if(sources[3].length){var c=parseInt(sources[3][0].codigo);if(c>=n)n=c+1;}
+    codigo=String(n);
+    $('f_codigo').value=codigo;
+  }catch(e){codigo=String(301201);$('f_codigo').value=codigo;}
+}
+
+async function genNumContrato(){
+  var y=new Date().getFullYear(), ts=Date.now().toString().slice(-4);
+  try{
+    var r=await api('contratos_vendedoras?select=numero_contrato&order=created_at.desc&limit=1');
+    var d=await r.json(), s=1;
+    if(d.length>0){var m=d[0].numero_contrato.match(/(\d+)$/);if(m)s=parseInt(m[1])+1;}
+    nContrato='ENI-'+y+'-'+String(s).padStart(4,'0');
+  }catch(e){nContrato='ENI-'+y+'-'+ts;}
+  $('contractNum').textContent='CONTRATO N.\u00B0 '+nContrato;
+}
+
+// =====================================================
+// STEP NAVIGATION
+// =====================================================
+function goToStep(s){
+  if(s>step&&!valStep(step))return;
+  step=s;
+  document.querySelectorAll('.form-section').forEach(function(x){x.classList.remove('active');});
+  $('step-'+s).classList.add('active');
+  document.querySelectorAll('.step').forEach(function(x){
+    var n=parseInt(x.dataset.step);
+    x.classList.remove('active','completed');
+    if(n===s)x.classList.add('active');
+    else if(n<s)x.classList.add('completed');
+  });
+  if(s===3){
+    $('cl_city').textContent=selTxt('f_mun')||'\u2014';
+    $('cl_dep').textContent=selTxt('f_dep')||'\u2014';
+    $('cl_date').textContent=fechaTexto();
+    $('cl_name').textContent=$('f_nombre').value||'\u2014';
+    $('cl_dni').textContent=$('f_dni').value||'\u2014';
+    $('cl_addr').textContent=$('f_direccion').value||'\u2014';
+  }
+  if(s===4){
+    $('r_nombre').textContent=$('f_nombre').value;
+    $('r_dni').textContent=$('f_dni').value;
+    $('r_email').textContent=$('f_email').value;
+    $('r_telefono').textContent=$('f_telefono').value;
+    $('r_ubic').textContent=selTxt('f_mun')+', '+selTxt('f_dep')+($('f_sector').value?' -- Sector '+$('f_sector').value:'');
+    $('r_codigo').textContent=codigo;
+    $('r_zona_oro').textContent=$('f_zona_oro').value||'-';
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function valStep(s){
+  if(s===1){
+    if(!dniOK){alert('Primero verifica el DNI.');return false;}
+    var ok=true;
+    [{id:'f_nombre'},{id:'f_telefono'},{id:'f_email',p:/^[^\s@]+@[^\s@]+\.[^\s@]+$/},{id:'f_fechanac'},{id:'f_direccion'}].forEach(function(f){
+      var el=$(f.id),v=el.value.trim(),g=!!v;
+      if(f.p&&v&&!f.p.test(v))g=false;
+      if(f.id==='f_fechanac'&&v&&calcEdad(v)<18)g=false;
+      if(!g){el.classList.add('error');ok=false;}else el.classList.remove('error');
+    });
+    if(archivos.length<2){$('f_files_err').style.display='block';ok=false;}else $('f_files_err').style.display='none';
+    return ok;
+  }
+  if(s===2){
+    var ok2=true;
+    ['f_dep','f_mun','f_sector'].forEach(function(id){var el=$(id);if(!el.value){el.classList.add('error');ok2=false;}else el.classList.remove('error');});
+    if(!$('f_zona_oro').value||$('f_zona_oro').value==='Departamento sin zona asignada'){alert('El departamento seleccionado no tiene zona asignada.');ok2=false;}
+    return ok2;
+  }
+  if(s===3){
+    var ok3=['chk1','chk2','chk3','chk4','chk5'].every(function(id){return $(id).checked;});
+    if(!ok3)alert('Debes aceptar todas las cláusulas para continuar.');
+    return ok3;
+  }
+  return true;
+}
+
+// =====================================================
+// PDF GENERATION (PRINT WINDOW)
+// =====================================================
+function generarPDFHTML(cd){
+  var dep=selTxt('f_dep'), mun=selTxt('f_mun'), sec=$('f_sector').value;
+  var firmaImg=cv.toDataURL('image/png');
+  var imgs='';
+  archB64.forEach(function(b,i){
+    if(b&&b.startsWith('data:image')){imgs+='<div style="margin:10px 0;text-align:center"><p style="font-size:11px;color:#888">Documento '+(i+1)+':</p><img src="'+b+'" style="max-width:100%;max-height:300px;border:1px solid #ccc"/></div>';}
+    else if(b){imgs+='<p style="font-size:11px;color:#888">Documento '+(i+1)+': Archivo PDF adjunto ('+(archivos[i]?archivos[i].name:'')+')</p>';}
+  });
+  return '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Contrato '+cd.numero_contrato+'</title>'
+    +'<style>body{font-family:Arial,sans-serif;color:#000;padding:40px;max-width:800px;margin:0 auto;font-size:13px;line-height:1.7}'
+    +'h1{font-size:20px;text-align:center;letter-spacing:4px;margin-bottom:4px}'
+    +'h2{font-size:15px;text-align:center;margin:20px 0 10px;border-bottom:1px solid #ccc;padding-bottom:6px}'
+    +'h3{font-size:13px;margin:14px 0 6px;font-weight:bold}.center{text-align:center}'
+    +'table{width:100%;border-collapse:collapse;margin:10px 0}td{padding:6px 10px;border-bottom:1px solid #eee}.label{font-weight:bold;width:40%;color:#555}'
+    +'ol{padding-left:20px}li{margin-bottom:4px}'
+    +'.sig-box{text-align:center;margin:20px 0;padding:20px;border:1px solid #ccc}'
+    +'.footer{text-align:center;font-size:10px;color:#999;margin-top:30px;border-top:1px solid #eee;padding-top:10px}'
+    +'@media print{body{padding:20px}}</style></head><body>'
+    +'<h1>ENIGME</h1><p class="center" style="font-size:10px;letter-spacing:3px;color:#8B6914">HONDURAS</p>'
+    +'<hr style="border:1px solid #8B6914;margin:15px 0">'
+    +'<h2>CONTRATO MERCANTIL DE INTERMEDIACI\u00D3N COMERCIAL INDEPENDIENTE</h2>'
+    +'<p class="center" style="font-size:11px;color:#888">Contrato N.\u00B0 <strong>'+cd.numero_contrato+'</strong></p>'
+    +'<p>Fundamentado en el C\u00F3digo de Comercio de Honduras (Decreto No. 73-50) y la Ley de Protecci\u00F3n al Consumidor (Decreto No. 24-2008).</p>'
+    +'<p>En la ciudad de <strong>'+mun+'</strong>, Departamento de <strong>'+dep+'</strong>, Rep\u00FAblica de Honduras, a los <strong>'+fechaTexto()+'</strong>, comparecen:</p>'
+    +'<p><strong>PRIMERA PARTE: ENIGME HONDURAS</strong>, sociedad mercantil, en adelante "LA EMPRESA".</p>'
+    +'<p><strong>SEGUNDA PARTE: '+cd.nombre_completo+'</strong>, con identidad n\u00FAmero <strong>'+cd.dni+'</strong>, domiciliada en <strong>'+cd.direccion+'</strong>, en adelante "LA ASESORA INDEPENDIENTE".</p>'
+    +'<h3>CL\u00C1USULA PRIMERA: OBJETO DEL CONTRATO</h3><p>Establecer la relaci\u00F3n comercial independiente para la distribuci\u00F3n, promoci\u00F3n y venta al detalle de los productos de la marca ENIGME.</p>'
+    +'<h3>CL\u00C1USULA SEGUNDA: COMISI\u00D3N POR VENTAS</h3><p>Comisi\u00F3n del <strong>quince por ciento (15%)</strong> sobre la venta neta.</p>'
+    +'<h3>CL\u00C1USULA TERCERA: CONDICIONES DE PAGO</h3><ol><li><strong>30%</strong> al momento de solicitar el pedido.</li><li><strong>40%</strong> al momento de recibir la mercader\u00EDa.</li><li><strong>30%</strong> restante en un plazo m\u00E1ximo de <strong>14 d\u00EDas calendario</strong>.</li></ol>'
+    +'<h3>CL\u00C1USULA CUARTA: COMPROMISO DE PAGO PUNTUAL</h3><p>La asesora se compromete a realizar todos los pagos <strong>al d\u00EDa</strong>.</p>'
+    +'<h3>CL\u00C1USULA QUINTA: INDEPENDENCIA COMERCIAL</h3><p>Act\u00FAa como comerciante individual independiente. No existe relaci\u00F3n laboral.</p>'
+    +'<h3>CL\u00C1USULA SEXTA: OBLIGACIONES DE LA ASESORA</h3><ol><li>Promocionar y distribuir los productos ENIGME de manera \u00E9tica y profesional.</li><li>No alterar, modificar ni reenvasar los productos.</li><li>Respetar los precios de venta sugeridos.</li><li>Mantener la confidencialidad de la informaci\u00F3n comercial.</li><li>Operar dentro de la zona geogr\u00E1fica y sector asignados.</li></ol>'
+    +'<h3>CL\u00C1USULA S\u00C9PTIMA: OBLIGACIONES DE LA EMPRESA</h3><ol><li>Suministrar los productos en condiciones de calidad.</li><li>Proveer material de apoyo.</li><li>Liquidar oportunamente las comisiones.</li><li>Proporcionar capacitaci\u00F3n comercial peri\u00F3dica.</li></ol>'
+    +'<h3>CL\u00C1USULA OCTAVA: RESPONSABILIDAD SOBRE LA MERCADER\u00CDA</h3><p>Una vez recibida, la asesora asume custodia total y responsabilidad.</p>'
+    +'<h3>CL\u00C1USULA NOVENA: VIGENCIA Y TERMINACI\u00D3N</h3><p>Vigencia indefinida. Puede terminarse con 15 d\u00EDas de anticipaci\u00F3n por escrito.</p>'
+    +'<h3>CL\u00C1USULA D\u00C9CIMA: PROTECCI\u00D3N DE DATOS</h3><p>LA EMPRESA protege los datos personales conforme a las mejores pr\u00E1cticas vigentes.</p>'
+    +'<h3>CL\u00C1USULA UND\u00C9CIMA: PROPIEDAD INTELECTUAL</h3><p>La marca ENIGME es propiedad exclusiva de LA EMPRESA.</p>'
+    +'<h3>CL\u00C1USULA DUOD\u00C9CIMA: SOLUCI\u00D3N DE CONTROVERSIAS</h3><p>Mediaci\u00F3n y conciliaci\u00F3n conforme a la Ley de Conciliaci\u00F3n y Arbitraje.</p>'
+    +'<h3>CL\u00C1USULA D\u00C9CIMA TERCERA: ACEPTACI\u00D3N INTEGRAL</h3><p>Firma digital con plena validez legal (Decreto No. 149-2013).</p>'
+    +'<hr style="margin:20px 0"><h2>DATOS DEL CONTRATO</h2>'
+    +'<table><tr><td class="label">Nombre:</td><td><strong>'+cd.nombre_completo+'</strong></td></tr>'
+    +'<tr><td class="label">DNI:</td><td>'+cd.dni+'</td></tr>'
+    +'<tr><td class="label">Tel\u00E9fono:</td><td>'+cd.telefono+'</td></tr>'
+    +'<tr><td class="label">Email:</td><td>'+cd.email+'</td></tr>'
+    +'<tr><td class="label">Direcci\u00F3n:</td><td>'+cd.direccion+'</td></tr>'
+    +'<tr><td class="label">Departamento:</td><td>'+dep+'</td></tr>'
+    +'<tr><td class="label">Municipio:</td><td>'+mun+'</td></tr>'
+    +'<tr><td class="label">Sector:</td><td>'+sec+'</td></tr>'
+    +'<tr><td class="label">Zona:</td><td><strong style="color:#8B6914">'+cd.zona_oro+'</strong></td></tr>'
+    +'<tr><td class="label">Gerente de Zona:</td><td>'+($('f_gz_txt').value||'\u2014')+'</td></tr>'
+    +'<tr><td class="label">Gerencia Divisional:</td><td>'+($('f_div_txt').value||'\u2014')+'</td></tr>'
+    +'<tr><td class="label">C\u00F3digo Asesora:</td><td><strong style="font-size:16px">'+cd.codigo_vendedora+'</strong></td></tr>'
+    +'<tr><td class="label">Comisi\u00F3n:</td><td><strong>15% sobre venta neta</strong></td></tr>'
+    +'<tr><td class="label">Esquema de Pago:</td><td><strong>30% - 40% - 30% (14 d\u00EDas)</strong></td></tr></table>'
+    +'<div class="sig-box"><p style="font-size:11px;color:#888;margin-bottom:10px">FIRMA DIGITAL DE LA ASESORA INDEPENDIENTE</p>'
+    +'<img src="'+firmaImg+'" style="max-width:300px;height:auto"/>'
+    +'<p style="margin-top:8px"><strong>'+cd.nombre_completo+'</strong></p>'
+    +'<p style="font-size:11px;color:#888">C\u00F3digo: '+cd.codigo_vendedora+' \u2014 Fecha: '+fechaTexto()+'</p></div>'
+    +(imgs?'<h2>DOCUMENTOS DE IDENTIDAD ADJUNTOS</h2>'+imgs:'')
+    +'<div class="footer"><p>\u00A9 2026 ENIGME Honduras \u2014 www.enigmeofficial.com</p>'
+    +'<p>Contrato generado digitalmente. V\u00E1lido conforme a la Ley de Firma Electr\u00F3nica (Decreto No. 149-2013).</p></div>'
+    +'<script>window.onload=function(){window.print();}<\/script></body></html>';
+}
+function imprimirPDF(){if(!contratoFinal)return;var w=window.open('','_blank');w.document.write(generarPDFHTML(contratoFinal));w.document.close();}
+
+// =====================================================
+// EMAIL HTML (Welcome)
+// =====================================================
+function emailHTML(d){
+  return '<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#fff;color:#000;border:1px solid #e0d8c8">'
+  +'<div style="background:#FAF6F0;padding:30px;text-align:center;border-bottom:2px solid #8B6914"><h1 style="font-family:serif;font-size:24px;font-weight:300;letter-spacing:8px;color:#000;margin:0">ENIGME</h1><p style="font-size:10px;letter-spacing:4px;color:#8B6914;margin-top:6px">HONDURAS</p></div>'
+  +'<div style="padding:30px;background:#fff;color:#000">'
+  +'<h2 style="font-size:18px;color:#000;margin-bottom:16px;text-align:center">Bienvenida a ENIGME</h2>'
+  +'<p style="font-size:14px;line-height:1.8;margin-bottom:16px">Estimada <strong>'+d.nombre_completo+'</strong>,</p>'
+  +'<p style="font-size:14px;line-height:1.8;color:#000;margin-bottom:12px">Es un placer darte la bienvenida como <strong>Asesora Independiente</strong> de ENIGME Honduras. Tu contrato <strong>'+d.numero_contrato+'</strong> ha sido registrado exitosamente.</p>'
+  +'<div style="background:#FAF6F0;border:2px solid #8B6914;padding:20px;text-align:center;margin-bottom:20px"><p style="font-size:11px;letter-spacing:3px;color:#8B6914;margin:0 0 6px">Tu C\u00F3digo de Asesora</p><p style="font-family:serif;font-size:28px;color:#8B6914;letter-spacing:4px;margin:0;font-weight:bold">'+d.codigo_vendedora+'</p></div>'
+  +'<h3 style="font-size:15px;color:#8B6914;margin:20px 0 10px;border-bottom:1px solid #eee;padding-bottom:6px">Resumen de tu Contrato</h3>'
+  +'<p style="font-size:13px;line-height:1.8;color:#000;margin-bottom:8px">Al firmar este contrato, aceptas actuar como <strong>intermediaria comercial independiente</strong> de ENIGME Honduras, conforme al C\u00F3digo de Comercio de Honduras (Decreto No. 73-50). No existe relaci\u00F3n laboral entre t\u00FA y la empresa.</p>'
+  +'<h3 style="font-size:15px;color:#8B6914;margin:20px 0 10px;border-bottom:1px solid #eee;padding-bottom:6px">Tu Comisi\u00F3n</h3>'
+  +'<p style="font-size:13px;line-height:1.8;color:#000;margin-bottom:8px">Recibir\u00E1s una comisi\u00F3n del <strong style="color:#27ae60">15% sobre la venta neta</strong> de cada pedido que gestiones.</p>'
+  +'<h3 style="font-size:15px;color:#8B6914;margin:20px 0 10px;border-bottom:1px solid #eee;padding-bottom:6px">Condiciones de Pago de Pedidos</h3>'
+  +'<table style="width:100%;font-size:13px;border-collapse:collapse;margin-bottom:16px">'
+  +'<tr><td style="padding:10px;border-bottom:1px solid #eee;color:#000"><strong>30%</strong> al momento de solicitar el pedido</td></tr>'
+  +'<tr><td style="padding:10px;border-bottom:1px solid #eee;color:#000"><strong>40%</strong> al momento de recibir la mercader\u00EDa</td></tr>'
+  +'<tr><td style="padding:10px;border-bottom:1px solid #eee;color:#000"><strong>30%</strong> restante en un plazo m\u00E1ximo de <strong>14 d\u00EDas calendario</strong></td></tr></table>'
+  +'<p style="font-size:13px;line-height:1.8;color:#000;margin-bottom:8px">Te comprometes a realizar todos los pagos <strong>al d\u00EDa</strong>, sin atrasos ni demoras. El incumplimiento reiterado ser\u00E1 causal de rescisi\u00F3n inmediata del contrato.</p>'
+  +'<h3 style="font-size:15px;color:#8B6914;margin:20px 0 10px;border-bottom:1px solid #eee;padding-bottom:6px">Tus Obligaciones</h3>'
+  +'<ul style="font-size:13px;line-height:1.8;color:#000;padding-left:20px;margin-bottom:16px">'
+  +'<li>Promocionar y distribuir los productos ENIGME de manera \u00E9tica y profesional</li>'
+  +'<li>No alterar, modificar ni reenvasar los productos</li>'
+  +'<li>Respetar los precios de venta sugeridos en el cat\u00E1logo oficial</li>'
+  +'<li>Mantener la confidencialidad de la informaci\u00F3n comercial</li>'
+  +'<li>Operar dentro de la zona geogr\u00E1fica y sector asignados</li>'
+  +'<li>Eres responsable de tus obligaciones fiscales ante el SAR</li></ul>'
+  +'<h3 style="font-size:15px;color:#8B6914;margin:20px 0 10px;border-bottom:1px solid #eee;padding-bottom:6px">Datos de tu Contrato</h3>'
+  +'<table style="width:100%;font-size:13px;border-collapse:collapse;margin-bottom:20px">'
+  +'<tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888;width:40%">Zona:</td><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold;color:#8B6914">'+(d.zona_oro||'\u2014')+'</td></tr>'
+  +'<tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888">DNI:</td><td style="padding:8px;border-bottom:1px solid #eee">'+d.dni+'</td></tr>'
+  +'<tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888">Tel\u00E9fono:</td><td style="padding:8px;border-bottom:1px solid #eee">'+d.telefono+'</td></tr>'
+  +'<tr><td style="padding:8px;color:#888">Vigencia:</td><td style="padding:8px;font-weight:bold">Indefinida (con 15 d\u00EDas de preaviso para terminaci\u00F3n)</td></tr></table>'
+  +'<p style="font-size:12px;line-height:1.7;color:#000;background:#FAF6F0;padding:14px;margin-bottom:20px">Este contrato tiene <strong>plena validez legal</strong> conforme a la Ley de Firma Electr\u00F3nica de Honduras (Decreto No. 149-2013). La marca ENIGME, logotipos y cat\u00E1logos son propiedad exclusiva de la empresa.</p>'
+  +'<h3 style="font-size:15px;color:#8B6914;margin:20px 0 10px;border-bottom:1px solid #eee;padding-bottom:6px">Tu Boutique Virtual</h3>'
+  +'<p style="font-size:13px;line-height:1.8;color:#000;margin-bottom:12px">Tu boutique online ya est\u00E1 lista. Comparte este enlace con tus clientes para que vean toda la colecci\u00F3n ENIGME con tu c\u00F3digo:</p>'
+  +'<div style="text-align:center;margin:16px 0;background:#FAF6F0;border:2px solid #8B6914;padding:16px"><a href="https://enigme.pro/tienda.html?c='+d.codigo_vendedora+'" style="font-family:serif;font-size:16px;color:#8B6914;font-weight:bold;letter-spacing:1px;text-decoration:none;word-break:break-all;">enigme.pro/tienda.html?c='+d.codigo_vendedora+'</a></div>'
+  +'<div style="text-align:center;margin:0 0 20px"><a href="https://enigme.pro/tienda.html?c='+d.codigo_vendedora+'" style="display:inline-block;padding:14px 32px;background:#8B6914;color:#fff;text-decoration:none;font-size:13px;letter-spacing:2px;font-weight:bold">\uD83D\uDECD ABRIR MI BOUTIQUE</a></div>'
+  +'<h3 style="font-size:15px;color:#8B6914;margin:20px 0 10px;border-bottom:1px solid #eee;padding-bottom:6px">Tu Cat\u00E1logo Digital</h3>'
+  +'<p style="font-size:13px;line-height:1.8;color:#000;margin-bottom:12px">Descarga tu cat\u00E1logo oficial ENIGME 2026 con todas las colecciones, precios y referencias:</p>'
+  +'<div style="text-align:center;margin:16px 0"><a href="https://enigme.pro/catalogo.pdf" style="display:inline-block;padding:14px 32px;background:#8B6914;color:#fff;text-decoration:none;font-size:13px;letter-spacing:2px;font-weight:bold">\u2B07 DESCARGAR CAT\u00C1LOGO 2026 (PDF)</a></div>'
+  +'<div style="background:#f0ece3;border-left:3px solid #8B6914;padding:14px 16px;margin:20px 0">'
+  +'<p style="font-size:12px;line-height:1.7;color:#444;margin:0">\uD83C\uDF3F <strong>Compromiso medioambiental:</strong> En ENIGME trabajamos de forma 100% virtual y digital. Nuestro cat\u00E1logo, contratos y comunicaciones son electr\u00F3nicos para <strong>reducir el impacto medioambiental</strong> y el consumo de papel. Gracias por ser parte de este compromiso con el planeta.</p></div>'
+  +'<div style="text-align:center;margin:24px 0"><a href="https://www.enigmeofficial.com" style="display:inline-block;padding:12px 30px;background:#8B6914;color:#fff;text-decoration:none;font-size:13px;letter-spacing:2px">VISITAR ENIGME</a></div>'
+  +'<p style="font-size:12px;color:#000;text-align:center">Tu gerente de zona est\u00E1 disponible para apoyarte.</p></div>'
+  +'<div style="padding:16px;background:#FAF6F0;text-align:center;border-top:1px solid #e0d8c8"><p style="font-size:10px;color:#888;margin:0">\u00A9 2026 ENIGME Honduras | <a href="https://www.enigmeofficial.com" style="color:#8B6914">www.enigmeofficial.com</a></p></div></div>';
+}
+
+// =====================================================
+// SUBMIT CONTRACT
+// =====================================================
+async function enviar(){
+  if(!sig){$('sigErr').style.display='block';return;}
+  $('sigErr').style.display='none';
+  $('btnEnviar').disabled=true;
+  $('loaderMsg').textContent='Procesando contrato...';
+  $('loader').classList.add('active');
+
+  try{
+    // Fresh contract number & codigo
+    $('loaderMsg').textContent='Generando n\u00FAmero de contrato...';
+    await genNumContrato();
+    await genCodigo();
+
+    var cd={
+      numero_contrato:nContrato,
+      nombre_completo:$('f_nombre').value.trim(),
+      dni:$('f_dni').value.trim(),
+      rtn:$('f_rtn').value.trim()||null,
+      telefono:$('f_telefono').value.trim(),
+      email:$('f_email').value.trim(),
+      direccion:$('f_direccion').value.trim(),
+      fecha_nacimiento:$('f_fechanac').value,
+      departamento_id:parseInt($('f_dep').value),
+      municipio_id:parseInt($('f_mun').value),
+      sector_id:null,
+      zona_id:$('f_zona_id').value||null,
+      gerente_id:$('f_gz_id').value||null,
+      gerencia_divisional_id:$('f_div_id').value||null,
+      zona_oro:$('f_zona_oro').value,
+      codigo_vendedora:codigo,
+      firma_digital:cv.toDataURL('image/png'),
+      aceptado_terminos:true,
+      porcentaje_comision:15,
+      pago_solicitud_porcentaje:30,
+      pago_recepcion_porcentaje:40,
+      pago_restante_porcentaje:30,
+      dias_plazo_pago:14,
+      estado:'activo'
+    };
+
+    // 1. Save contract
+    $('loaderMsg').textContent='Guardando contrato...';
+    var cr=await api('contratos_vendedoras',{method:'POST',body:JSON.stringify(cd)});
+    if(!cr.ok){var t=await cr.text();throw new Error(t);}
+    var contrato=await cr.json();
+
+    // 2. Save vendedora
+    $('loaderMsg').textContent='Registrando asesora...';
+    var vd={
+      codigo:codigo,
+      nombre:cd.nombre_completo,
+      dni:cd.dni,
+      telefono:cd.telefono,
+      email:cd.email,
+      direccion:cd.direccion,
+      fecha_nacimiento:cd.fecha_nacimiento,
+      zona_id:cd.zona_id,
+      gerente_id:cd.gerente_id,
+      activo:true,
+      fecha_ingreso:new Date().toISOString().split('T')[0]
+    };
+    if(GZ){try{var sr=await api('sectores?gerente_id=eq.'+GZ.id+'&numero_sector=eq.'+$('f_sector').value+'&limit=1');var sd=await sr.json();if(sd[0])vd.sector_id=sd[0].id;}catch(e){}}
+    var vr=await api('vendedoras',{method:'POST',body:JSON.stringify(vd)});
+    if(vr.ok){var v=await vr.json();if(v&&v[0])await api('contratos_vendedoras?id=eq.'+contrato[0].id,{method:'PATCH',body:JSON.stringify({vendedora_id:v[0].id})});}
+
+    // 2b. Save to nombramientos (para que aparezca en admin)
+    $('loaderMsg').textContent='Registrando nombramiento...';
+    try{await api('nombramientos',{method:'POST',body:JSON.stringify({
+      nombre:cd.nombre_completo,
+      dni:cd.dni,
+      codigo_nombramiento:codigo,
+      gerente_id:cd.gerente_id||null,
+      telefono:cd.telefono,
+      email:cd.email,
+      direccion:cd.direccion,
+      ano:new Date().getFullYear(),
+      fecha_ingreso:new Date().toISOString().split('T')[0],
+      observaciones:'Contrato '+nContrato+' | Zona: '+(cd.zona_oro||'N/A'),
+      archivado:false
+    })});}catch(e){console.error('Nombramiento:',e);}
+
+    // 3. Welcome email to vendedora
+    $('loaderMsg').textContent='Enviando correo de bienvenida...';
+    await sendEmail(cd.email,'Bienvenida a ENIGME - Tu C\u00F3digo: '+codigo,emailHTML(cd));
+
+    // 4. Notify gerente zona
+    $('loaderMsg').textContent='Notificando a Gerencia de Zona...';
+    if(GZ&&GZ.email){
+      await sendEmail(GZ.email,'Nuevo Contrato \u2014 '+cd.nombre_completo+' ('+codigo+')',
+        '<div style="font-family:Arial;padding:20px"><h2>Nuevo Contrato de Asesora</h2>'
+        +'<p><strong>Nombre:</strong> '+cd.nombre_completo+'</p>'
+        +'<p><strong>DNI:</strong> '+cd.dni+'</p>'
+        +'<p><strong>C\u00F3digo:</strong> '+codigo+'</p>'
+        +'<p><strong>Zona:</strong> '+cd.zona_oro+'</p>'
+        +'<p><strong>Tel\u00E9fono:</strong> '+cd.telefono+'</p>'
+        +'<p><strong>Correo:</strong> '+cd.email+'</p>'
+        +'<p><strong>Contrato:</strong> '+nContrato+'</p>'
+        +'<p><strong>Sector:</strong> '+$('f_sector').value+'</p>'
+        +'<hr><p style="color:#888;font-size:12px">Revise en el panel de Gerencia.</p></div>');
+    }
+
+    // 5. Notify divisional
+    $('loaderMsg').textContent='Notificando a Gerencia Divisional...';
+    if(DV&&DV.email){
+      await sendEmail(DV.email,'Nuevo Contrato \u2014 Zona '+(ZN?ZN.nombre:'')+' \u2014 '+cd.nombre_completo,
+        '<div style="font-family:Arial;padding:20px"><h2>Nuevo Contrato en su Divisi\u00F3n</h2>'
+        +'<p><strong>Asesora:</strong> '+cd.nombre_completo+' ('+codigo+')</p>'
+        +'<p><strong>Zona:</strong> '+(ZN?ZN.nombre:'')+'</p>'
+        +'<p><strong>Gerente:</strong> '+(GZ?GZ.nombre:'N/A')+'</p>'
+        +'<p><strong>Contrato:</strong> '+nContrato+'</p>'
+        +'<hr><p style="color:#888;font-size:12px">Revise en su panel de Gerencia Divisional.</p></div>');
+    }
+
+    // 6. Justificante to admin emails
+    $('loaderMsg').textContent='Enviando justificantes a administraci\u00F3n...';
+    var justHtml='<div style="font-family:Arial;padding:20px;max-width:600px;margin:0 auto">'
+      +'<div style="background:#FAF6F0;padding:24px;text-align:center;border-bottom:2px solid #8B6914">'
+      +'<h1 style="font-family:serif;font-size:22px;letter-spacing:6px;color:#000;margin:0">ENIGME</h1>'
+      +'<p style="font-size:10px;letter-spacing:4px;color:#8B6914;margin-top:4px">JUSTIFICANTE DE CONTRATO</p></div>'
+      +'<div style="padding:24px;background:#fff"><h2 style="font-size:16px;color:#000;margin-bottom:16px">Nuevo Contrato Registrado</h2>'
+      +'<table style="width:100%;font-size:13px;border-collapse:collapse">'
+      +'<tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888;width:40%">Contrato:</td><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold">'+nContrato+'</td></tr>'
+      +'<tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888">Nombre:</td><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold">'+cd.nombre_completo+'</td></tr>'
+      +'<tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888">DNI:</td><td style="padding:8px;border-bottom:1px solid #eee">'+cd.dni+'</td></tr>'
+      +'<tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888">C\u00F3digo:</td><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold;color:#8B6914">'+codigo+'</td></tr>'
+      +'<tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888">Zona:</td><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold;color:#8B6914">'+cd.zona_oro+'</td></tr>'
+      +'<tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888">Tel\u00E9fono:</td><td style="padding:8px;border-bottom:1px solid #eee">'+cd.telefono+'</td></tr>'
+      +'<tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888">Email:</td><td style="padding:8px;border-bottom:1px solid #eee">'+cd.email+'</td></tr>'
+      +'<tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888">Gerente Zona:</td><td style="padding:8px;border-bottom:1px solid #eee">'+(GZ?GZ.nombre:'N/A')+'</td></tr>'
+      +'<tr><td style="padding:8px;color:#888">Fecha:</td><td style="padding:8px">'+fechaTexto()+'</td></tr></table></div>'
+      +'<div style="padding:12px;background:#FAF6F0;text-align:center;font-size:10px;color:#999">\u00A9 2026 ENIGME Honduras \u2014 Justificante autom\u00E1tico</div></div>';
+    var justAsunto='Justificante \u2014 Nuevo Contrato '+nContrato+' \u2014 '+cd.nombre_completo+' ('+cd.zona_oro+')';
+    await sendEmail(['info@enigmeofficial.com','keydiarmas@enigmeofficial.com','carlosarmas@enigmeofficial.com'],justAsunto,justHtml);
+
+    // 7. Generate PDF
+    $('loaderMsg').textContent='Generando PDF del contrato...';
+    contratoFinal=cd;
+    await new Promise(function(r){setTimeout(r,500);});
+    var pdfWin=window.open('','_blank');
+    if(pdfWin){pdfWin.document.write(generarPDFHTML(cd));pdfWin.document.close();}
+
+    // Done - show success
+    $('loader').classList.remove('active');
+    $('s_codigo').textContent=codigo;
+    $('s_contrato').textContent=nContrato;
+    $('s_nombre').textContent=cd.nombre_completo;
+    $('s_zona').textContent=$('f_zona_oro').value||'N/A';
+    $('s_zona_oro').textContent=cd.zona_oro||'N/A';
+    $('s_gerente').textContent=$('f_gz_txt').value||'N/A';
+    $('s_div').textContent=$('f_div_txt').value||'N/A';
+    $('s_fecha').textContent=new Date().toLocaleDateString('es-HN',{year:'numeric',month:'long',day:'numeric'});
+    $('s_tienda_link').textContent=window.location.origin+'/tienda.html?c='+encodeURIComponent(codigo);
+    document.querySelectorAll('.form-section').forEach(function(x){x.classList.remove('active');});
+    document.querySelector('.steps').style.display='none';
+    document.querySelector('.contract-header').style.display='none';
+    $('okScreen').classList.add('active');
+
+  }catch(e){
+    console.error(e);
+    $('loader').classList.remove('active');
+    $('btnEnviar').disabled=false;
+    alert('Error: '+e.message);
+  }
+}
+
+// =====================================================
+// NUEVO CONTRATO (RESET)
+// =====================================================
+function copiarLinkTienda(){var l=document.getElementById('s_tienda_link').textContent;navigator.clipboard.writeText(l).then(function(){alert('Enlace de tienda copiado.');}).catch(function(){alert('Enlace: '+l);});}
+
+function nuevoContrato(){
+  document.querySelectorAll('.form-input').forEach(function(i){if(!i.readOnly)i.value='';});
+  document.querySelectorAll('.form-select').forEach(function(s){s.selectedIndex=0;});
+  document.querySelectorAll('input[type="checkbox"]').forEach(function(c){c.checked=false;});
+  clearSig();
+  dniOK=false;archivos=[];archB64=[];contratoFinal=null;
+  $('formDatos').style.display='none';
+  $('dniExistenteBox').style.display='none';
+  $('dniOkBox').style.display='none';
+  $('filesList').innerHTML='';
+  $('okScreen').classList.remove('active');
+  document.querySelector('.steps').style.display='';
+  document.querySelector('.contract-header').style.display='';
+  $('btnEnviar').disabled=false;
+  $('f_mun').disabled=true;
+  $('f_mun').innerHTML='<option value="">Primero selecciona departamento</option>';
+  // Reset readonly fields
+  $('f_zona_oro').value='';$('f_zona_id').value='';
+  $('f_gz_txt').value='';$('f_gz_id').value='';
+  $('f_div_txt').value='';$('f_div_id').value='';
+  $('f_codigo').value='';
+  GZ=null;ZN=null;DV=null;
+  step=1;goToStep(1);genNumContrato();
+}
+
+// =====================================================
+// EVENT LISTENERS & INIT
+// =====================================================
+document.querySelectorAll('.form-input,.form-select').forEach(function(el){
+  el.addEventListener('input',function(){el.classList.remove('error');});
+  el.addEventListener('change',function(){el.classList.remove('error');});
+});
+
+var dz=$('dropZone');
+if(dz){
+  dz.ondragover=function(e){e.preventDefault();dz.style.borderColor='#8B6914';};
+  dz.ondragleave=function(){dz.style.borderColor='rgba(139,105,20,.25)';};
+  dz.ondrop=function(e){e.preventDefault();dz.style.borderColor='rgba(139,105,20,.25)';$('f_files').files=e.dataTransfer.files;onFiles();};
+}
+
+init();
+// SW disabled - was causing cache redirect issues
+// if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(e){console.log('SW:',e);});}
+</script>
+</body>
+</html>

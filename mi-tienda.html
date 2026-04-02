@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mi Tienda &middot; ENIGME</title>
+  <meta name="theme-color" content="#0a0a0a"/>
+  <link rel="icon" href="icon-192.svg" type="image/svg+xml"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@300;400;500;600;700&family=Jost:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{background:#0a0a0a;color:#e8e0d0;font-family:'Jost',sans-serif;font-weight:300;min-height:100vh;}
+
+    /* TOPBAR */
+    .topbar{padding:18px 28px;border-bottom:1px solid rgba(203,170,99,.15);background:rgba(10,10,10,.97);display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(10px);}
+    .topbar .brand{font-family:'Cinzel',serif;font-size:.85rem;letter-spacing:.35em;color:#CBAA63;font-weight:400;}
+    .topbar .brand-sub{font-size:.5rem;letter-spacing:3px;color:rgba(203,170,99,.4);text-transform:uppercase;margin-left:10px;}
+    .btn-logout{padding:7px 18px;border:1px solid rgba(203,170,99,.25);background:transparent;font-family:'Jost',sans-serif;font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:rgba(203,170,99,.6);cursor:pointer;transition:all .2s;}
+    .btn-logout:hover{border-color:#c0392b;color:#c0392b;}
+
+    .container{max-width:720px;margin:0 auto;padding:36px 20px;}
+
+    /* LOGIN SCREEN */
+    .login-screen{display:flex;align-items:center;justify-content:center;min-height:85vh;}
+    .login-box{background:linear-gradient(135deg,#111 0%,#0d0d0d 100%);border:1px solid rgba(203,170,99,.2);padding:52px 40px;max-width:400px;width:100%;text-align:center;position:relative;overflow:hidden;}
+    .login-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#CBAA63,transparent);}
+    .login-box h1{font-family:'Cinzel',serif;font-size:1.8rem;font-weight:300;letter-spacing:.3em;color:#CBAA63;margin-bottom:4px;}
+    .login-box .sub{font-size:.7rem;color:rgba(203,170,99,.5);letter-spacing:3px;margin-bottom:36px;font-family:'Cormorant Garamond',serif;font-style:italic;}
+    .login-box label{display:block;text-align:left;font-size:.55rem;letter-spacing:2px;text-transform:uppercase;color:#CBAA63;margin-bottom:6px;font-weight:400;}
+    .login-box input{width:100%;padding:14px 16px;border:1px solid rgba(203,170,99,.15);background:rgba(255,255,255,.03);font-family:'Jost',sans-serif;font-size:.85rem;color:#e8e0d0;outline:none;margin-bottom:18px;transition:border .2s;}
+    .login-box input:focus{border-color:#CBAA63;background:rgba(203,170,99,.04);}
+    .login-btn{width:100%;padding:16px;border:none;background:linear-gradient(135deg,#8B6914,#CBAA63);color:#0a0a0a;font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:3px;text-transform:uppercase;cursor:pointer;font-weight:600;transition:opacity .2s;}
+    .login-btn:hover{opacity:.9;}
+    .login-err{color:#e74c3c;font-size:.75rem;margin-top:12px;display:none;}
+
+    /* DASHBOARD */
+    .dash{display:none;}
+    .dash.active{display:block;}
+
+    /* CARDS */
+    .card{background:linear-gradient(135deg,#111 0%,#0e0e0e 100%);border:1px solid rgba(203,170,99,.12);padding:28px;margin-bottom:22px;position:relative;overflow:hidden;}
+    .card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(203,170,99,.3),transparent);}
+    .card-title{font-family:'Cinzel',serif;font-size:1rem;letter-spacing:.15em;color:#e8e0d0;margin-bottom:16px;font-weight:300;}
+    .card-title span{color:#CBAA63;font-weight:400;}
+
+    /* LINK BOX */
+    .link-box{background:rgba(203,170,99,.04);border:1px solid rgba(203,170,99,.2);padding:16px;font-size:.78rem;word-break:break-all;color:#CBAA63;font-weight:400;margin-bottom:12px;letter-spacing:.5px;}
+    .btn-copy{padding:10px 24px;border:1px solid #CBAA63;background:transparent;color:#CBAA63;font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all .2s;}
+    .btn-copy:hover{background:#CBAA63;color:#0a0a0a;}
+
+    /* STATS */
+    .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px;}
+    .stat{background:linear-gradient(135deg,#111,#0e0e0e);border:1px solid rgba(203,170,99,.1);padding:20px;text-align:center;position:relative;}
+    .stat::after{content:'';position:absolute;bottom:0;left:20%;right:20%;height:1px;background:linear-gradient(90deg,transparent,rgba(203,170,99,.2),transparent);}
+    .stat .num{font-family:'Cinzel',serif;font-size:1.5rem;color:#CBAA63;font-weight:600;letter-spacing:2px;}
+    .stat .lbl{font-size:.5rem;letter-spacing:3px;text-transform:uppercase;color:rgba(203,170,99,.45);margin-top:6px;}
+
+    /* INFO ROWS */
+    .info-row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(203,170,99,.06);font-size:.85rem;}
+    .info-row .label{color:rgba(203,170,99,.5);font-size:.55rem;letter-spacing:2px;text-transform:uppercase;}
+    .info-row .value{font-weight:400;color:#e8e0d0;}
+
+    /* POLICIES BUTTON */
+    .btn-policies{display:block;width:100%;padding:16px;border:1px solid rgba(203,170,99,.2);background:rgba(203,170,99,.04);color:#CBAA63;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:3px;text-transform:uppercase;cursor:pointer;margin-top:22px;transition:all .2s;text-align:center;}
+    .btn-policies:hover{background:rgba(203,170,99,.1);border-color:#CBAA63;}
+
+    /* MODAL */
+    .modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.85);z-index:1000;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px);}
+    .modal-overlay.active{display:flex;}
+    .modal{background:#111;border:1px solid rgba(203,170,99,.2);max-width:600px;width:100%;max-height:85vh;overflow-y:auto;position:relative;}
+    .modal-header{padding:24px 28px;border-bottom:1px solid rgba(203,170,99,.1);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#111;z-index:1;}
+    .modal-header h2{font-family:'Cinzel',serif;font-size:.9rem;letter-spacing:.15em;color:#CBAA63;font-weight:400;}
+    .modal-close{background:none;border:1px solid rgba(203,170,99,.2);color:#CBAA63;font-size:1.1rem;cursor:pointer;width:32px;height:32px;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+    .modal-close:hover{border-color:#c0392b;color:#c0392b;}
+    .modal-body{padding:28px;font-size:.8rem;line-height:1.8;color:rgba(232,224,208,.75);}
+    .modal-body h3{font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:.1em;color:#CBAA63;margin:22px 0 10px;font-weight:400;}
+    .modal-body h3:first-child{margin-top:0;}
+    .modal-body ul{padding-left:20px;margin-bottom:14px;}
+    .modal-body li{margin-bottom:6px;}
+    .modal-body p{margin-bottom:12px;}
+    .modal-body strong{color:#e8e0d0;}
+
+    /* FOOTER */
+    .enigme-footer{text-align:center;margin-top:30px;padding:20px;border-top:1px solid rgba(203,170,99,.08);}
+    .enigme-footer p{font-size:.5rem;color:rgba(203,170,99,.3);letter-spacing:2px;}
+
+    @media(max-width:500px){
+      .container{padding:20px 14px;}
+      .card{padding:20px;}
+      .login-box{padding:36px 24px;}
+      .stat-row{grid-template-columns:1fr 1fr;}
+    }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <span class="brand">ENIGME</span>
+    <span class="brand-sub">Mi Tienda</span>
+  </div>
+  <button class="btn-logout" id="logoutBtn" style="display:none;" onclick="logout()">Cerrar Sesi&oacute;n</button>
+</div>
+
+<!-- LOGIN -->
+<div class="container" id="loginScreen">
+  <div class="login-screen">
+    <div class="login-box">
+      <h1>ENIGME</h1>
+      <p class="sub">Acceso a Tu Tienda Virtual</p>
+      <label>N&uacute;mero de Identidad (DNI)</label>
+      <input type="text" id="loginDni" placeholder="0000-0000-00000" maxlength="15"/>
+      <label>Fecha de Nacimiento</label>
+      <input type="date" id="loginFecha"/>
+      <button class="login-btn" onclick="doLogin()">Acceder</button>
+      <div class="login-err" id="loginErr"></div>
+    </div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="container dash" id="dashScreen">
+
+  <div class="card">
+    <div class="card-title">Tu <span>Tienda Virtual</span></div>
+    <p style="font-size:.78rem;color:rgba(203,170,99,.5);margin-bottom:14px;font-family:'Cormorant Garamond',serif;font-style:italic;">Comparte este enlace con tus clientes para que vean tu cat&aacute;logo ENIGME</p>
+    <div class="link-box" id="tiendaLink"></div>
+    <button class="btn-copy" onclick="copyLink()">Copiar Enlace</button>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat"><div class="num" id="statProductos">0</div><div class="lbl">Productos</div></div>
+    <div class="stat"><div class="num">15%</div><div class="lbl">Tu Comisi&oacute;n</div></div>
+    <div class="stat"><div class="num" id="statZona">-</div><div class="lbl">Tu Zona</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Tus <span>Datos</span></div>
+    <div id="datosVendedora"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Condiciones del <span>Contrato</span></div>
+    <div class="info-row"><span class="label">Comisi&oacute;n</span><span class="value" style="color:#27ae60;">15% sobre venta neta</span></div>
+    <div class="info-row"><span class="label">Pago Pedido</span><span class="value">30% pedir &middot; 40% recibir &middot; 30% en 14 d&iacute;as</span></div>
+    <div class="info-row"><span class="label">Vigencia</span><span class="value">Indefinida (15 d&iacute;as preaviso)</span></div>
+  </div>
+
+  <button class="btn-policies" onclick="openModal()">Pol&iacute;ticas y Responsabilidades</button>
+
+  <div class="enigme-footer">
+    <p>&copy; 2026 ENIGME Honduras &middot; Aura &middot; Misterio &middot; Presencia</p>
+  </div>
+</div>
+
+<!-- MODAL POLITICAS -->
+<div class="modal-overlay" id="modalPoliticas">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Pol&iacute;ticas y Responsabilidades</h2>
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <h3>Tu Rol como Asesora Independiente</h3>
+      <p>Como asesora independiente de ENIGME Honduras, usted opera como <strong>comerciante individual</strong> conforme al C&oacute;digo de Comercio de Honduras (Decreto No. 73-50). No existe relaci&oacute;n laboral entre usted y la empresa.</p>
+
+      <h3>Responsabilidades Fiscales</h3>
+      <p>Usted es responsable de sus obligaciones fiscales ante el <strong>Servicio de Administraci&oacute;n de Rentas (SAR)</strong> y de la gesti&oacute;n legal de su microempresa.</p>
+
+      <h3>Tus Obligaciones</h3>
+      <ul>
+        <li>Promocionar y distribuir los productos ENIGME de manera &eacute;tica y profesional.</li>
+        <li>No alterar, modificar ni reenvasar los productos.</li>
+        <li>Respetar los precios de venta sugeridos en el cat&aacute;logo oficial.</li>
+        <li>Mantener la confidencialidad de la informaci&oacute;n comercial.</li>
+        <li>Operar dentro de la zona geogr&aacute;fica y sector asignados.</li>
+      </ul>
+
+      <h3>Condiciones de Pago</h3>
+      <ul>
+        <li><strong>30%</strong> al momento de solicitar el pedido.</li>
+        <li><strong>40%</strong> al momento de recibir la mercader&iacute;a.</li>
+        <li><strong>30%</strong> restante en un plazo m&aacute;ximo de <strong>14 d&iacute;as calendario</strong>.</li>
+      </ul>
+      <p>El incumplimiento reiterado en pagos ser&aacute; causal de <strong>rescisi&oacute;n inmediata</strong> del contrato.</p>
+
+      <h3>Propiedad Intelectual</h3>
+      <p>La marca ENIGME, logotipos, cat&aacute;logos y material publicitario son <strong>propiedad exclusiva</strong> de la empresa. Su uso est&aacute; autorizado &uacute;nicamente para actividades de promoci&oacute;n y venta dentro del marco del contrato.</p>
+
+      <h3>Validez Legal</h3>
+      <p>Tu contrato tiene plena validez legal conforme a la <strong>Ley de Firma Electr&oacute;nica de Honduras</strong> (Decreto No. 149-2013).</p>
+
+      <h3>Terminaci&oacute;n</h3>
+      <p>El contrato tiene vigencia indefinida. Cualquiera de las partes puede terminarlo con <strong>15 d&iacute;as de preaviso</strong> por escrito.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+var _h='aGFqbXludG52dXJsY3V3c2hqZGQ=';function _u(){return 'https://'+atob(_h)+'.supabase.co';}
+var SB=_u()+'/rest/v1/';
+var SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhham15bnRudnVybGN1d3NoamRkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwMDM2MjEsImV4cCI6MjA4ODU3OTYyMX0.XGF5wPX1sI9VgG11bnr41lCxeqTfFVHEhBIfBXXYAkw';
+var H={'apikey':SK,'Authorization':'Bearer '+SK};
+var vendedora=null;
+var TIENDA_BASE=window.location.origin+'/tienda.html?c=';
+
+function openModal(){document.getElementById('modalPoliticas').classList.add('active');}
+function closeModal(){document.getElementById('modalPoliticas').classList.remove('active');}
+document.getElementById('modalPoliticas').addEventListener('click',function(e){if(e.target===this)closeModal();});
+
+async function doLogin(){
+  var dni=document.getElementById('loginDni').value.trim();
+  var fecha=document.getElementById('loginFecha').value;
+  var err=document.getElementById('loginErr');
+  err.style.display='none';
+  if(!dni||!fecha){err.textContent='Ingresa tu DNI y fecha de nacimiento.';err.style.display='block';return;}
+  try{
+    var r=await fetch(SB+'vendedoras?dni=eq.'+encodeURIComponent(dni)+'&select=*',{headers:H});
+    var d=await r.json();
+    if(d.length&&d[0].fecha_nacimiento===fecha){vendedora=d[0];showDash();return;}
+    var r2=await fetch(SB+'contratos_vendedoras?dni=eq.'+encodeURIComponent(dni)+'&select=*',{headers:H});
+    var d2=await r2.json();
+    if(d2.length&&d2[0].fecha_nacimiento===fecha){
+      vendedora={nombre:d2[0].nombre_completo,dni:d2[0].dni,telefono:d2[0].telefono,email:d2[0].email,codigo:d2[0].codigo_vendedora,zona_oro:d2[0].zona_oro,direccion:d2[0].direccion,fecha_nacimiento:d2[0].fecha_nacimiento};
+      showDash();return;
+    }
+    err.textContent='DNI o fecha de nacimiento incorrectos.';err.style.display='block';
+  }catch(e){err.textContent='Error de conexi\u00f3n.';err.style.display='block';console.error(e);}
+}
+
+async function showDash(){
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('dashScreen').classList.add('active');
+  document.getElementById('logoutBtn').style.display='';
+  var link=TIENDA_BASE+encodeURIComponent(vendedora.codigo);
+  document.getElementById('tiendaLink').textContent=link;
+  document.getElementById('statZona').textContent=vendedora.zona_oro||'-';
+  try{
+    var r=await fetch(SB+'catalogo_productos?activo=eq.true&select=id',{headers:H});
+    var p=await r.json();
+    document.getElementById('statProductos').textContent=p.length;
+  }catch(e){}
+  document.getElementById('datosVendedora').innerHTML=
+    '<div class="info-row"><span class="label">Nombre</span><span class="value">'+esc(vendedora.nombre)+'</span></div>'+
+    '<div class="info-row"><span class="label">C\u00f3digo</span><span class="value" style="color:#CBAA63;font-family:Cinzel,serif;letter-spacing:3px;">'+esc(vendedora.codigo)+'</span></div>'+
+    '<div class="info-row"><span class="label">DNI</span><span class="value">'+esc(vendedora.dni)+'</span></div>'+
+    '<div class="info-row"><span class="label">Tel\u00e9fono</span><span class="value">'+esc(vendedora.telefono)+'</span></div>'+
+    '<div class="info-row"><span class="label">Email</span><span class="value">'+esc(vendedora.email)+'</span></div>'+
+    '<div class="info-row"><span class="label">Zona</span><span class="value" style="color:#CBAA63;">'+esc(vendedora.zona_oro||'-')+'</span></div>';
+}
+
+function copyLink(){
+  var link=document.getElementById('tiendaLink').textContent;
+  navigator.clipboard.writeText(link).then(function(){alert('Enlace copiado al portapapeles.');}).catch(function(){
+    var t=document.createElement('textarea');t.value=link;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);alert('Enlace copiado.');
+  });
+}
+
+function logout(){
+  vendedora=null;
+  document.getElementById('dashScreen').classList.remove('active');
+  document.getElementById('loginScreen').style.display='';
+  document.getElementById('logoutBtn').style.display='none';
+  document.getElementById('loginDni').value='';
+  document.getElementById('loginFecha').value='';
+}
+
+function esc(s){var d=document.createElement('div');d.textContent=s||'';return d.innerHTML;}
+</script>
+</body>
+</html>

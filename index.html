@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ENIGME Honduras · Portal</title>
+  <meta name="description" content="Portal de contratos y tienda virtual para Asesoras Independientes de ENIGME Honduras."/>
+  <meta name="theme-color" content="#FAF6F0"/>
+  <script>
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.getRegistrations().then(function(regs){regs.forEach(function(r){r.unregister();});});
+    caches.keys().then(function(names){names.forEach(function(n){caches.delete(n);});});
+  }
+  </script>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="icon" href="icon-192.svg" type="image/svg+xml"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@300;400;500&family=Jost:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{background:#FAF6F0;color:#000;font-family:'Jost',sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;}
+    .portal{text-align:center;padding:40px 24px;max-width:480px;width:100%;}
+    .brand{font-family:'Cinzel',serif;font-size:2rem;letter-spacing:.3em;font-weight:300;margin-bottom:4px;}
+    .sub{font-size:.6rem;letter-spacing:4px;color:#8B6914;text-transform:uppercase;margin-bottom:40px;}
+    .links{display:flex;flex-direction:column;gap:16px;}
+    .link-btn{display:block;padding:18px 24px;border:1px solid rgba(139,105,20,.2);background:#fff;text-decoration:none;color:#000;font-family:'Jost',sans-serif;font-size:.85rem;letter-spacing:1px;transition:all .2s;cursor:pointer;}
+    .link-btn:hover{border-color:#8B6914;background:rgba(139,105,20,.04);}
+    .link-btn strong{display:block;font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:3px;text-transform:uppercase;color:#8B6914;margin-bottom:6px;}
+    .link-btn span{font-size:.75rem;color:rgba(0,0,0,.5);}
+    .footer{margin-top:40px;font-size:.55rem;color:rgba(0,0,0,.3);letter-spacing:1px;}
+    /* PASSWORD SCREEN */
+    .pw-screen{text-align:center;padding:40px 24px;max-width:380px;width:100%;}
+    .pw-box{background:#fff;border:1px solid rgba(139,105,20,.15);padding:48px 36px;}
+    .pw-box h1{font-family:'Cinzel',serif;font-size:1.6rem;font-weight:300;letter-spacing:.25em;margin-bottom:4px;}
+    .pw-box .pw-sub{font-size:.65rem;letter-spacing:3px;color:#8B6914;text-transform:uppercase;margin-bottom:32px;}
+    .pw-box input{width:100%;padding:14px 16px;border:1px solid rgba(139,105,20,.15);background:#fff;font-family:'Jost',sans-serif;font-size:.9rem;outline:none;text-align:center;letter-spacing:2px;margin-bottom:16px;}
+    .pw-box input:focus{border-color:#8B6914;}
+    .pw-btn{width:100%;padding:14px;border:1px solid #8B6914;background:#8B6914;color:#fff;font-family:'Jost',sans-serif;font-size:.65rem;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:background .2s;}
+    .pw-btn:hover{background:#6B5310;}
+    .pw-err{color:#c0392b;font-size:.75rem;margin-top:12px;display:none;}
+    .hidden{display:none;}
+  </style>
+</head>
+<body>
+
+<!-- PASSWORD GATE -->
+<div class="pw-screen" id="pwScreen">
+  <div class="pw-box">
+    <h1>ENIGME</h1>
+    <p class="pw-sub">Honduras</p>
+    <input type="password" id="pwInput" placeholder="Contrase&ntilde;a de acceso" onkeydown="if(event.key==='Enter')checkPw()"/>
+    <button class="pw-btn" onclick="checkPw()">Ingresar</button>
+    <div class="pw-err" id="pwErr">Contrase&ntilde;a incorrecta</div>
+  </div>
+</div>
+
+<!-- PORTAL (hidden until password) -->
+<div class="portal hidden" id="portalScreen">
+  <h1 class="brand">ENIGME</h1>
+  <p class="sub">Honduras</p>
+  <div class="links">
+    <a href="contrato-vendedora.html" class="link-btn">
+      <strong>Nuevo Contrato</strong>
+      <span>Registrar nueva Asesora Independiente</span>
+    </a>
+    <a href="mi-tienda.html" class="link-btn">
+      <strong>Mi Tienda Virtual</strong>
+      <span>Acceso para asesoras (DNI + fecha de nacimiento)</span>
+    </a>
+    <a href="panel-contratos.html" class="link-btn">
+      <strong>Panel de Gerencia</strong>
+      <span>Base de datos de contratos (acceso con contrase&ntilde;a)</span>
+    </a>
+    <div class="link-btn" onclick="descargarCatalogo()" style="border-color:#CBAA63;background:rgba(203,170,99,.06);">
+      <strong style="color:#000;">Descargar Cat&aacute;logo 2026</strong>
+      <span>Cat&aacute;logo oficial ENIGME Honduras &mdash; PDF</span>
+    </div>
+  </div>
+  <p class="footer">&copy; 2026 ENIGME Honduras</p>
+</div>
+
+<script>
+var _h='aGFqbXludG52dXJsY3V3c2hqZGQ=';
+function _u(){return 'https://'+atob(_h)+'.supabase.co';}
+function checkPw(){
+  var v=document.getElementById('pwInput').value;
+  if(v==='Enigme.2026.HND'){
+    document.getElementById('pwScreen').classList.add('hidden');
+    document.getElementById('portalScreen').classList.remove('hidden');
+    sessionStorage.setItem('_ea','1');
+  }else{
+    document.getElementById('pwErr').style.display='block';
+    document.getElementById('pwInput').value='';
+  }
+}
+function descargarCatalogo(){
+  var a=document.createElement('a');
+  a.href='/catalogo.pdf';
+  a.download='CATALOGO_ENIGME_2026.pdf';
+  a.click();
+}
+// Auto-login if session exists
+if(sessionStorage.getItem('_ea')==='1'){
+  document.getElementById('pwScreen').classList.add('hidden');
+  document.getElementById('portalScreen').classList.remove('hidden');
+}
+</script>
+</body>
+</html>

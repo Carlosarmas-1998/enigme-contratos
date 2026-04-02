@@ -1,0 +1,1679 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ENIGME Honduras - Catálogo Oficial 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+<style>
+  @page {
+    size: 148mm 210mm;
+    margin: 0;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Cormorant Garamond', serif;
+    background: #e0ddd8;
+    color: #1a1a1a;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page {
+    width: 148mm;
+    height: 210mm;
+    background: #FAF6F0;
+    margin: 10mm auto;
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+  }
+
+  .page-border {
+    position: absolute;
+    top: 7mm;
+    left: 7mm;
+    right: 7mm;
+    bottom: 7mm;
+    border: 1px solid #CBAA63;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .page-inner {
+    position: absolute;
+    top: 9mm;
+    left: 9mm;
+    right: 9mm;
+    bottom: 9mm;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+  }
+
+  /* Header bar */
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 3mm;
+    border-bottom: 0.5px solid #d4c18f;
+    margin-bottom: 2mm;
+    flex-shrink: 0;
+  }
+  .page-header span {
+    font-family: 'Playfair Display', serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #CBAA63;
+  }
+
+  /* Product area */
+  .products-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .product-row {
+    display: flex;
+    align-items: center;
+    gap: 4mm;
+    flex: 1;
+    max-height: 48%;
+  }
+
+  .product-row.reverse {
+    flex-direction: row-reverse;
+  }
+
+  .product-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2mm;
+  }
+
+  .product-info.text-right {
+    text-align: right;
+    align-items: flex-end;
+  }
+
+  .product-info.text-left {
+    text-align: left;
+    align-items: flex-start;
+  }
+
+  .product-ref {
+    font-size: 13px;
+    color: #CBAA63;
+    letter-spacing: 2px;
+    font-family: 'Cormorant Garamond', serif;
+    margin-bottom: 1mm;
+  }
+
+  .product-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 1.5mm;
+    color: #1a1a1a;
+  }
+
+  .product-tagline {
+    font-size: 14px;
+    font-style: italic;
+    color: #555;
+    margin-bottom: 2mm;
+    line-height: 1.3;
+  }
+
+  .product-line {
+    width: 30px;
+    height: 1px;
+    background: #CBAA63;
+    margin-bottom: 2mm;
+  }
+  .product-info.text-right .product-line {
+    margin-left: auto;
+  }
+
+  .product-material {
+    font-size: 13px;
+    color: #777;
+    margin-bottom: 2mm;
+    letter-spacing: 0.5px;
+  }
+
+  .product-old-price {
+    font-size: 17px;
+    text-decoration: line-through;
+    color: #999;
+    margin-bottom: 0.5mm;
+  }
+
+  .product-price {
+    font-size: 34px;
+    font-weight: 700;
+    color: #CBAA63;
+    font-family: 'Playfair Display', serif;
+    line-height: 1;
+  }
+
+  /* Vitrine Dior image frame */
+  .vitrine-wrap {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .vitrine {
+    width: 260px;
+    height: 280px;
+    background: #fff;
+    padding: 5px;
+    border: 1.5px solid #CBAA63;
+    outline: 1.5px solid #d4c18f;
+    outline-offset: 5px;
+    box-shadow: 0 6px 28px rgba(0,0,0,0.12), 0 1px 6px rgba(203,170,99,0.15);
+    transition: box-shadow 0.3s;
+  }
+
+  .vitrine img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    background: #FAF6F0;
+  }
+
+  /* Divider between products */
+  .product-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2mm 0;
+    flex-shrink: 0;
+  }
+  .product-divider::before,
+  .product-divider::after {
+    content: '';
+    flex: 1;
+    height: 0.5px;
+    background: #d4c18f;
+  }
+  .product-divider .diamond {
+    color: #CBAA63;
+    font-size: 8px;
+    margin: 0 3mm;
+  }
+
+  /* Single product page */
+  .single-product {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .single-product .vitrine {
+    width: 300px;
+    height: 320px;
+    margin-bottom: 5mm;
+  }
+
+  .single-product .product-info {
+    align-items: center;
+    text-align: center;
+  }
+  .single-product .product-line {
+    margin: 0 auto 2mm auto;
+  }
+
+  /* Page number */
+  .page-number {
+    position: absolute;
+    bottom: 4mm;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 10px;
+    color: #CBAA63;
+    letter-spacing: 1px;
+    z-index: 3;
+  }
+
+  /* COVER */
+  .cover-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 15mm;
+  }
+  .cover-content .logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 900;
+    letter-spacing: 12px;
+    color: #CBAA63;
+    margin-bottom: 4mm;
+  }
+  .cover-content .subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    letter-spacing: 5px;
+    color: #1a1a1a;
+    text-transform: uppercase;
+    margin-bottom: 10mm;
+  }
+  .cover-content .cover-line {
+    width: 40mm;
+    height: 1px;
+    background: #CBAA63;
+    margin-bottom: 10mm;
+  }
+  .cover-content .tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-style: italic;
+    color: #555;
+    letter-spacing: 3px;
+    margin-bottom: 6mm;
+  }
+  .cover-content .website {
+    font-size: 13px;
+    letter-spacing: 3px;
+    color: #CBAA63;
+  }
+  .cover-content .year {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: #d4c18f;
+    margin-bottom: 6mm;
+    letter-spacing: 6px;
+  }
+
+  /* MANIFESTO */
+  .manifesto-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 12mm;
+  }
+  .manifesto-content h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    color: #CBAA63;
+    margin-bottom: 5mm;
+    font-style: italic;
+  }
+  .manifesto-content p {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 3mm;
+    color: #333;
+  }
+  .manifesto-content .gold-italic {
+    color: #CBAA63;
+    font-style: italic;
+    font-size: 15px;
+    margin: 3mm 0;
+  }
+  .manifesto-content .manifesto-sign {
+    text-align: center;
+    margin-top: 5mm;
+    font-size: 14px;
+    letter-spacing: 4px;
+    color: #CBAA63;
+    font-style: italic;
+  }
+
+  /* SECTION DIVIDER */
+  .section-divider {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 15mm;
+  }
+  .section-divider .section-line {
+    width: 30mm;
+    height: 1px;
+    background: #CBAA63;
+    margin-bottom: 8mm;
+  }
+  .section-divider h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: #1a1a1a;
+    letter-spacing: 4px;
+    margin-bottom: 5mm;
+    text-transform: uppercase;
+  }
+  .section-divider .section-sub {
+    font-size: 16px;
+    font-style: italic;
+    color: #777;
+    letter-spacing: 1px;
+  }
+  .section-divider .section-line-bottom {
+    width: 30mm;
+    height: 1px;
+    background: #CBAA63;
+    margin-top: 8mm;
+  }
+
+  /* BACK COVER */
+  .back-cover {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 15mm;
+  }
+  .back-cover .logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 900;
+    letter-spacing: 10px;
+    color: #CBAA63;
+    margin-bottom: 6mm;
+  }
+  .back-cover .tagline {
+    font-size: 16px;
+    font-style: italic;
+    color: #555;
+    letter-spacing: 3px;
+    margin-bottom: 8mm;
+  }
+  .back-cover .cover-line {
+    width: 30mm;
+    height: 1px;
+    background: #CBAA63;
+    margin-bottom: 8mm;
+  }
+  .back-cover .info-line {
+    font-size: 13px;
+    color: #999;
+    letter-spacing: 2px;
+    margin-bottom: 2mm;
+  }
+  .back-cover .year {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: #d4c18f;
+    margin-top: 6mm;
+    letter-spacing: 5px;
+  }
+
+  @media print {
+    body { background: none; }
+    .page { margin: 0; box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== PAGE 1: COVER ==================== -->
+<div class="page">
+  <div class="page-border"></div>
+  <div class="cover-content">
+    <div class="logo-text">ENIGME</div>
+    <div class="subtitle">Honduras</div>
+    <div class="cover-line"></div>
+    <div class="year">2026</div>
+    <div class="tagline">Aura &middot; Misterio &middot; Presencia</div>
+    <div class="cover-line"></div>
+    <div class="subtitle">Cat&aacute;logo Oficial</div>
+    <div class="website">enigmeofficial.com</div>
+  </div>
+</div>
+
+<!-- ==================== PAGE 2: MANIFESTO ==================== -->
+<div class="page">
+  <div class="page-border"></div>
+  <div class="manifesto-content">
+    <h2>Manifiesto</h2>
+    <p>No sabemos cu&aacute;ndo empez&oacute;. Quiz&aacute; fue un susurro. Una intuici&oacute;n. Esa certeza silenciosa de que exist&iacute;a algo m&aacute;s.</p>
+    <p>ENIGME no naci&oacute; en una f&aacute;brica. Naci&oacute; en un sue&ntilde;o. En la convicci&oacute;n de que lo bello no necesita explicarse. Que el misterio es la forma m&aacute;s pura de elegancia. Que cada pieza que tocas deber&iacute;a hacerte sentir que el mundo se detiene un instante.</p>
+    <p>Creemos en las manos que construyen desde cero. En las mujeres que deciden no esperar. En los hombres que apuestan por lo que a&uacute;n no existe. En quienes eligen escribir su propia historia antes de que alguien m&aacute;s la escriba por ellos.</p>
+    <p class="gold-italic">Porque esto no es solo un cat&aacute;logo. Es una puerta.</p>
+    <p>Detr&aacute;s de cada imagen hay una pieza creada para despertar algo en ti. Y detr&aacute;s de cada pieza, hay una oportunidad real de transformar tu vida. Tu c&oacute;digo no es un n&uacute;mero. Es tu identidad. Tu negocio. Tu libertad.</p>
+    <p>No vendemos joyas. Ofrecemos fragmentos de un universo donde el esfuerzo se convierte en independencia. Donde la belleza es el veh&iacute;culo y la determinaci&oacute;n es el motor.</p>
+    <p>Si est&aacute;s leyendo esto, alguien crey&oacute; en ti lo suficiente como para compartirlo. No dejes que ese gesto pase inadvertido.</p>
+    <p class="gold-italic">Bienvenido al misterio. Bienvenida a ENIGME.</p>
+    <div class="manifesto-sign">Aura &middot; Misterio &middot; Presencia</div>
+  </div>
+  <div class="page-number">2</div>
+</div>
+
+<!-- ==================== PAGE 3: SECTION DIVIDER - JOYERÍA ==================== -->
+<div class="page">
+  <div class="page-border"></div>
+  <div class="section-divider">
+    <div class="section-line"></div>
+    <h1>Joyer&iacute;a</h1>
+    <div class="section-sub">Colecciones ba&ntilde;adas en oro de 18 quilates</div>
+    <div class="section-line-bottom"></div>
+  </div>
+  <div class="page-number">3</div>
+</div>
+
+<!-- ==================== PAGE 4: J0015 + J0082 ==================== -->
+<div class="page">
+  <div class="page-border"></div>
+  <div class="page-inner">
+    <div class="page-header">
+      <span>ENIGME</span>
+      <span>Joyer&iacute;a</span>
+    </div>
+    <div class="products-area">
+      <div class="product-row">
+        <div class="product-info text-left">
+          <div class="product-ref">J0015</div>
+          <div class="product-name">Collier C&oelig;ur d'Or</div>
+          <div class="product-tagline">El coraz&oacute;n late al ritmo del oro. Un romance forjado en metal noble.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Ba&ntilde;o Oro 14K / Acero 316L</div>
+          <div class="product-old-price">L 848</div>
+          <div class="product-price">L 649</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/j1.png" alt="Collier Coeur d'Or">
+          </div>
+        </div>
+      </div>
+      <div class="product-divider"><span class="diamond">&#9670;</span></div>
+      <div class="product-row reverse">
+        <div class="product-info text-right">
+          <div class="product-ref">J0082</div>
+          <div class="product-name">Parure L'Eau d'Amour</div>
+          <div class="product-tagline">Ondas doradas que acarician la piel. Fluidez y elegancia sin esfuerzo.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Ba&ntilde;o Oro 14K / Acero 316L</div>
+          <div class="product-old-price">L 1,169</div>
+          <div class="product-price">L 899</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/j2.png" alt="Parure L'Eau d'Amour">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-number">4</div>
+</div>
+
+<!-- ==================== PAGE 5: J0033 + J0047 ==================== -->
+<div class="page">
+  <div class="page-border"></div>
+  <div class="page-inner">
+    <div class="page-header">
+      <span>ENIGME</span>
+      <span>Joyer&iacute;a</span>
+    </div>
+    <div class="products-area">
+      <div class="product-row">
+        <div class="product-info text-left">
+          <div class="product-ref">J0033</div>
+          <div class="product-name">Set N&oelig;ud d'&Eacute;ternit&eacute;</div>
+          <div class="product-tagline">Lazos invisibles, ahora en oro visible. El s&iacute;mbolo de lo eterno.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Ba&ntilde;o Oro 14K / Acero 316L</div>
+          <div class="product-old-price">L 1,169</div>
+          <div class="product-price">L 899</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/j3.png" alt="Set Noeud d'Éternité">
+          </div>
+        </div>
+      </div>
+      <div class="product-divider"><span class="diamond">&#9670;</span></div>
+      <div class="product-row reverse">
+        <div class="product-info text-right">
+          <div class="product-ref">J0047</div>
+          <div class="product-name">Parure Printemps</div>
+          <div class="product-tagline">El florecer de la elegancia pura. Una primavera dorada en tu escote.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Ba&ntilde;o Oro 14K / Acero 316L</div>
+          <div class="product-old-price">L 1,039</div>
+          <div class="product-price">L 799</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/j4.png" alt="Parure Printemps">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-number">5</div>
+</div>
+
+<!-- ==================== PAGE 6: J0051 + J0069 ==================== -->
+<div class="page">
+  <div class="page-border"></div>
+  <div class="page-inner">
+    <div class="page-header">
+      <span>ENIGME</span>
+      <span>Joyer&iacute;a</span>
+    </div>
+    <div class="products-area">
+      <div class="product-row">
+        <div class="product-info text-left">
+          <div class="product-ref">J0051</div>
+          <div class="product-name">Pendentif Cercle Divin</div>
+          <div class="product-tagline">Perfecci&oacute;n geom&eacute;trica que brilla. El c&iacute;rculo absoluto de la moda.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Ba&ntilde;o Oro 14K / Acero 316L</div>
+          <div class="product-old-price">L 597</div>
+          <div class="product-price">L 459</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/j5.png" alt="Pendentif Cercle Divin">
+          </div>
+        </div>
+      </div>
+      <div class="product-divider"><span class="diamond">&#9670;</span></div>
+      <div class="product-row reverse">
+        <div class="product-info text-right">
+          <div class="product-ref">J0069</div>
+          <div class="product-name">Grand Set Le Ruban</div>
+          <div class="product-tagline">El lazo definitivo de la alta sociedad. Presencia magn&eacute;tica.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Ba&ntilde;o Oro 14K / Acero 316L</div>
+          <div class="product-old-price">L 1,559</div>
+          <div class="product-price">L 1,199</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/j6.png" alt="Grand Set Le Ruban">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-number">6</div>
+</div>
+
+<!-- ==================== PAGE 7: J0074 + J0088 ==================== -->
+<div class="page">
+  <div class="page-border"></div>
+  <div class="page-inner">
+    <div class="page-header">
+      <span>ENIGME</span>
+      <span>Joyer&iacute;a</span>
+    </div>
+    <div class="products-area">
+      <div class="product-row">
+        <div class="product-info text-left">
+          <div class="product-ref">J0074</div>
+          <div class="product-name">Parure M&eacute;tamorphose</div>
+          <div class="product-tagline">Alas de oro que elevan tu presencia. Una transformaci&oacute;n sublime.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Ba&ntilde;o Oro 14K / Acero 316L</div>
+          <div class="product-old-price">L 1,429</div>
+          <div class="product-price">L 1,099</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/j7.png" alt="Parure Métamorphose">
+          </div>
+        </div>
+      </div>
+      <div class="product-divider"><span class="diamond">&#9670;</span></div>
+      <div class="product-row reverse">
+        <div class="product-info text-right">
+          <div class="product-ref">J0088</div>
+          <div class="product-name">Set Perle Dor&eacute;e</div>
+          <div class="product-tagline">El encuentro supremo entre perla y oro. Simetr&iacute;a divina.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Ba&ntilde;o Oro 14K / Acero 316L</div>
+          <div class="product-old-price">L 909</div>
+          <div class="product-price">L 699</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/j8.png" alt="Set Perle Dorée">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-number">7</div>
+</div>
+
+<!-- ==================== PAGE 8: J0092 + J0105 ==================== -->
+<div class="page">
+  <div class="page-border"></div>
+  <div class="page-inner">
+    <div class="page-header">
+      <span>ENIGME</span>
+      <span>Joyer&iacute;a</span>
+    </div>
+    <div class="products-area">
+      <div class="product-row">
+        <div class="product-info text-left">
+          <div class="product-ref">J0092</div>
+          <div class="product-name">Boucles Goutte Solaire</div>
+          <div class="product-tagline">Gotas de luz ba&ntilde;adas en oro real. Destellos hipn&oacute;ticos.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Ba&ntilde;o Oro 14K / Acero 316L</div>
+          <div class="product-old-price">L 714</div>
+          <div class="product-price">L 549</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/j9.png" alt="Boucles Goutte Solaire">
+          </div>
+        </div>
+      </div>
+      <div class="product-divider"><span class="diamond">&#9670;</span></div>
+      <div class="product-row reverse">
+        <div class="product-info text-right">
+          <div class="product-ref">J0105</div>
+          <div class="product-name">Set D&eacute;licatesse</div>
+          <div class="product-tagline">La fuerza sutil de la verdadera clase. Imposible de ignorar.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Ba&ntilde;o Oro 14K / Acero 316L</div>
+          <div class="product-old-price">L 1,039</div>
+          <div class="product-price">L 799</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/j10.png" alt="Set Délicatesse">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-number">8</div>
+</div>
+
+<!-- ==================== PAGE 9: J0118 + J0123 ==================== -->
+<div class="page">
+  <div class="page-border"></div>
+  <div class="page-inner">
+    <div class="page-header">
+      <span>ENIGME</span>
+      <span>Joyer&iacute;a</span>
+    </div>
+    <div class="products-area">
+      <div class="product-row">
+        <div class="product-info text-left">
+          <div class="product-ref">J0118</div>
+          <div class="product-name">Set &Egrave;NIGME Perles</div>
+          <div class="product-tagline">El &iacute;cono de la casa. Un legado atemporal que enmarca el rostro.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Ba&ntilde;o Oro 14K / Acero 316L</div>
+          <div class="product-old-price">L 1,039</div>
+          <div class="product-price">L 799</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/j11.png" alt="Set ÈNIGME Perles">
+          </div>
+        </div>
+      </div>
+      <div class="product-divider"><span class="diamond">&#9670;</span></div>
+      <div class="product-row reverse">
+        <div class="product-info text-right">
+          <div class="product-ref">J0123</div>
+          <div class="product-name">Parure Signature</div>
+          <div class="product-tagline">Lleva la distinci&oacute;n en cada movimiento. Identidad absoluta.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Ba&ntilde;o Oro 14K / Acero 316L</div>
+          <div class="product-old-price">L 1,039</div>
+          <div class="product-price">L 799</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/j12.png" alt="Parure Signature">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-number">9</div>
+</div>
+
+<!-- ==================== PAGE 10: J0137 + J0144 ==================== -->
+<div class="page">
+  <div class="page-border"></div>
+  <div class="page-inner">
+    <div class="page-header">
+      <span>ENIGME</span>
+      <span>Joyer&iacute;a</span>
+    </div>
+    <div class="products-area">
+      <div class="product-row">
+        <div class="product-info text-left">
+          <div class="product-ref">J0137</div>
+          <div class="product-name">Duo L'Harmonie</div>
+          <div class="product-tagline">Dos piezas, una sola obra de arte inquebrantable.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Ba&ntilde;o Oro 14K / Acero 316L</div>
+          <div class="product-old-price">L 1,065</div>
+          <div class="product-price">L 819</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/j13.png" alt="Duo L'Harmonie">
+          </div>
+        </div>
+      </div>
+      <div class="product-divider"><span class="diamond">&#9670;</span></div>
+      <div class="product-row reverse">
+        <div class="product-info text-right">
+          <div class="product-ref">J0144</div>
+          <div class="product-name">Amour Suspendu</div>
+          <div class="product-tagline">El amor escrito en puntos suspensivos... Cautivador y delicado.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Ba&ntilde;o Oro 14K / Acero 316L</div>
+          <div class="product-old-price">L 779</div>
+          <div class="product-price">L 599</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/j14.png" alt="Amour Suspendu">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-number">10</div>
+</div>
+
+<!-- ==================== PAGE 11: J0159 + J0162 ==================== -->
+<div class="page">
+  <div class="page-border"></div>
+  <div class="page-inner">
+    <div class="page-header">
+      <span>ENIGME</span>
+      <span>Joyer&iacute;a</span>
+    </div>
+    <div class="products-area">
+      <div class="product-row">
+        <div class="product-info text-left">
+          <div class="product-ref">J0159</div>
+          <div class="product-name">Collier M&egrave;re &Eacute;ternelle</div>
+          <div class="product-tagline">El tributo dorado al origen de todo. Belleza incuestionable.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Ba&ntilde;o Oro 14K / Acero 316L</div>
+          <div class="product-old-price">L 1,039</div>
+          <div class="product-price">L 799</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/j15.png" alt="Collier Mère Éternelle">
+          </div>
+        </div>
+      </div>
+      <div class="product-divider"><span class="diamond">&#9670;</span></div>
+      <div class="product-row reverse">
+        <div class="product-info text-right">
+          <div class="product-ref">J0162</div>
+          <div class="product-name">Collier Quatre C&oelig;urs</div>
+          <div class="product-tagline">Cuatro corazones alineados para formar un todo de alta costura.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Ba&ntilde;o Oro 14K / Acero 316L</div>
+          <div class="product-old-price">L 1,039</div>
+          <div class="product-price">L 799</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/j16.png" alt="Collier Quatre Cœurs">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-number">11</div>
+</div>
+
+<!-- ==================== PAGE 12: J0177 (SOLO) ==================== -->
+<div class="page">
+  <div class="page-border"></div>
+  <div class="page-inner">
+    <div class="page-header">
+      <span>ENIGME</span>
+      <span>Joyer&iacute;a</span>
+    </div>
+    <div class="products-area">
+      <div class="single-product">
+        <div class="vitrine">
+          <img src="https://enigmeofficial.com/j17.png" alt="Parure Papillon Royal">
+        </div>
+        <div class="product-info">
+          <div class="product-ref">J0177</div>
+          <div class="product-name">Parure Papillon Royal</div>
+          <div class="product-tagline">El vuelo definitivo del lujo absoluto. Una maravilla dorada en 18K.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Ba&ntilde;o Oro 18K / Acero 316L</div>
+          <div class="product-old-price">L 1,689</div>
+          <div class="product-price">L 1,299</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-number">12</div>
+</div>
+
+<!-- ==================== PAGE 13: SECTION DIVIDER - BOUTIQUE ==================== -->
+<div class="page">
+  <div class="page-border"></div>
+  <div class="section-divider">
+    <div class="section-line"></div>
+    <h1>Boutique</h1>
+    <div class="section-sub">Bolsos de dise&ntilde;o exclusivo</div>
+    <div class="section-line-bottom"></div>
+  </div>
+  <div class="page-number">13</div>
+</div>
+
+<!-- ==================== PAGE 14: B001 + B002 ==================== -->
+<div class="page">
+  <div class="page-border"></div>
+  <div class="page-inner">
+    <div class="page-header">
+      <span>ENIGME</span>
+      <span>Boutique</span>
+    </div>
+    <div class="products-area">
+      <div class="product-row">
+        <div class="product-info text-left">
+          <div class="product-ref">B001</div>
+          <div class="product-name">Bolso Enigma</div>
+          <div class="product-tagline">Arquitectura pura forjada en gris metalizado. Una declaraci&oacute;n de intenciones.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Piel Sint&eacute;tica Premium</div>
+          <div class="product-old-price">L 1,559</div>
+          <div class="product-price">L 1,199</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/b1.png" alt="Bolso Enigma">
+          </div>
+        </div>
+      </div>
+      <div class="product-divider"><span class="diamond">&#9670;</span></div>
+      <div class="product-row reverse">
+        <div class="product-info text-right">
+          <div class="product-ref">B002</div>
+          <div class="product-name">Bolso Electric</div>
+          <div class="product-tagline">El magnetismo del lujo absoluto. Una silueta vibrante.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Piel Sint&eacute;tica Premium</div>
+          <div class="product-old-price">L 1,559</div>
+          <div class="product-price">L 1,199</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/b2.png" alt="Bolso Electric">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-number">14</div>
+</div>
+
+<!-- ==================== PAGE 15: B003 + B004 ==================== -->
+<div class="page">
+  <div class="page-border"></div>
+  <div class="page-inner">
+    <div class="page-header">
+      <span>ENIGME</span>
+      <span>Boutique</span>
+    </div>
+    <div class="products-area">
+      <div class="product-row">
+        <div class="product-info text-left">
+          <div class="product-ref">B003</div>
+          <div class="product-name">Bolso Elegance</div>
+          <div class="product-tagline">L&iacute;neas de una pulcritud magistral. Sofisticaci&oacute;n atemporal.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Piel Sint&eacute;tica Premium</div>
+          <div class="product-old-price">L 2,079</div>
+          <div class="product-price">L 1,599</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/b3.png" alt="Bolso Elegance">
+          </div>
+        </div>
+      </div>
+      <div class="product-divider"><span class="diamond">&#9670;</span></div>
+      <div class="product-row reverse">
+        <div class="product-info text-right">
+          <div class="product-ref">B004</div>
+          <div class="product-name">Bolso Aura</div>
+          <div class="product-tagline">Presencia imponente. El nuevo est&aacute;ndar del alto lujo.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Piel Sint&eacute;tica Premium</div>
+          <div class="product-old-price">L 1,819</div>
+          <div class="product-price">L 1,399</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/b4.png" alt="Bolso Aura">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-number">15</div>
+</div>
+
+<!-- ==================== PAGE 16: B005 + B006 ==================== -->
+<div class="page">
+  <div class="page-border"></div>
+  <div class="page-inner">
+    <div class="page-header">
+      <span>ENIGME</span>
+      <span>Boutique</span>
+    </div>
+    <div class="products-area">
+      <div class="product-row">
+        <div class="product-info text-left">
+          <div class="product-ref">B005</div>
+          <div class="product-name">Bolso Misterio</div>
+          <div class="product-tagline">Volumen y estructura en perfecta armon&iacute;a. Cautivador.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Piel Sint&eacute;tica Premium</div>
+          <div class="product-old-price">L 1,949</div>
+          <div class="product-price">L 1,499</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/b5.png" alt="Bolso Misterio">
+          </div>
+        </div>
+      </div>
+      <div class="product-divider"><span class="diamond">&#9670;</span></div>
+      <div class="product-row reverse">
+        <div class="product-info text-right">
+          <div class="product-ref">B006</div>
+          <div class="product-name">Bolso Burde&uacute;X</div>
+          <div class="product-tagline">El color del poder absoluto. Obra maestra en burdeos.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Piel Sint&eacute;tica Premium</div>
+          <div class="product-old-price">L 1,429</div>
+          <div class="product-price">L 1,099</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/b6.png" alt="Bolso BurdeúX">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-number">16</div>
+</div>
+
+<!-- ==================== PAGE 17: SECTION DIVIDER - PLATA 925 ==================== -->
+<div class="page">
+  <div class="page-border"></div>
+  <div class="section-divider">
+    <div class="section-line"></div>
+    <h1>Plata 925</h1>
+    <div class="section-sub">Plata esterlina certificada</div>
+    <div class="section-line-bottom"></div>
+  </div>
+  <div class="page-number">17</div>
+</div>
+
+<!-- ==================== PAGE 18: PL001 + PL002 ==================== -->
+<div class="page">
+  <div class="page-border"></div>
+  <div class="page-inner">
+    <div class="page-header">
+      <span>ENIGME</span>
+      <span>Plata 925</span>
+    </div>
+    <div class="products-area">
+      <div class="product-row">
+        <div class="product-info text-left">
+          <div class="product-ref">PL001</div>
+          <div class="product-name">Anillo Aura C&eacute;leste</div>
+          <div class="product-tagline">Un fragmento de cielo capturado en plata.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Plata 925 / Rodio</div>
+          <div class="product-old-price">L 1,949</div>
+          <div class="product-price">L 1,499</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/pl1.jpg" alt="Anillo Aura Céleste">
+          </div>
+        </div>
+      </div>
+      <div class="product-divider"><span class="diamond">&#9670;</span></div>
+      <div class="product-row reverse">
+        <div class="product-info text-right">
+          <div class="product-ref">PL002</div>
+          <div class="product-name">Anillo &Eacute;clat de Lune</div>
+          <div class="product-tagline">Luz forjada en la penumbra. Hipnotizante.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Plata 925 / Circonitas</div>
+          <div class="product-old-price">L 2,469</div>
+          <div class="product-price">L 1,899</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/pl3.jpg" alt="Anillo Éclat de Lune">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-number">18</div>
+</div>
+
+<!-- ==================== PAGE 19: PL003 + PL004 ==================== -->
+<div class="page">
+  <div class="page-border"></div>
+  <div class="page-inner">
+    <div class="page-header">
+      <span>ENIGME</span>
+      <span>Plata 925</span>
+    </div>
+    <div class="products-area">
+      <div class="product-row">
+        <div class="product-info text-left">
+          <div class="product-ref">PL003</div>
+          <div class="product-name">Anillo Sortil&egrave;ge</div>
+          <div class="product-tagline">La elegancia de un hechizo silencioso.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Plata 925 Certificada</div>
+          <div class="product-old-price">L 1,819</div>
+          <div class="product-price">L 1,399</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/pl5.jpg" alt="Anillo Sortilège">
+          </div>
+        </div>
+      </div>
+      <div class="product-divider"><span class="diamond">&#9670;</span></div>
+      <div class="product-row reverse">
+        <div class="product-info text-right">
+          <div class="product-ref">PL004</div>
+          <div class="product-name">Anillo Majest&eacute;</div>
+          <div class="product-tagline">Una corona dise&ntilde;ada para dominar el espacio.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Plata 925 / Swarovski</div>
+          <div class="product-old-price">L 2,079</div>
+          <div class="product-price">L 1,599</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/pl7.jpg" alt="Anillo Majesté">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-number">19</div>
+</div>
+
+<!-- ==================== PAGE 20: PL005 (SOLO) ==================== -->
+<div class="page">
+  <div class="page-border"></div>
+  <div class="page-inner">
+    <div class="page-header">
+      <span>ENIGME</span>
+      <span>Plata 925</span>
+    </div>
+    <div class="products-area">
+      <div class="single-product">
+        <div class="vitrine">
+          <img src="https://enigmeofficial.com/pl9.jpg" alt="Pulsera Éternité Bleu">
+        </div>
+        <div class="product-info">
+          <div class="product-ref">PL005</div>
+          <div class="product-name">Pulsera &Eacute;ternit&eacute; Bleu</div>
+          <div class="product-tagline">El ciclo interminable de un aura cautivadora.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Plata 925 / Piedras Naturales</div>
+          <div class="product-old-price">L 1,689</div>
+          <div class="product-price">L 1,299</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-number">20</div>
+</div>
+
+<!-- ==================== PAGE 21: SECTION DIVIDER - LIQUIDACIÓN ==================== -->
+<div class="page">
+  <div class="page-border"></div>
+  <div class="section-divider">
+    <div class="section-line"></div>
+    <h1>Liquidaci&oacute;n</h1>
+    <div class="section-sub">Precios especiales</div>
+    <div class="section-line-bottom"></div>
+  </div>
+  <div class="page-number">21</div>
+</div>
+
+<!-- ==================== PAGE 22: LQ001 + LQ002 ==================== -->
+<div class="page">
+  <div class="page-border"></div>
+  <div class="page-inner">
+    <div class="page-header">
+      <span>ENIGME</span>
+      <span>Liquidaci&oacute;n</span>
+    </div>
+    <div class="products-area">
+      <div class="product-row">
+        <div class="product-info text-left">
+          <div class="product-ref">LQ001</div>
+          <div class="product-name">Aretes Lo-Ve</div>
+          <div class="product-tagline">El romance en su forma m&aacute;s pura. Geometr&iacute;a irresistible.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Acero Hipoalerg&eacute;nico Premium</div>
+          <div class="product-old-price">L 449</div>
+          <div class="product-price">L 299</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/l1.png" alt="Aretes Lo-Ve">
+          </div>
+        </div>
+      </div>
+      <div class="product-divider"><span class="diamond">&#9670;</span></div>
+      <div class="product-row reverse">
+        <div class="product-info text-right">
+          <div class="product-ref">LQ002</div>
+          <div class="product-name">Set 6 Argollas Classique</div>
+          <div class="product-tagline">Elegancia vers&aacute;til para cada d&iacute;a. B&aacute;sico indiscutible.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Acero Hipoalerg&eacute;nico Premium</div>
+          <div class="product-old-price">L 529</div>
+          <div class="product-price">L 379</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/l2.png" alt="Set 6 Argollas Classique">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-number">22</div>
+</div>
+
+<!-- ==================== PAGE 23: LQ003 + LQ004 ==================== -->
+<div class="page">
+  <div class="page-border"></div>
+  <div class="page-inner">
+    <div class="page-header">
+      <span>ENIGME</span>
+      <span>Liquidaci&oacute;n</span>
+    </div>
+    <div class="products-area">
+      <div class="product-row">
+        <div class="product-info text-left">
+          <div class="product-ref">LQ003</div>
+          <div class="product-name">Anillo Demi-C&oelig;ur</div>
+          <div class="product-tagline">La otra mitad de tu esencia. Vanguardia asim&eacute;trica.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Acero Hipoalerg&eacute;nico Premium</div>
+          <div class="product-old-price">L 479</div>
+          <div class="product-price">L 329</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/l3.png" alt="Anillo Demi-Cœur">
+          </div>
+        </div>
+      </div>
+      <div class="product-divider"><span class="diamond">&#9670;</span></div>
+      <div class="product-row reverse">
+        <div class="product-info text-right">
+          <div class="product-ref">LQ004</div>
+          <div class="product-name">Set Alianzas &Eacute;ternel</div>
+          <div class="product-tagline">Un pacto forjado en acero. S&oacute;lido y perpetuo.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Acero Hipoalerg&eacute;nico Premium</div>
+          <div class="product-old-price">L 629</div>
+          <div class="product-price">L 479</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/l4.png" alt="Set Alianzas Éternel">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-number">23</div>
+</div>
+
+<!-- ==================== PAGE 24: LQ005 + LQ006 ==================== -->
+<div class="page">
+  <div class="page-border"></div>
+  <div class="page-inner">
+    <div class="page-header">
+      <span>ENIGME</span>
+      <span>Liquidaci&oacute;n</span>
+    </div>
+    <div class="products-area">
+      <div class="product-row">
+        <div class="product-info text-left">
+          <div class="product-ref">LQ005</div>
+          <div class="product-name">Anillo Ros&eacute;e</div>
+          <div class="product-tagline">La delicadeza de una gota de roc&iacute;o matutina.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Acero Hipoalerg&eacute;nico Premium</div>
+          <div class="product-old-price">L 529</div>
+          <div class="product-price">L 379</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/l5.png" alt="Anillo Rosée">
+          </div>
+        </div>
+      </div>
+      <div class="product-divider"><span class="diamond">&#9670;</span></div>
+      <div class="product-row reverse">
+        <div class="product-info text-right">
+          <div class="product-ref">LQ006</div>
+          <div class="product-name">Collar &Eacute;toile Cristal</div>
+          <div class="product-tagline">Una estrella fugaz capturada eternamente.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Acero Hipoalerg&eacute;nico Premium</div>
+          <div class="product-old-price">L 629</div>
+          <div class="product-price">L 479</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/l6.png" alt="Collar Étoile Cristal">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-number">24</div>
+</div>
+
+<!-- ==================== PAGE 25: LQ007 + LQ008 ==================== -->
+<div class="page">
+  <div class="page-border"></div>
+  <div class="page-inner">
+    <div class="page-header">
+      <span>ENIGME</span>
+      <span>Liquidaci&oacute;n</span>
+    </div>
+    <div class="products-area">
+      <div class="product-row">
+        <div class="product-info text-left">
+          <div class="product-ref">LQ007</div>
+          <div class="product-name">Aretes Cercle Parfait</div>
+          <div class="product-tagline">Volumen y minimalismo en armon&iacute;a geom&eacute;trica.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Acero Hipoalerg&eacute;nico Premium</div>
+          <div class="product-old-price">L 459</div>
+          <div class="product-price">L 309</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/l7.png" alt="Aretes Cercle Parfait">
+          </div>
+        </div>
+      </div>
+      <div class="product-divider"><span class="diamond">&#9670;</span></div>
+      <div class="product-row reverse">
+        <div class="product-info text-right">
+          <div class="product-ref">LQ008</div>
+          <div class="product-name">Pulsera Sph&egrave;res</div>
+          <div class="product-tagline">Simetr&iacute;a impecable y luz continua.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Acero Hipoalerg&eacute;nico Premium</div>
+          <div class="product-old-price">L 529</div>
+          <div class="product-price">L 379</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/l8.png" alt="Pulsera Sphères">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-number">25</div>
+</div>
+
+<!-- ==================== PAGE 26: LQ009 + LQ010 ==================== -->
+<div class="page">
+  <div class="page-border"></div>
+  <div class="page-inner">
+    <div class="page-header">
+      <span>ENIGME</span>
+      <span>Liquidaci&oacute;n</span>
+    </div>
+    <div class="products-area">
+      <div class="product-row">
+        <div class="product-info text-left">
+          <div class="product-ref">LQ009</div>
+          <div class="product-name">Pulsera Sph&egrave;res Flex</div>
+          <div class="product-tagline">Fluidez majestuosa y adaptabilidad milim&eacute;trica.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Acero Hipoalerg&eacute;nico Premium</div>
+          <div class="product-old-price">L 549</div>
+          <div class="product-price">L 399</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/l9.png" alt="Pulsera Sphères Flex">
+          </div>
+        </div>
+      </div>
+      <div class="product-divider"><span class="diamond">&#9670;</span></div>
+      <div class="product-row reverse">
+        <div class="product-info text-right">
+          <div class="product-ref">LQ010</div>
+          <div class="product-name">Charms Heritage</div>
+          <div class="product-tagline">Una historia contada a trav&eacute;s de dijes atemporales.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Acero Hipoalerg&eacute;nico Premium</div>
+          <div class="product-old-price">L 629</div>
+          <div class="product-price">L 479</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/l10.png" alt="Charms Heritage">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-number">26</div>
+</div>
+
+<!-- ==================== PAGE 27: LQ011 + LQ012 ==================== -->
+<div class="page">
+  <div class="page-border"></div>
+  <div class="page-inner">
+    <div class="page-header">
+      <span>ENIGME</span>
+      <span>Liquidaci&oacute;n</span>
+    </div>
+    <div class="products-area">
+      <div class="product-row">
+        <div class="product-info text-left">
+          <div class="product-ref">LQ011</div>
+          <div class="product-name">Collar Lumi&egrave;re Pastel</div>
+          <div class="product-tagline">Destellos de color sutil que iluminan tu aura.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Acero Hipoalerg&eacute;nico Premium</div>
+          <div class="product-old-price">L 629</div>
+          <div class="product-price">L 479</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/l11.png" alt="Collar Lumière Pastel">
+          </div>
+        </div>
+      </div>
+      <div class="product-divider"><span class="diamond">&#9670;</span></div>
+      <div class="product-row reverse">
+        <div class="product-info text-right">
+          <div class="product-ref">LQ012</div>
+          <div class="product-name">Collar Fe-Male</div>
+          <div class="product-tagline">Devoci&oacute;n inquebrantable en perlas y acero.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Acero Hipoalerg&eacute;nico Premium</div>
+          <div class="product-old-price">L 629</div>
+          <div class="product-price">L 479</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/l12.png" alt="Collar Fe-Male">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-number">27</div>
+</div>
+
+<!-- ==================== PAGE 28: LQ013 + LQ014 ==================== -->
+<div class="page">
+  <div class="page-border"></div>
+  <div class="page-inner">
+    <div class="page-header">
+      <span>ENIGME</span>
+      <span>Liquidaci&oacute;n</span>
+    </div>
+    <div class="products-area">
+      <div class="product-row">
+        <div class="product-info text-left">
+          <div class="product-ref">LQ013</div>
+          <div class="product-name">Collar Croix Minimal</div>
+          <div class="product-tagline">Simbolismo puro y l&iacute;neas exactas. Silente.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Acero Hipoalerg&eacute;nico Premium</div>
+          <div class="product-old-price">L 579</div>
+          <div class="product-price">L 429</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/l13.png" alt="Collar Croix Minimal">
+          </div>
+        </div>
+      </div>
+      <div class="product-divider"><span class="diamond">&#9670;</span></div>
+      <div class="product-row reverse">
+        <div class="product-info text-right">
+          <div class="product-ref">LQ014</div>
+          <div class="product-name">Collar Ros&eacute;</div>
+          <div class="product-tagline">El rubor del atardecer en tu escote.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Acero Hipoalerg&eacute;nico Premium</div>
+          <div class="product-old-price">L 549</div>
+          <div class="product-price">L 399</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/l14.png" alt="Collar Rosé">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-number">28</div>
+</div>
+
+<!-- ==================== PAGE 29: LQ015 + LQ016 ==================== -->
+<div class="page">
+  <div class="page-border"></div>
+  <div class="page-inner">
+    <div class="page-header">
+      <span>ENIGME</span>
+      <span>Liquidaci&oacute;n</span>
+    </div>
+    <div class="products-area">
+      <div class="product-row">
+        <div class="product-info text-left">
+          <div class="product-ref">LQ015</div>
+          <div class="product-name">Set Perles d'Eau</div>
+          <div class="product-tagline">Perlas de vanguardia. Clasicismo reinventado.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Acero Hipoalerg&eacute;nico Premium</div>
+          <div class="product-old-price">L 629</div>
+          <div class="product-price">L 479</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/l15.png" alt="Set Perles d'Eau">
+          </div>
+        </div>
+      </div>
+      <div class="product-divider"><span class="diamond">&#9670;</span></div>
+      <div class="product-row reverse">
+        <div class="product-info text-right">
+          <div class="product-ref">LQ016</div>
+          <div class="product-name">Set Love Me</div>
+          <div class="product-tagline">Declaraci&oacute;n de intenciones brillante y audaz.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Acero Hipoalerg&eacute;nico Premium</div>
+          <div class="product-old-price">L 629</div>
+          <div class="product-price">L 479</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/l15.png" alt="Set Love Me">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-number">29</div>
+</div>
+
+<!-- ==================== PAGE 30: LQ017 + LQ018 ==================== -->
+<div class="page">
+  <div class="page-border"></div>
+  <div class="page-inner">
+    <div class="page-header">
+      <span>ENIGME</span>
+      <span>Liquidaci&oacute;n</span>
+    </div>
+    <div class="products-area">
+      <div class="product-row">
+        <div class="product-info text-left">
+          <div class="product-ref">LQ017</div>
+          <div class="product-name">Set V&eacute;nus</div>
+          <div class="product-tagline">Corazones entrelazados para la diosa moderna.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Acero Hipoalerg&eacute;nico Premium</div>
+          <div class="product-old-price">L 629</div>
+          <div class="product-price">L 479</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/l16.png" alt="Set Vénus">
+          </div>
+        </div>
+      </div>
+      <div class="product-divider"><span class="diamond">&#9670;</span></div>
+      <div class="product-row reverse">
+        <div class="product-info text-right">
+          <div class="product-ref">LQ018</div>
+          <div class="product-name">Set Ball Gold</div>
+          <div class="product-tagline">Geometr&iacute;a fina y destellos dorados. Infalible.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Acero Hipoalerg&eacute;nico Premium</div>
+          <div class="product-old-price">L 629</div>
+          <div class="product-price">L 479</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/l17.png" alt="Set Ball Gold">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-number">30</div>
+</div>
+
+<!-- ==================== PAGE 31: LQ019 + LQ020 ==================== -->
+<div class="page">
+  <div class="page-border"></div>
+  <div class="page-inner">
+    <div class="page-header">
+      <span>ENIGME</span>
+      <span>Liquidaci&oacute;n</span>
+    </div>
+    <div class="products-area">
+      <div class="product-row">
+        <div class="product-info text-left">
+          <div class="product-ref">LQ019</div>
+          <div class="product-name">Set Oc&eacute;an</div>
+          <div class="product-tagline">Tesoros marinos en acero imperecedero.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Acero Hipoalerg&eacute;nico Premium</div>
+          <div class="product-old-price">L 629</div>
+          <div class="product-price">L 479</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/l18.png" alt="Set Océan">
+          </div>
+        </div>
+      </div>
+      <div class="product-divider"><span class="diamond">&#9670;</span></div>
+      <div class="product-row reverse">
+        <div class="product-info text-right">
+          <div class="product-ref">LQ020</div>
+          <div class="product-name">Quatuor Ajustable</div>
+          <div class="product-tagline">Cuatro piezas, infinitas combinaciones.</div>
+          <div class="product-line"></div>
+          <div class="product-material">Acero Hipoalerg&eacute;nico Premium</div>
+          <div class="product-old-price">L 629</div>
+          <div class="product-price">L 479</div>
+        </div>
+        <div class="vitrine-wrap">
+          <div class="vitrine">
+            <img src="https://enigmeofficial.com/l20.png" alt="Quatuor Ajustable">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-number">31</div>
+</div>
+
+<!-- ==================== PAGE 32: BACK COVER ==================== -->
+<div class="page">
+  <div class="page-border"></div>
+  <div class="back-cover">
+    <div class="logo-text">ENIGME</div>
+    <div class="tagline">Aura &middot; Misterio &middot; Presencia</div>
+    <div class="cover-line"></div>
+    <div class="info-line">enigmeofficial.com</div>
+    <div class="info-line">Honduras &middot; 2026</div>
+    <div class="cover-line"></div>
+    <div class="info-line">Cat&aacute;logo Oficial</div>
+    <div class="info-line">Todos los precios en Lempiras (L)</div>
+    <div class="info-line">Precios sujetos a cambio sin previo aviso</div>
+    <div class="year">2026</div>
+  </div>
+</div>
+
+</body>
+</html>
